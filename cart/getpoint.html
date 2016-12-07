@@ -1,0 +1,73 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+ <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    
+     <script>
+          var suplat;
+          var suplong;
+   function grabthe{
+      var ref = new Firebase("https://amhungry.firebaseio.com/points/");
+ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+  console.log("Supermarket name: " + newPost.name);
+  console.log("latitude: " + newPost.latitude);
+ alert("longitude: " + newPost.longitude);
+    //suplat=newPost.latitude;
+    //suplong=newpost.longitude;
+  //  alert("Supermarket latitude"+newPost.latitude);
+    //localStorage.suplat=suplat;
+    //localStorage.suplong=suplong;
+// alert("Grabbed details are"+newPost.latitude);
+ 
+ });
+   }
+          </script>
+    </head>
+    
+    <body onload="grabthe();">
+    <script>
+        var URL="bodabillsup.html";
+        var ref = new Firebase("https://amhungry.firebaseio.com/points/");
+ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+  console.log("Supermarket name: " + newPost.name);
+  console.log("latitude: " + newPost.latitude);
+    localStorage.pointlat=newPost.latitude;
+    localStorage.pointlong=newPost.longitude;
+// alert("longitude: " + newPost.longitude);
+    //suplat=newPost.latitude;
+    //suplong=newpost.longitude;
+  //  alert("Supermarket latitude"+newPost.latitude);
+    //localStorage.suplat=suplat;
+    //localStorage.suplong=suplong;
+ alert("Grabbed details are"+newPost.latitude);
+     // var delay = 5000; //Your delay in milliseconds
+//setTimeout(function(){ window.location = URL; }, delay);
+ DelayRedirect();
+ });
+        </script>
+         <script type="text/javascript">
+function DelayRedirect() {
+    var seconds = 5;
+    var dvCountDown = document.getElementById("dvCountDown");
+    var lblCount = document.getElementById("lblCount");
+    dvCountDown.style.display = "block";
+    lblCount.innerHTML = seconds;
+    setInterval(function () {
+        seconds--;
+        lblCount.innerHTML = seconds;
+        if (seconds == 0) {
+            dvCountDown.style.display = "none";
+            window.location = "bodabillsup.html";
+        }
+    }, 1000);
+}
+</script>
+     <div id="dvCountDown" style = "display:none">
+You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.
+</div>
+    </body>
+
+
+</html>

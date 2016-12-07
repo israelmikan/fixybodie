@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="AngularFireCart">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Special Order</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="libs/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom styles for this app -->
+        <link href="app/style.min.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+              <script type="text/javascript">
+<!-- hide from old browsers
+
+function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+
+// end hide -->
+</script>
+        
+        <script type="text/javascript">
+  //localStorage.startlat=wheretopicklat;
+       //   localStorage.startlong=wheretopicklong;
+         var name = getValue("name");
+            localStorage.supermarket=name;
+            alert("You Selected"+localStorage.supermarket);
+            alert("We will start at"+ localStorage.startlat);
+        
+        </script>
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <header class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container navbar-header">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                    <a id="logo" class="navbar-brand" href="#">Special<b>Order</b></a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div id="simple-cart" data-simple-cart="simple-cart" ng-controller="CartCtrl">
+                        <!-- Simple Cart Directive  -->
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <nav class="collapse navbar-collapse" id="menu" role="navigation">
+                        <ul class="nav navbar-nav" ng-controller="CategoriesCtrl">
+                            <li>
+                                <a href="#/">All Products</a>
+                            </li>
+                            <li ng-repeat="category in categories">
+                                <a href="#/categories/{{category.slug}}">{{category.title}}</a>
+                            </li>
+                            <li>
+                                <a href="#/sale"><Span class="glyphicon glyphicon-tag btn-xs"></span> Sale</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container -->
+        </header>
+
+        <!-- Page Content -->
+        <div class="container" ng-view>
+        </div>
+        <!-- /.container -->
+        <!-- Footer -->
+        <footer class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span>by: <a href="https://twitter.com/clicktheglobe"><b>@Clicktheglobe</b></a></span>
+                    <a href="admin.html" class="pull-right"><span class="glyphicon glyphicon-lock btn-xs"></span>Admin</a>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Usually these JavaScript files also get uglified for production
+             However, for build time and debugging purpose they are left as is.
+        ==================================================================== -->
+        <script src="libs/jquery/dist/jquery.min.js"></script>
+        <script src="libs/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="libs/angular/angular.js"></script>
+        <script src="libs/angular-resource/angular-resource.js"></script>
+        <script src="libs/angular-route/angular-route.js"></script>
+        <script src="libs/angular-animate/angular-animate.js"></script>
+        <script src="libs/angular-local-storage/angular-local-storage.js"></script>
+        <script src="libs/firebase/firebase.js"></script>
+        <script src="libs/angularfire/dist/angularfire.js"></script>
+        <script src="app/app.min.js"></script>
+    </body>
+</html>

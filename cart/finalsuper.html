@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+ Copyright 2010 Google Inc. 
+ Licensed under the Apache License, Version 2.0: 
+ http://www.apache.org/licenses/LICENSE-2.0 
+ -->
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<script>
+  if (localStorage.orderkeysuper == null) {
+        //...
+                alert("You Dont have Any Current Orders");
+      window.location.assign("../index.html")
+      
+      
+      }else{
+                
+            }
+
+  
+</script>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+   
+<title>Special Order</title>
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <script> 
+        
+        
+function myFunction() {
+   // alert("Refresh working");
+    setInterval(function(){Track();},8000);
+}
+</script>
+<script type="text/javascript">
+    
+    
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             localStorage.custlat=latitude;
+             localStorage.custlong=longitude;
+           
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+           // alert("Latitude : " + latitude + " Longitude: " + longitude);
+             //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+           // alert("Pushing");
+                var t=localStorage.nowkey;
+                var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkeysuper);
+            // Retrieve new posts as they are added to our database
+
+                      var onComplete = function(error) {
+                  if (error) {
+                    console.log('Synchronization failed');
+                  } else {
+                    console.log('Synchronization succeeded');
+                      alert('Order Details Updated');
+                  }
+                };
+                  ref.update({ supermarket: localStorage.supermarket,customerlat: localStorage.custlat, customerlong:localStorage.custlong }, onComplete);
+                    //alert('Details Updated');
+             
+               }
+ 
+  
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied!");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+            }
+         }
+         
+         function Track(){
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:1000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, device does not support geolocation!");
+            }
+            
+            myFunction();
+             refreshData();
+             
+         }
+function refreshData()
+{
+    x = 8;  // 5 Seconds
+   Track();
+
+    setTimeout(refreshData, x*1000);
+}refreshData();
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap">
+    </script>
+    </head>
+   <body onload="Track();">
+       <script>
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+    </script>
+
+    
+         <script>
+                
+                document.write("<table width='100%'>");
+                
+         
+            
+         
+var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkeysuper+"");
+// Retrieve new posts as they are added to our database
+ref.on("value", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+    var customer=newPost.customer;
+    var subtotal=newPost.subTotal;
+    var orderstatus=newPost.status;
+    var orderkey=snapshot.key();
+    localStorage.nowkey=orderkey;
+    
+    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div>"); 
+     document.write("<p>Delivery page</p>");
+     document.write("<p>You Are required to keep on this page to monitor your order progress</p>");
+    document.write("<div id='map'></div>");
+        document.write("<table border='1' width='100%'><tr><td>"+customer+"</td><td>"+subtotal+"</td><td>"+orderstatus+"</td></tr></table>");  
+   document.write("<table border='1'>");
+ var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
+  ref1.once("value", function(snapshot1) {
+  
+    snapshot1.forEach(function(childSnapshot) {
+    // key will be "fred" the first time and "barney" the second time
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();
+        var itemtitle=childData.title;
+        var price=childData.price;
+        var qty=childData.quantity;
+        
+        document.write("<tr><td>Item name:"+itemtitle+"</td><td>Quantity"+qty+"</td><td>Price:"+price+"</td></tr>");
+          
+
+
+  
+  });
+document.write("</table>");
+  });
+    
+    
+});
+
+
+</script>
+    <div id='map'></div>
+    
+    </body>
+
+
+
+</html>

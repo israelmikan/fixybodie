@@ -1,0 +1,144 @@
+  <!DOCTYPE html>
+<html>
+  <head>
+       <link rel="stylesheet" type="text/css" href="framework7/css/framework7.material.min.css" class="uib-framework-theme">
+        
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"
+            type="text/javascript"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+      <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <title>Special Order</title> 
+
+   
+    
+    <script>
+function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+
+// end hide -->
+</script>
+    <script>
+        var email = getValue("names");
+        var password = getValue("location");
+      </script>
+      
+    <script>
+	var ref = new Firebase("https://amhungry.firebaseio.com/bodas");
+    ref.authWithPassword({
+      email    : email,
+      password : password
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+                alert("Login Details Wrong");
+                window.location.assign("login.html");
+            break;
+          case "INVALID_PASSWORD":
+            console.log("The specified user account password is incorrect.");
+                alert("You Entered A wrong password");
+                window.location.assign("login.html");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+                alert("Account Doesnt Exist");
+                window.location.assign("login.html");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+                alert("Unknown Error Try Again");
+                window.location.assign("login.html");
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+          alert("Autheticated Well"+authData);
+          localStorage.setItem("located",email);
+          if(localStorage.getItem("located")=="admin@amhungry.com"){
+          window.location.assign("cart/admin.html");
+          }else{
+            var newref = new Firebase("https://amhungry.firebaseio.com/bodas"); 
+           	newref.orderByChild("name").equalTo(email).on("child_added", function(snapshot) {
+                //grabbing boda details
+                var det=snapshot.val();
+                var bodatag=det.tag;
+                console.log("tag "+det.tag);
+                console.log(snapshot.key());
+                console.log(snapshot.tag);
+              
+                localStorage.setItem("bodatag",bodatag);
+            
+            });   
+              
+         if((localStorage.getItem("bodatag")==null)){
+          alert("OOps No Boda tag");
+         }else if(localStorage.getItem("bodatag") !==null){
+             alert(localStorage.getItem("bodatag"));
+                          window.location.assign("orders.html");
+         } else{
+             
+         } 
+          
+
+          }
+      }
+    });</script>  
+      
+      
+    </head>
+	
+	
+	<body>
+	
+	
+	</body>
+	</html>

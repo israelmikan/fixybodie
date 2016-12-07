@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBPJ_yLcvl9dHifCA8txgAwPAmHR_SchYw",
+    authDomain: "amhungry.firebaseapp.com",
+    databaseURL: "https://amhungry.firebaseio.com",
+    storageBucket: "firebase-amhungry.appspot.com",
+    messagingSenderId: "602067665186"
+  };
+  firebase.initializeApp(config);
+</script>
+     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+       <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    
+    <script>
+    
+          
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+          
+  var name = getValue("pointname");
+           var qty = getValue("qty");
+        
+       
+        
+          var total= getValue("total");
+          //alert(total);
+          var contact = getValue("contact");
+           //var type = getValue("type");
+           //var qty = getValue("qty");
+           var point = getValue("point");
+           var latit = getValue("latitude");
+            var longit = getValue("longitude");
+        var orderid= getValue("orderid")
+         var saletype= getValue("type")
+            
+        //saving details to localstorage
+        localStorage.hotel=name;
+        localStorage.qty=qty;
+        localStorage.total=total;
+        localStorage.contact=contact;
+        localStorage.latitude=latit;
+        localStorage.longitude=longit;
+        localStorage.orderid=orderid;
+        localStorage.saletype=saletype;
+            
+          
+   
+    </script>
+   
+    <script> 
+        
+        function showdiv(){
+          //  alert("redirect here");
+            //document.getElementById("continue").style.visibility = "visible";            
+        }
+    
+    </script>
+    <style>
+.progress_bar {
+  height: 10px;
+  background: orange;
+  width: 0%;
+  -moz-transition: all 4s ease;
+  -moz-transition-delay: 1s;
+  -webkit-transition: all 4s ease;
+  -webkit-transition-delay: 1s;
+  transition: all 4s ease;
+  transition-delay: 1s;
+}
+</style>
+<script>
+  var count = 8;
+var redirect = "bodabill.html";
+ 
+function countDown(){
+    //alert("Counting Down");
+    var timer = document.getElementById("timer");
+    if(count > 0){
+        count--;
+        timer.innerHTML = "This page will redirect in "+count+" seconds.";
+        setTimeout("countDown()", 1000);
+    }else{
+        window.location.href = redirect;
+    }
+}  
+    
+    
+  var messageListRef = new Firebase('https://amhungry.firebaseio.com/orders');
+
+    
+    function auth(){
+        //alert("auth");
+        
+    //var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+         // alert("Authetication Working");
+          fuck();
+          //window.location.assign("final.html");
+        
+      }
+    });
+    //end of auth
+   
+}  
+   
+function fuck(){
+//alert("fuck this ");
+//messageListRef.push({ 'user_id': 'ttttttttred', 'text': 'Yabba Dabba Doo!' });
+messageListRef.push({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.custlat, 'longitude': localStorage.custlong, 'saletype': localStorage.saletype, 'bodalat': 'bodalat', 'bodalong': 'bodalong', 'orderstatus': 'pending' });
+//alert("Iyiiii");
+    
+   
+    messageListRef.orderByChild("order_id").equalTo(localStorage.orderid).on("child_added", function(snapshot) {
+      console.log(snapshot.key());
+        localStorage.mykey=snapshot.key();
+       alert("Order Saved Successfully");
+        localStorage.success="true";
+        
+        
+        
+        /*
+  document.write("<center><div class='img-wrapper'><img src='img/piss.png' height='250px' width='80%'></div></center>");
+    document.write("<h2>Order saved but Pending</h2>");
+    
+    document.write("<table><tr>");
+        
+    document.write("<td>Ordered from:</td><td>");
+document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.hotel+"'></td>"); 
+    document.write("<tr><td>Ordered type:</td><td>");
+ document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.saletype+"'></td></tr>"); 
+            document.write("<tr><td>Quantity:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.qty+"'></td></tr>");
+document.write("<tr><td>Order Id:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.orderid+"'></td></tr>");        
+        
+    document.write("<tr><td>Total Bill:</td><td>");
+    document.write("<input type='text' id='total' name='total'readonly='readonly' value='"+localStorage.total+"'></td></tr>");
+    
+    document.write("<tr><td>Contact:</td><td>");
+    document.write("<input type='text' id='contact' readonly='readonly' name='contact' value='"+localStorage.contact+"'></td></tr>");
+    
+    document.write("<tr hidden='hidden'><td>Your Latitude:</td><td>");
+    document.write("<input type='text' id='latitude' readonly='readonly' name='latitude' value='"+localStorage.newloclat+"'></td></tr>");
+    document.write("<tr hidden='hidden'><td>Your Longitude:</td><td>");
+    document.write("<input type='text' id='longitude'readonly='readonly' name='longitude' value='"+localStorage.newloclong+"'></td></tr>");
+        document.write("</table>");
+    
+    localStorage.orderstatus="pending";
+    document.write("Your Order Status: "+localStorage.orderstatus);
+            document.write("<br><center><a href='bodabill.html'><input type='button' class='continue' value='Continue' id='continue' style=' background-color: dodgerblue; color: white;        display: block;border-radius: 15px;    height: 40px;width: 100px;'> </a></center>");
+        
+              // window.location.assign("final.html"); */
+        
+    });   
+countDown();    
+   
+}
+     
+//var messageListRef = new Firebase('https://amhungry.firebaseio.com');
+//function push(){
+//var newMessageRef = messageListRef.push();
+   //     newMessageRef.set({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.latitude, 'longitude': localStorage.longitude, 'saletype': localStorage.saletype });
+    // We've appended a new message to the message_list location.
+   // var path = newMessageRef.toString();
+    // path will be something like
+    // 'https://samplechat.firebaseio-demo.com/message_list/-IKo28nwJLH0Nc5XeFmj'
+	//alert("successful");
+
+//}
+</script>
+     <script type="text/javascript">
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             localStorage.newloclat=latitude;
+             localStorage.newloclong=longitude;
+            alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+           
+         }
+                      
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Turn Location On To Shop!");
+                window.location.assign("index.html");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error:Failed to Access your Location try Again");
+                window.location.assign("index.html");
+            }
+         }
+         
+       
+
+    // Do your thing here
+
+
+         function getLocationUpdate(){
+               x = 5;  // 5 Seconds
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:60000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, browser does not support geolocation!");
+            }
+             setTimeout(refreshData, x*1000);
+         }
+       
+      </script>
+    
+</head>
+<body onload="auth();">
+    <div id="progressBar" class="progress_bar"></div>
+    <script>
+  // Assign your element ID to a variable.
+  var progress = document.getElementById("progressBar");
+  // Pause the animation for 100 so we can animate from 0 to x%
+  setTimeout(
+    function(){
+      progress.style.width = "100%";
+      // PHP Version:
+      // progress.style.width = "<?php echo $progressPercentage; ?>";
+      progress.style.backgroundColor = "green";
+    }
+  ,100);
+</script>
+    <center>
+    <script>
+     document.write("<center><div class='img-wrapper'><img src='img/piss.png' height='250px' width='80%'></div></center>");
+    document.write("<h2>Saving Order Please wait</h2>");
+    
+    document.write("<table><tr>");
+        
+    document.write("<td>Ordered from:</td><td>");
+document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.hotel+"'></td>"); 
+    document.write("<tr><td>Ordered type:</td><td>");
+ document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.saletype+"'></td></tr>"); 
+            document.write("<tr><td>Quantity:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.qty+"'></td></tr>");
+document.write("<tr><td>Order Id:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.orderid+"'></td></tr>");        
+        
+    document.write("<tr><td>Total Bill:</td><td>");
+    document.write("<input type='text' id='total' name='total'readonly='readonly' value='"+localStorage.total+"'></td></tr>");
+    
+    document.write("<tr><td>Contact:</td><td>");
+    document.write("<input type='text' id='contact' readonly='readonly' name='contact' value='"+localStorage.contact+"'></td></tr>");
+    
+    document.write("<tr hidden='hidden'><td>Your Latitude:</td><td>");
+    document.write("<input type='text' id='latitude' readonly='readonly' name='latitude' value='"+localStorage.newloclat+"'></td></tr>");
+    document.write("<tr hidden='hidden'><td>Your Longitude:</td><td>");
+    document.write("<input type='text' id='longitude'readonly='readonly' name='longitude' value='"+localStorage.newloclong+"'></td></tr>");
+        document.write("</table>");
+    
+    localStorage.orderstatus="pending";
+    document.write("Your Order Status: "+localStorage.orderstatus);
+        
+    </script></center><style>
+    .continue{
+    background-color: dodgerblue;
+        color: white;
+        display: block;
+            border-radius: 15px;
+        height: 40px;
+        width: 100px;
+        
+    }
+    </style>
+  
+    
+    
+    <center>
+        
+        </center>
+    <script type="text/javascript"
+
+            src="https://www.simplify.com/commerce/simplify.pay.js"></script>
+    <center>
+        <span id="timer">
+<script type="text/javascript">countDown();</script>
+</span>
+        
+     <button hidden="hidden" data-sc-key="sbpb_NzcwNjUyMTMtNWM2My00YWJiLTg5NjYtZjE5NjUxMDk5ZWJl"
+
+            data-name="Special Order Uganda"
+
+            data-description="Open me Open Appetite"
+
+            data-reference="99999"
+
+             
+             data-amount="10000"
+
+            data-color="#12B830">
+
+            Pay Now For Delivery
+ 
+    </button>
+ </center>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script><style> #map{
+        height:250px;
+        width: 1005;
+    }</style>
+   
+    <center > <input hidden="hidden" type="button" onclick="getLocationUpdate();" value="Update My location"/></center>
+    <div id="map">
+               
+               
+               </div> 
+        <script>
+                     
+    
+      
+            
+            
+            var c = parseFloat(localStorage.custlat);
+            var d = parseFloat(localStorage.custlong);
+            var bodalat=parseFloat(localStorage.bodalaty);
+            var bodalong=parseFloat(localStorage.bodalongy);
+            
+              
+            //alert(c);
+           // alert(d);
+            
+               
+            
+      var map;
+      function initMap() {
+                    
+          var myLatLng = {lat: c, lng: d};
+          //get boda latitude
+          var bodyy={lat: bodalat, lng: bodalong};
+
+          //alert("laty"+laty);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 16
+        });
+          
+         var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          animation: google.maps.Animation.DROP,                   
+          title: 'Customer Location!'
+        });
+          
+          
+          GetAddress();
+            
+          
+          
+          
+      }
+            
+    </script>
+  
+    
+</body>
+  
+
+    
+
+</html>

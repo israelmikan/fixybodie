@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+<script type="text/javascript" src="validate.js"></script>    
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+var why=localStorage."located";
+
+
+if (localStorage.getItem("located") === null) {
+  //...
+div_show();
+
+
+}else{
+
+document.getElementById("result").innerHTML = localStorage.getItem("fullnames");
+    document.getElementById("result").innerHTML = localStorage.getItem("loction");
+
+}
+
+
+</script>
+
+<title>Login</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+function testResults (form) {
+
+    var who = form.names.value;
+
+    var where = form.location.value;
+    alert(name);
+    if(who ==' '){
+        
+        alert("Name Canot be Empty");
+        
+    }
+    
+   
+     var person=who;  
+     var located=where;  
+    
+  console.log( person );
+  localStorage.setItem( 'person', person );
+  console.log( localStorage.getItem( 'person' ) );
+
+   
+  console.log( located );
+  localStorage.setItem( 'located', located );
+  console.log( localStorage.getItem( 'located' ) );
+    
+
+
+
+   // document.getElementById("result").innerHTML = "Sorry, your Device does not support Web Storage...";
+
+
+
+}
+if (localStorage.getItem("person") !== null) {
+  //...
+window.location.assign("orders.html")
+
+
+}
+</SCRIPT>
+
+<link href="popout.css" rel="stylesheet">
+<script>
+// Validating Empty Field
+function check_empty() {
+
+if (document.getElementById('name').value == "" || document.getElementById('locaion').value == "" || document.getElementById('msg').value == "") {
+alert("Fill All Fields !");
+} else {
+document.getElementById('form').submit();
+alert("Form Submitted Successfully...");
+}
+}
+//Function To Display Popup
+function div_show() {
+document.getElementById('abc').style.display = "block";
+}
+//Function to Hide Popup
+function div_hide(){
+document.getElementById('abc').style.display = "none";
+    window.location.assign("index.html")
+}
+
+
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+var why=localStorage."located";
+
+
+if (localStorage.getItem("located") === null) {
+  //...
+div_show();
+
+
+}else{
+
+document.getElementById("result").innerHTML = localStorage.getItem("fullnames");
+    document.getElementById("result").innerHTML = localStorage.getItem("loction");
+
+}
+
+
+</script>
+
+<title>Login</title>
+
+<SCRIPT LANGUAGE="JavaScript">
+function testResults (form) {
+
+    var who = form.names.value;
+
+    var where = form.location.value;
+    if(who ==' '){
+        
+        alert("Name Canot be Empty");
+        
+    }
+    
+   
+     var person=who;  
+     var located=where;  
+    
+  console.log( person );
+  localStorage.setItem( 'person', person );
+  console.log( localStorage.getItem( 'person' ) );
+    localStorage.boda=person;
+    localStorage.bodapass=where;
+
+   
+  console.log( located );
+  localStorage.setItem( 'located', located );
+  console.log( localStorage.getItem( 'located' ) );
+    
+
+
+
+   // document.getElementById("result").innerHTML = "Sorry, your Device does not support Web Storage...";
+
+
+
+}
+if (localStorage.getItem("person") !== null) {
+  //...
+
+    
+window.location.assign("boda.html")
+
+
+}
+</SCRIPT>
+
+<link href="popout.css" rel="stylesheet">
+<script>
+// Validating Empty Field
+function check_empty() {
+
+if (document.getElementById('name').value == "" || document.getElementById('locaion').value == "" || document.getElementById('msg').value == "") {
+alert("Fill All Fields !");
+} else {
+document.getElementById('form').submit();
+alert("Form Submitted Successfully...");
+}
+}
+//Function To Display Popup
+function div_show() {
+document.getElementById('abc').style.display = "block";
+}
+//Function to Hide Popup
+function div_hide(){
+document.getElementById('abc').style.display = "none";
+    window.location.assign("index.html")
+}
+
+
+</script>
+
+
+</head>
+<!-- Body Starts Here -->
+<body id="body" style="overflow:hidden; width:100%;" onLoad="div_show();" >
+<div id="abc"  style="width:100%">
+<!-- Popup Div Starts Here -->
+<div id="popupContact" >
+<!-- Contact Us Form -->
+<form action="loginboda.html" id="form"  name="form" style="overflow:hidden;" >
+<img id="close" src="img/close.png" onclick ="div_hide()" >
+<center><img src="img/boda.png"></center>
+<h3>Login</h3>
+    <p style="background-color:black; color:white">#Delivering Satisfaction</p>
+<hr>
+<input id="name" name="names" placeholder="Enter Email" style="background-color:black; color:white" type="text" required>
+<input type="password" id="location" name="location" style="background-color:black; color:white" placeholder="Enter Password " type="text"  required>
+<br>
+<br>
+    <br>
+    <br>
+<INPUT TYPE="submit" id="submit" NAME="button" Value="Enter App">
+</form>
+<center>Note: </center>
+<center><p style="word-wrap:break-word;">Are You A Boda boda or Special Taxi<br> intrested to join Delivery team<br> Please  <a href="tel:+256705957020">  Call Us </a>or <a href="mailto:israelmikan@gmail.com"> Email Us</a> 
+<hr>
+<p>Terms and Conditions Apply</p></p>
+</center>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
+<!-- Display Popup Button -->
+
+</body>
+<!-- Body Ends Here -->
+</html>
+
+</head>
+<!-- Body Starts Here -->
+<body id="body" style="overflow:hidden; width:100%;" onLoad="div_show();" >
+<div id="abc"  style="width:100%">
+<!-- Popup Div Starts Here -->
+<div id="popupContact" >
+<!-- Contact Us Form -->
+<form action="#" id="form"  name="form" style="overflow:hidden;" >
+<img id="close" src="close.png" onclick ="div_hide()" >
+<h3>Join InnovateUg </h3>
+    <p style="background-color:black; color:white">#Ict4Better</p>
+<hr>
+<input id="name" name="names" placeholder="Innovator Name" style="background-color:black; color:white" type="text" required>
+<input id="location" name="location" style="background-color:black; color:white" placeholder="Hub,Company,Institude " type="text"  required>
+<br>
+<br>
+    <br>
+    <br>
+<INPUT TYPE="submit" id="submit" NAME="button" Value="Join Forum" onClick="testResults(this.form)">
+</form>
+</div>
+<!-- Popup Div Ends Here -->
+</div>
+<!-- Display Popup Button -->
+
+
+</body>
+<!-- Body Ends Here -->
+</html>

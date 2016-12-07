@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+ Copyright 2010 Google Inc. 
+ Licensed under the Apache License, Version 2.0: 
+ http://www.apache.org/licenses/LICENSE-2.0 
+ -->
+
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Special Order</title>
+       <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBPJ_yLcvl9dHifCA8txgAwPAmHR_SchYw",
+    authDomain: "amhungry.firebaseapp.com",
+    databaseURL: "https://amhungry.firebaseio.com",
+    storageBucket: "firebase-amhungry.appspot.com",
+    messagingSenderId: "602067665186"
+  };
+  firebase.initializeApp(config);
+</script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+     -->
+        
+              <script type="text/javascript">
+<!-- hide from old browsers
+
+function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+
+// end hide -->
+</script>
+   
+      <script type="text/javascript">
+<!-- hide
+         var order_key = getValue("key");
+           var custo = getValue("custo");
+          alert(order_key);
+          alert(custo);          
+          localStorage.orderkey=order_key;
+            var ref6 = new Firebase("https://amhungry.firebaseio.com/customers/"+custo+"");
+// Retrieve new posts as they are added to our database
+        ref6.on("value", function(snapshot2, prevChildKey) {
+          var newPost1 = snapshot2.val();
+            var custname=newPost1.name;
+            var contact=newPost1.email;
+            var apart=newPost1.unit;
+            localStorage.customername=custname;
+            localStorage.customercontact=contact;
+            localStorage.customerapart=apart;
+           
+              //document.write("<p>Customer name: " + custname+"</p>");
+             //document.write("<p>Customer contact: " + contact+"</p>");
+             // document.write("<p>Apartment" + apart+"</p>");
+            });     
+          
+          
+          
+          
+          
+         var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+      // Get a database reference to our posts
+   
+ 
+ ref.on("value", function(snapshot, prevChildKey) {
+    
+ 
+   var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey+"/items");
+  ref1.once("value", function(snapshot1) {
+      
+      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); 
+      
+      
+       var ket=snapshot.key();
+ 
+  document.write("<table  width='100%'>");
+ 
+      document.write("<table width='100%'>");
+  var newPost = snapshot.val();
+  document.write("<tr><td style='background-color:yellow;color:white;'><a  href='#'>Deliver Order:</td><td>"+ket+"</a></td></tr>");
+  document.write("<tr><td>Customer id:</td><td> " + newPost.customer+"</td></tr>");
+  document.write("<tr><td>Customer name:</td><td> " + localStorage.customername+"</td></tr>");
+  document.write("<tr><td>Customer Contact:</td><td> " + localStorage.customercontact+"</td></tr>");
+  document.write("<tr><td>Apartment:</td><td> " + localStorage.customerapart+"</td></tr>");
+  document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
+  document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");
+document.write("<tr><td>Location:</td><td> " + newPost.customerlat+","+newPost.customerlong+"</td></tr>");
+      localStorage.customerlat=newPost.customerlat;
+      localStorage.customerlong=newPost.customerlong;
+      
+      
+  document.write("<tr><td>View map</td><td><a href='showcustomer.html'><input type='submit' id='show' value='View map'></a></td></tr>");
+ var cust=newPost.customer;
+      document.write("</table>");      
+   
+        
+ 
+    snapshot1.forEach(function(childSnapshot) {
+        
+        
+    // key will be "fred" the first time and "barney" the second time
+          document.write("<table width='100%'>");
+        
+          document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();
+	
+	
+	 console.log("Product: " + childData.title);
+     console.log("price:   " + childData.price);
+	 console.log("Quantity: " + childData.quantity);
+	 console.log("One order ends here");
+     document.write("<tr><td width='200px'>"+childData.title+"</td><td width='200px'>"+childData.price+"</td><td width='200px'>"+childData.quantity+"</td></tr>");
+        
+       
+    
+  
+  });
+     
+document.write("</table>");
+      document.write("<div id='map''></div>");
+   document.write("<hr>");
+  
+  
+  });
+  ///document.write("<tr><td>""</td><td>""</td><td><a href='bodasuper.html'>Deliver Order</td></tr>");
+    
+
+  
+}); 
+          
+          
+      
+      </script>
+  <script>
+    
+    function showcustomer(){
+       alert("Customer Showing"); 
+    var dialog = document.getElementById('window');  
+    document.getElementById('show').onclick = function() {  
+        dialog.show();  
+    }; 
+        
+    document.getElementById('exit').onclick = function() {  
+        dialog.close();  
+    }; 
+        
+    }   
+    </script>  
+    
+    
+    
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"></script>
+ 
+    <script>
+			if (localStorage.getItem("located") === null) {
+			  //...
+			window.location.assign("login.html")
+			
+			
+			}
+    </script>
+    
+<script type="text/javascript">
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+           // alert("Latitude : " + latitude + " Longitude: " + longitude);
+             //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+             changeT();
+                   }
+            
+  function changeT(){
+      alert("changing");
+      autheticate();
+  }
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied!");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+            }
+         }
+         
+         function getLocationUpdate(){
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:6000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, browser does not support geolocation!");
+            }
+         }
+    
+    </script>
+<script>
+    
+    
+    </script>
+    <script>
+     function autheticate(){
+        //alert("auth");
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+         // alert('Synchronization succeeded');
+      }
+    };
+    messageListRef.update({ bodalat: latitude, bodalong: longitude }, onComplete);
+         // alert("Authetication Working");
+       alert('Boda details saved');
+          //window.location.assign("final.html");
+  
+      }
+    });
+    //end of auth
+   
+} 
+
+    // Same as the previous example, except we will also display an alert
+    // message when the data has finished synchronizing.
+  
+
+</script>
+
+<script>
+ 
+    </script>
+</head>
+<body  style="font-family: sans-serif;" onload="getLocationUpdate();">
+     <style>.mine{
+        overflow: scroll;
+        height: 280px;
+        background-color:floralwhite;
+        
+        
+        }
+    
+        .mine li{
+            list-style: none;
+            outline-style: groove;
+            border-radius: 30px ;
+            list-style-image: url(img/pizzaico.gif);
+            list-style-position: inherit;
+        }  
+        
+        .check{
+            
+            border-bottom-width: thick;
+            position: absolute right;
+        }
+        .go{
+            position: absolute right;
+            perspective-origin: top;
+            column-span: all;
+            float: inherit;
+            left: 20%;
+            top: auto 20%;
+        }
+        .listed{
+            background-image: url(img/pizzaico.gif);
+            background-repeat: no-repeat;
+            background-position: top right;
+            background-color: white;
+            
+        }
+        .top{
+            
+           background-color: blueviolet;
+            color: black;
+            text-transform: capitalize;
+            font-size: 18px;
+            font-family: fantasy;
+            font-language-override: normal;
+        }
+       .deli{
+           display: block;
+           border: thin;
+           background-color: black;
+           color: white;
+           
+       }
+    </style>
+    
+  
+        
+   
+    
+    <hr>
+ 
+
+    
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script><style> #map{
+        height:250px;
+        width: 1005;
+    }</style>
+    <form><div id="map">
+               
+               
+               </div> <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script>
+                     
+    
+      
+            
+            
+            var c = parseFloat(localStorage.orderlat);
+            var d = parseFloat(localStorage.orderlong);
+            var bodalat=parseFloat(latitude);
+            var bodalong=parseFloat(longitude);
+            
+            
+            //alert(c);
+           // alert(d);
+            
+            
+            
+      var map;
+      function initMap() {
+                    
+          var myLatLng = {lat: c, lng: d};
+          var bodyy={lat: bodalat, lng: bodalong};
+
+          //alert("laty"+laty);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 16
+        });
+          
+         var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          animation: google.maps.Animation.BOUNCE,                   
+          title: 'Customer Location!'
+        });
+          
+          
+       var marker2 = new google.maps.Marker({
+          position: boddy,
+          map: map,
+          animation: google.maps.Animation.BOUNCE,                   
+          title: 'Customer Location!'
+        });
+          
+            
+          
+          
+          
+      }
+            
+    </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script>
+       <script>
+        
+        function updateOrder(){
+            
+            alert("Update order");
+            
+            var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+         // alert('Synchronization succeeded');
+      }
+    };
+    messageListRef.update({ orderstatus:"delivered"}, onComplete);
+         // alert("Authetication Working");
+       alert('Order details Set to delivered');
+          //window.location.assign("final.html");
+  
+      }
+    });
+    //end of auth
+   
+            
+        }
+        </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+      function openColorBox(){
+        $.colorbox({iframe:true, width:"80%", height:"80%", href: "http://www.sitepoint.com"});
+      }
+      
+      function countDown(){
+        seconds--
+        $("#seconds").text(seconds);
+        if (seconds === 0){
+          openColorBox();
+          clearInterval(i);
+        }
+      }
+
+      var seconds = 7,
+          i = setInterval(countDown, 1000);
+    </script>
+ <input type="button" onclick="updateOrder();" value="Set Order Delivered"/>
+         <input type="button" onclick="getLocationUpdate();" value="Watch Update"/>
+      </form>
+ 
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+       <link rel="stylesheet" type="text/css" href="framework7/css/framework7.material.min.css" class="uib-framework-theme">
+        
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+      <title>
+      
+      </title>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+      <script>
+			if (localStorage.getItem("located") === null) {
+			  //...
+			window.location.assign("login.html")
+			
+			
+			}
+		</script>
+      
+ <style>
+    .mybutton{
+        border: thick;
+        height:50px;
+        background-color: black;
+        color: white;
+        font-family: serif;
+    }
+     
+     .deliver a: link {
+       color: white;
+}
+</style>
+    </head>
+    
+    <body>
+     
+       <script>
+         var supermarket;
+     alert(localStorage.getItem("bodatag"));
+     
+ var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/");
+      // Get a database reference to our posts
+   
+ 
+ ref.orderByChild("supermarket").equalTo(localStorage.getItem("bodatag")).on("child_added", function(snapshot, prevChildKey) {
+    
+ var det=snapshot.val();
+     supermarket=det.supermarket;
+     //alert(supermarket);
+  
+   var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
+  ref1.once("value", function(snapshot1) {
+      
+      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); 
+      
+      
+       var ket=snapshot.key();
+      document.write("Choose Order key To Deliver");
+      
+  document.write("<table  width='100%'>");
+  
+      document.write("<table width='100%'>");
+      
+  var newPost = snapshot.val();
+      var cust=newPost.customer;
+      if(localStorage.getItem("bodatag") ==supermarket){
+    
+        document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='bodasuper.html?key="+ket+"&custo="+cust+"'>Deliver Order:</a></td><td>"+ket+"</td></tr>");
+       
+  document.write("<tr><td>Customer:</td><td> " + newPost.customer+"</td></tr>");
+  document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
+  document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");
+  document.write("</table>");
+    snapshot1.forEach(function(childSnapshot) {
+    // key will be "fred" the first time and "barney" the second time
+          document.write("<table width='100%'>");
+          //document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();	
+	 console.log("Product: " + childData.title);
+     console.log("price:   " + childData.price);
+	 console.log("Quantity: " + childData.quantity);
+	 console.log("One order ends here");        
+     document.write("<tr><td width='100%'>Product &nbsp;"+childData.title+"</td><td width='200px'>Price:"+childData.price+"</td><td width='200px'>Qty: "+childData.quantity+"</td></tr>");
+    });
+      
+document.write("</table>");
+   document.write("<hr>"); 
+   }else{
+    document.write("You Dnt Have Orders Pensing");
+   }  
+  });
+  ///document.write("<tr><td>""</td><td>""</td><td><a href='bodasuper.html'>Deliver Order</td></tr>");
+ 
+ 
+});
+      </script>
+   
+    
+    </body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    
+    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
+    //alert("You Should Stay on This page For fast Deliveries to take effect");
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBPJ_yLcvl9dHifCA8txgAwPAmHR_SchYw",
+    authDomain: "amhungry.firebaseapp.com",
+    databaseURL: "https://amhungry.firebaseio.com",
+    storageBucket: "firebase-amhungry.appspot.com",
+    messagingSenderId: "602067665186"
+  };
+  firebase.initializeApp(config);
+</script>
+      <script>
+ 
+ function autoRefresh1()
+{
+	   window.location.reload();
+}
+ 
+ setInterval('autoRefresh1()', 15000); // this will reload page after every 5 secounds; Method II
+</script>  
+     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+       <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+     
+    <script>
+			if (localStorage.mykey == null) {
+			  //...
+                alert("You Dont have Any Current Orders");
+			window.location.assign("index.html")
+			
+			
+			}else{
+                
+            }
+		</script>
+    <script>
+    
+          
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+          
+  var name = getValue("pointname");
+           var qty = getValue("qty");
+        
+       
+        
+          var key= getValue("orderkey");
+        //alert("we have akey here"+key);
+          //alert(total);
+          var contact = getValue("contact");
+           //var type = getValue("type");
+           //var qty = getValue("qty");
+           var point = getValue("point");
+           var latit = getValue("latitude");
+            var longit = getValue("longitude");
+        var orderid= getValue("orderid")
+         var saletype= getValue("type")
+            
+       localStorage.orderkey=order_key;
+          localStorage.hotel=hotel;
+          localStorage.orderid=order_id;
+          localStorage.qty=qty;
+          localStorage.saletype=saletype;
+          localStorage.total=total;
+          localStorage.contact=contact;
+          localStorage.orderlat=latit;
+          localStorage.orderlong=longit;
+        var alltopay=localStorage.getitem("alltopay");
+      //  alert(alltopay);
+          
+
+    </script>
+    <script> 
+        
+        
+    
+    </script>
+<script>
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+
+    
+    function auth(){
+        alert("auth");
+    
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+     
+      }
+    });
+  
+}   
+function fuck(){
+  alert("fuck this ");
+//messageListRef.push({ 'user_id': 'ttttttttred', 'text': 'Yabba Dabba Doo!' });
+messageListRef.push({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.latitude, 'longitude': localStorage.longitude, 'saletype': localStorage.saletype  });
+alert("Iyiiii");
+    
+   
+    messageListRef.orderByChild("order_id").equalTo(localStorage.orderid).on("child_added", function(snapshot) {
+      console.log(snapshot.key());
+       
+        alert("Saved Order is "+snapshot.key());
+        
+        var orderid=snapshot.key();
+        
+        var res =orderid.toString();
+        locastorage.orderkey=res;
+    });   
+    
+}
+    
+//var messageListRef = new Firebase('https://amhungry.firebaseio.com');
+//function push(){
+//var newMessageRef = messageListRef.push();
+   //     newMessageRef.set({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.latitude, 'longitude': localStorage.longitude, 'saletype': localStorage.saletype });
+    // We've appended a new message to the message_list location.
+   // var path = newMessageRef.toString();
+    // path will be something like
+    // 'https://samplechat.firebaseio-demo.com/message_list/-IKo28nwJLH0Nc5XeFmj'
+	//alert("successful");
+
+//}
+</script>
+
+     <script type="text/javascript">
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             localStorage.newloclat=latitude;
+             localStorage.newloclong=longitude;
+            //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+            // alert("new lat"+localStorage.newloclat);
+            changeCustomer();
+         }
+                      function changeCustomer(){
+                            // alert("Customer changing");
+                              autheticate();
+                      }
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Turn Location For Delivery!");
+                window.location.assign("index.html");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error:Failed to Access your Location try Again");
+              //  window.location.assign("index.html");
+            }
+         }
+         
+       
+
+    // Do your thing here
+
+
+         function getLocationUpdate(){
+               x = 5;  // 5 Seconds
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:60000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, Device does not support location services");
+            }
+             setTimeout(refreshData, x*1000);
+         }
+      </script>
+    <script>
+    //update customer location
+        function fire(){
+//alert("fireing");
+   var onComplete = function(error) {
+  if (error) {
+    console.log('Synchronization failed');
+  } else {
+    console.log('Synchronization succeeded');
+      //alert('Synchronization succeeded');
+  }
+};
+messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong }, onComplete);  
+          //  alert("Details Saved Successfully");
+
+}
+        
+                                                                                   }
+    </script>
+        <script>
+     function autheticate(){
+        //alert("autheticate");
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+        //  alert('Synchronization succeeded');
+      }
+    };
+    messageListRef.update({latitude: localStorage.newloclat, longitude: localStorage.newloclong }, onComplete);
+         // alert("Authetication Working");
+       //alert('Customer details saved');
+          //window.location.assign("final.html");
+        
+      }
+    });
+    //end of auth
+   getNew();
+} 
+
+    // Same as the previous example, except we will also display an alert
+    // message when the data has finished synchronizing.
+   function getNew(){
+            
+           //alert("Getting New");
+ var messageListRef1 = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+               messageListRef1.on("value", function(snapshot1, prevChildKey) {
+				  var newPost1 = snapshot1.val();
+                   localStorage.newcustlat=newPost1.bodalat;
+                   localStorage.newcustlong=newPost1.bodalong;
+                   //alert("In Localstorage latitude"+localStorage.newcustlat);
+                   
+				  //alert("Customer contact: " + newPost1.contact);
+				 // alert("Hotel: " + newPost1.hotel);
+				  //alert("Latitude: " + newPost1.latitude);
+				 // console.log("Longitude: " + newPost1.longitude);
+				 // console.log("Order Id: " + newPost1.order_id);
+				 // console.log("Saletype: " + newPost1.saletype);
+				 // console.log("Quantity: " + newPost1.qty);
+				 //  console.log("One Point Ends Here");
+            
+        });
+          
+        }  
+
+</script>
+ 
+</head>
+<body onload="getLocationUpdate();">
+    <script>document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>"); document.write("<center>Bodafix Delivery Page</center>");
+                 document.write("<table width='100%' border='0'>")
+                document.write("<tr hidden='hidden'><td>Order Key:</td><td>"+localStorage.mykey+"</td></tr>");
+                 document.write("<tr><td>Order Id:</td><td>"+localStorage.orderid+"</td></tr>");
+                 document.write("<tr><td>From:</td><td>"+localStorage.hotel+"</td></tr>");
+                 document.write("<tr><td>What :</td><td>"+localStorage.saletype+"</td></tr>");
+                 document.write("<tr><td>Quantity:</td><td>"+localStorage.qty+"</td></tr>");
+                 document.write("<tr><td>Bill:</td><td>"+localStorage.total+"</td></tr>");
+                 document.write("<tr><td>Customer No</td><td>"+localStorage.contact+"</td></tr>");
+                 document.write("<tr hidden='hidden'><td>Latitude:</td><td>"+localStorage.orderlat+"</td></tr>");
+                 document.write("<tr hidden='hidden'><td>Longitude:</td><td>"+localStorage.orderlong+"</td></tr>");
+                 document.write("<tr><td>Delivery Costs:</td><td>"+localStorage.bodabill+"</td></tr>");
+              document.write("<tr><td>Sub-Total:</td><td>"+localStorage.getItem("alltopay")+"</td></tr>");
+             document.write("</table>")
+             
+             </script>
+   <script type="text/javascript">
+var tals=localStorage.subtotal;
+var nt=tals +"00";
+
+  function getRate(from, to) {
+    var script = document.createElement('script');
+    script.setAttribute('src', "http://query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D"+from+to+"%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json&callback=parseExchangeRate");
+    document.body.appendChild(script);
+  }
+  function parseExchangeRate(data) {
+    var name = data.query.results.row.name;
+    var rate = parseFloat(data.query.results.row.rate, 10);
+    //alert("Exchange rate " + name + " is " + rate);
+	alert("Rate"+rate);
+	//document.write("Rate is"+rate);
+	var newpay=localStorage.subtotal/rate;
+      localStorage.setItem("paythis",newpay);
+	//alert("Dollars"+newpay); 
+  }
+  
+  getRate("USD", "UGX");
+  
+  
+</script>
+    <script type="text/javascript"
+
+            src="https://www.simplify.com/commerce/simplify.pay.js"></script>
+    <center>
+       
+     <script language="javascript" type="text/javascript">
+var myNamespace = {};
+ var topay=localStorage.getItem("paythis");
+         alert("Dollars"+topay);
+myNamespace.round = function(number, precision) {
+    var factor = Math.pow(10, precision);
+    var tempNumber = number * factor;
+    var roundedTempNumber = Math.round(tempNumber);
+    return roundedTempNumber / factor;
+};
+
+alert("Converted"+myNamespace.round(topay, +2)); // 1234.6
+var finalpay=myNamespace.round(topay, +2);
+localStorage.setItem("finalpay",finalpay);
+</script>   
+        
+        
+      <script type="text/javascript"
+
+            src="https://www.simplify.com/commerce/simplify.pay.js"></script>
+
+			<script> var ammount=00;
+             var subtotal=localStorage.getItem("paythis");
+                var cash=localStorage.total;
+                var theny=cash+"00"
+                //alert(cash);
+                
+                var thy=parseFloat(cash);
+                
+                alert("Subtotal"+subtotal);
+                var gy=cash +"10";
+                var why=parseInt(gy);
+            document.write("<button id='payments' data-sc-key='sbpb_YTUyZWRiYTYtZDcxYi00ZDVjLWJjOTEtYTQ1ZTQ5OGM2NWNi'");
+			document.write("data-name='Boda Fix Uganda'");
+			document.write("data-description='Order Of "+localStorage.saletype+" from "+localStorage.hotel+"'");
+			document.write("data-reference='"+localStorage.orderid+"'");
+            document.write("data-currency='UGX'");
+			document.write("data-amount='"+theny+"'");
+			document.write("data-color='#12B830'>");
+			document.write("Buy Now");
+			document.write("</button> ");
+					
+			</script>
+			
+ </center>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script><style> #map{
+        height:250px;
+        width: 1005;
+    }</style>
+   
+    <center > <input hidden="hidden" type="button" onclick="getLocationUpdate();" value="Update My location"/></center>
+    <div id="map">
+               
+               
+               </div> 
+        <script>
+                     
+    
+      
+            
+            
+            var c = parseFloat(localStorage.newcustlat);
+            var d = parseFloat(localStorage.newcustlong);
+            var bodalat=parseFloat(localStorage.bodalaty);
+            var bodalong=parseFloat(localStorage.bodalongy);
+            
+              
+            //alert(c);
+           // alert(d);
+            
+               
+            
+      var map;
+      function initMap() {
+                    
+          var myLatLng = {lat: c, lng: d};
+          //get boda latitude
+          var bodyy={lat: bodalat, lng: bodalong};
+
+          //alert("laty"+laty);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 16
+        });
+          
+         var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          animation: google.maps.Animation.DROP,                   
+          title: 'Customer Location!'
+        });
+          
+          
+          GetAddress();
+            
+          
+          
+          
+      }
+            
+    </script>
+   
+    
+</body>
+  
+
+    
+
+</html>

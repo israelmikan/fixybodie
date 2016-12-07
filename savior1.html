@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+     <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    
+    <script>
+    
+          
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+          
+  var name = getValue("pointname");
+           var qty = getValue("qty");
+        
+       
+        
+          var total= getValue("total");
+          //alert(total);
+          var contact = getValue("contact");
+           //var type = getValue("type");
+           //var qty = getValue("qty");
+           var point = getValue("point");
+           var latitude = getValue("latitude");
+            var longitude = getValue("longitude");
+        var orderid= getValue("orderid")
+         var saletype= getValue("type")
+            
+        //saving details to localstorage
+        localStorage.hotel=name;
+        localStorage.qty=qty;
+        localStorage.total=total;
+        localStorage.contact=contact;
+        localStorage.latitude=latitude;
+        localStorage.longitude=longitude;
+        localStorage.orderid=orderid;
+        localStorage.saletype=saletype;
+            
+        //alert("Locxal Longitude"+localStorage.custlat);
+          
+   
+    </script>
+   
+
+<script>
+var messageListRef = new Firebase('https://amhungry.firebaseio.com/');
+function push(){
+alert("pushing");
+
+ // messageListRef.push({ 'user_id': 'fred', 'text': 'Yabba Dabba Doo!' });
+  var newMessageRef = messageListRef.push();
+        newMessageRef.set({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.latitude, 'longitude': localStorage.longitude, 'saletype': localStorage.saletype });
+    // We've appended a new message to the message_list location.
+    var path = newMessageRef.toString();
+    // path will be something like
+    // 'https://samplechat.firebaseio-demo.com/message_list/-IKo28nwJLH0Nc5XeFmj'
+	alert("successful");
+    
+       document.write("<div style='height:40px; background-color:blue; color:white;'><h2><center>Order Zone</center></h2></div>");
+    document.write("<table><tr><td colspan='2'><center><div class='img-wrapper'><img src='img/piss.png' height='250px' width='80%'></div></center></td></tr>");
+    document.write("<h2>Order Saved Successfully</h2><hr>");
+    document.write("<tr><td>Ordered from:</td><td>");
+  document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.hotel+"'></td></tr>"); 
+    
+    document.write("<tr><td>Ordered type:</td><td>");
+ document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.saletype+"'></td></tr>"); 
+     
+    document.write("<tr><td>Quantity:</td><td>");
+    document.write("<input type='text'  id='qty' readonly='readonly' name='qty' value='"+localStorage.qty+"'></td></tr>");
+    document.write("<tr><td>Total Bill:</td><td>");
+    document.write("<input type='text' id='total' readonly='readonly' name='total' value='"+localStorage.total+"'></td></tr>");
+    
+    document.write("<tr><td>Contact:</td><td>");
+    document.write("<input type='text' id='contact' readonly='readonly'  name='contact' value='"+localStorage.contact+"'></td></tr>");
+    
+    document.write("<tr><td>Latitude:</td><td>");
+    document.write("<input type='text' id='latitude' readonly='readonly' name='latitude' value='"+localStorage.latitude+"'></td></tr>");
+    document.write("<tr><td>Longitude:</td><td>");
+    document.write("<input type='text' id='longitude' readonly='readonly' name='longitude' value='"+localStorage.longitude+"'></td></tr>");
+     
+      document.write("</table>");
+ 
+    
+        
+}
+</script>
+    
+ 
+ 
+
+</head>
+<body onload="push();" >
+<!--
+    <script>
+    document.write("<div style='height:40px; background-color:blue; color:white;'><h2><center>Order Zone</center></h2></div>");
+    document.write("<table><tr><td colspan='2'><center><div class='img-wrapper'><img src='img/piss.png' height='250px' width='80%'></div></center></td></tr>");
+    document.write("<h2>Order Saved Successfully</h2><hr>");
+        
+        document.write("<tr><td>Order id:</td><td>");
+  document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.orderid+"'></td></tr>"); 
+    document.write("<tr><td>Ordered from:</td><td>");
+  document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.hotel+"'></td></tr>"); 
+    
+    document.write("<tr><td>Ordered type:</td><td>");
+ document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.saletype+"'></td></tr>"); 
+     
+    document.write("<tr><td>Quantity:</td><td>");
+    document.write("<input type='text'  id='qty' readonly='readonly' name='qty' value='"+localStorage.qty+"'></td></tr>");
+    document.write("<tr><td>Total Bill:</td><td>");
+    document.write("<input type='text' id='total' readonly='readonly' name='total' value='"+localStorage.total+"'></td></tr>");
+    
+    document.write("<tr><td>Contact:</td><td>");
+    document.write("<input type='text' id='contact' readonly='readonly'  name='contact' value='"+localStorage.contact+"'></td></tr>");
+    
+    document.write("<tr><td>Latitude:</td><td>");
+    document.write("<input type='text' id='latitude' readonly='readonly' name='latitude' value='"+localStorage.latitude+"'></td></tr>");
+    document.write("<tr><td>Longitude:</td><td>");
+    document.write("<input type='text' id='longitude' readonly='readonly' name='longitude' value='"+localStorage.longitude+"'></td></tr>");
+     document.write("<tr><td></td><td><input type='button' value='Complete Order' onclick='push()'></td></tr>");
+      document.write("</table>");
+    
+    </script>
+-->
+    <style>
+     
+      #map {
+        width: 100%;
+          height: 200px;
+      }
+    </style>
+  <div id='map'></div>  
+   
+    <script>
+//building the maps
+      function initMap() {
+             alert("initing maps");
+          var laty=localStorage.latitude;
+          var longy=localStorage.longitude;
+          alert("Longitudeyyyyy"+laty);
+       
+        var myLatLng = {lat:laty, lng: longy};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: myLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    </script>
+
+    
+    
+      <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap">
+    </script>
+    </body>
+  
+
+
+    
+
+</html>

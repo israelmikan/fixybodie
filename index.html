@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+       <link rel="stylesheet" type="text/css" href="framework7/css/framework7.material.min.css" class="uib-framework-theme">
+        <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-sc
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"
+            type="text/javascript"></script>
+	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script></head>
+     
+       <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Bodafix</title>
+     <style>
+body {
+    font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+    height: 50%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    text-align:center;
+    background-image: url('img/back.jpg');
+    background-repeat: no-repeat;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    background-color: black;
+
+
+}
+
+.sidenav a:hover{
+    color: yellow;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style> 
+      <style>.mybutton{
+          background-color: chocolate;
+          border: groove;
+          color: aliceblue;
+          
+          
+          }
+      
+          .fields{
+              background-color: black;
+              color: aliceblue;
+              opacity: inherit;
+              
+              
+          }
+      </style>
+    
+      <script>
+      //unset boda login
+       // localStorage.clear();
+      // localStorage.removeItem("located");
+      // localStorage.removeItem("bodatag");
+      
+      
+      </script>
+
+      
+        
+    <script type="text/javascript">
+    //<![CDATA[
+    //get currrent location
+    var chick="Pizza+Chicken";
+    var customIcons = {
+      Pizza: {
+        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon38.png'
+       //icon: 'http://clicktheglobe.co.nf/pizzame/pizzaico.gif'
+      },
+      Chicken: {
+        icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
+      },
+       supermarket: {
+        icon: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png'
+      },
+      chick:{
+      icon:'img/Chicken.png'
+      },
+      wine:{
+       icon: 'img/winde.png'
+      }
+         
+    };
+	function load(){
+	var map = new google.maps.Map(document.getElementById("map"), {
+        center: new google.maps.LatLng(0.3205746,32.6287588),
+        zoom: 13,
+        mapTypeId: 'roadmap'
+      });
+	     var infoWindow = new google.maps.InfoWindow;
+		 
+		      var messageListRef = new Firebase("https://amhungry.firebaseio.com/points");
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		messageListRef.on("child_added", function(snapshot, prevChildKey) {
+				  var newPost = snapshot.val();
+				  console.log("Title: " + newPost.name);
+				  console.log("Type: " + newPost.type);
+				  console.log("latitude: " + newPost.latitude);
+				  console.log("Longitude: " + newPost.longitude);
+				  console.log("Price: " + newPost.price);
+				  console.log("Previous Post ID: " + prevChildKey);
+				  console.log("One Point Ends Here");
+				  
+					  var idi = snapshot.key();
+					  var name = newPost.name;  
+                      var laty=newPost.latitude;
+                      var longy=newPost.longitude;
+					  var which=  localStorage.setItem("PizzaPoint",name);
+						//alert(localStorage.getItem("Pizza Point"));
+					  var address = newPost.price;
+					  var type = newPost.type;
+					  var point = new google.maps.LatLng(
+					  parseFloat(newPost.latitude),
+					   parseFloat(newPost.longitude));
+						
+							  var link="";
+					  //var html = "<b>" + name + "</b> <br/>" + address+"</b> <br/>" + type+"<br><button class='mybutton'>Order</button>"+;
+						var html = "<b>" + name + "</b> <br/>" + address+"</b> <br/>" + type+"<br>"+link+""+"<form name='theform' action='buy.html' method='get'><input type='hidden' name='price' value='"+address+"'><input type='hidden' name='idi' value='"+idi+"'><input type='hidden' name='latiu' value='"+laty+"'><input type='hidden' name='longiu' value='"+longy+"'><input type='hidden' name='location' value='"+point+"'><input type='hidden' name='type' value='"+type+"'><input type='hidden' name='name' readonly='readonly' value='"+name+"'><input type='text' name='qty' required='required' placeholder='Enter Quantity' class='fields' value=''><input type='number' name='contact' required='required' class='fields' placeholder='Emergency Contact' value=''><input type='submit' class='mybutoon' value='order Now'></form>";
+						var username = "supermarket";
+						
+						if(type==username){
+							//alert("Found something");
+						   var html="<form name='theform' action='cart/index.html' method='get'><input type='hidden' name='name' value='"+name+"'><input type='submit' class='mybutoon' value='Shop Now'>";
+						}
+            
+				        var icon = customIcons[type] || {};
+						var marker = new google.maps.Marker({
+						map: map,
+						position: point,
+						title:name,
+						icon: icon.icon
+						
+					  });
+						bindInfoWindow(marker, map, infoWindow, html);
+				  
+				  
+				  
+				  
+				});
+		
+		
+		
+			
+         } 
+    });
+		
+	
+        infoWindow.addEventListener('click',function() {
+            window.location.assign("buy.html");
+          });
+           marker.addListener('click', function() {
+              
+          marker.getPosition();
+            window.location.assign("buy.html");
+          });
+
+	
+	
+	
+	
+	
+	}
+	function bindInfoWindow(marker, map, infoWindow, html) {
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.setContent(html);
+        infoWindow.open(map, marker);
+      });
+    }
+
+    function downloadUrl(url, callback) {
+      var request = window.ActiveXObject ?
+          new ActiveXObject('Microsoft.XMLHTTP') :
+          new XMLHttpRequest;
+
+      request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+          request.onreadystatechange = doNothing;
+          callback(request, request.status);
+        }
+      };
+
+      request.open('GET', url, true);
+      request.send(null);
+    }
+
+    function doNothing() {}
+	
+	</script>
+	<script src="cordova.js" id="xdkJScordova_"></script>
+
+        <script src="js/app.js"></script>
+        <!-- for your event code, see README and file comments for details -->
+        <script src="js/init-app.js"></script>
+        <!-- for your init code, see README and file comments for details -->
+        <script src="xdk/init-dev.js"></script>
+       <link rel="stylesheet" href="css/buy.css">
+  </head>
+
+  <body onload="load()"><style>.boda{
+      display: block;
+      border-radius: 20px;
+      color: white;
+    
+      }
+ .logosec{
+  background-image: url('img/logo.png');
+  background-repeat: no-repeat;;
+  background-position: left;
+  padding-left: 5px;
+  margin-left: 5px;
+ }
+ .h2boda{
+ width: 70px;
+ height: 10px;
+ }
+      </style>
+      <main id="container">
+          <table style="background-color:cyan; width:100%;"><tr><td class="logosec"><img src="img/boda.png"></td><td style="background-position:right; padding-right:5px;"><!--<a href="final.html" >My Order</a>&nbsp; &nbsp;<a href="cart/finalsuper.html" >My cart</a>&nbsp; &nbsp;<a href="orders.html" >Deliver</a>
+              <a href="charge.html" >Charge</a>--> <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="final.html">My Order</a>
+  <a href="cart/finalsuper.html">My Cart</a>
+  <a href="orders.html">Deliver</a>
+  <a href="charge.html">Charge</a>
+  
+ <!--  <a href="#">Browse</a>
+ <a href="#">Clients</a>
+  <a href="#">Contact</a> -->
+</div><span style="font-size:30px;cursor:pointer; background-position:right; " onclick="openNav()">&#9776; </span></td></tr></table>
+
+
+  <script>
+function openNav() {
+    document.getElementById("mySidenav").style.width = "70%";
+}
+
+function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+}
+</script>
+  <div class="img-wrapper">
+      <img src="img/pizza.jpg" alt="">
+  </div>
+          <div id="map" style="width: 100%; height: 300px"></div></main>
+	  <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+  </body>
+
+</html>

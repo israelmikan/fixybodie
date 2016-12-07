@@ -1,0 +1,409 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+ Copyright 2010 Google Inc. 
+ Licensed under the Apache License, Version 2.0: 
+ http://www.apache.org/licenses/LICENSE-2.0 
+ -->
+
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>Special Order</title>
+       <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBPJ_yLcvl9dHifCA8txgAwPAmHR_SchYw",
+    authDomain: "amhungry.firebaseapp.com",
+    databaseURL: "https://amhungry.firebaseio.com",
+    storageBucket: "firebase-amhungry.appspot.com",
+    messagingSenderId: "602067665186"
+  };
+  firebase.initializeApp(config);
+</script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+
+<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+     -->
+        
+              <script type="text/javascript">
+<!-- hide from old browsers
+
+function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+
+// end hide -->
+</script>
+   
+      <script type="text/javascript">
+<!-- hide
+         var order_key = getValue("key");
+          var order_id = getValue("order_id");
+          var hotel = getValue("hotel");
+           var qty = getValue("qty");
+           var saletype = getValue("saletype");
+           var total = getValue("total");
+          var contact = getValue("contact");
+           var latitude = getValue("latitude");
+          var longitude = getValue("longitude");
+      
+          localStorage.orderkey=order_key;
+          localStorage.hotel=hotel;
+          localStorage.orderid=order_id;
+          localStorage.qty=qty;
+          localStorage.saletype=saletype;
+          localStorage.total=total;
+          localStorage.contact=contact;
+          localStorage.orderlat=latitude;
+          localStorage.orderlong=longitude;
+      
+      </script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"></script>
+ 
+    <script>
+			if (localStorage.getItem("located") === null) {
+			  //...
+			window.location.assign("login.html")
+			
+			
+			}
+    </script>
+    
+<script type="text/javascript">
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;       
+            alert("Latitude : " + latitude + " Longitude: " + longitude);
+             //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+             localStorage.bodalaty=latitude;
+            localstorage.bodalongy=longitude;
+           
+             
+        
+         }
+            
+  
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied!");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+            }
+         }
+         
+         function getLocationUpdate(){
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:6000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, browser does not support geolocation!");
+            }
+         }
+    
+    </script>
+<script>
+    
+    
+    </script>
+    <script>
+     function autheticate(){
+        alert("auth");
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+          alert('Synchronization succeeded');
+      }
+    };
+    messageListRef.update({ latitude: latitude, longitude: longitude }, onComplete);
+         // alert("Authetication Working");
+       alert('Customer details saved');
+          //window.location.assign("final.html");
+        
+      }
+    });
+    //end of auth
+   
+} 
+
+    // Same as the previous example, except we will also display an alert
+    // message when the data has finished synchronizing.
+  
+
+</script>
+
+
+</head>
+<body  style="font-family: sans-serif;" onload="getLocationUpdate();autheticate();">
+     <style>.mine{
+        overflow: scroll;
+        height: 280px;
+        background-color:floralwhite;
+        
+        
+        }
+    
+        .mine li{
+            list-style: none;
+            outline-style: groove;
+            border-radius: 30px ;
+            list-style-image: url(img/pizzaico.gif);
+            list-style-position: inherit;
+        }  
+        
+        .check{
+            
+            border-bottom-width: thick;
+            position: absolute right;
+        }
+        .go{
+            position: absolute right;
+            perspective-origin: top;
+            column-span: all;
+            float: inherit;
+            left: 20%;
+            top: auto 20%;
+        }
+        .listed{
+            background-image: url(img/pizzaico.gif);
+            background-repeat: no-repeat;
+            background-position: top right;
+            background-color: white;
+            
+        }
+        .top{
+            
+           background-color: blueviolet;
+            color: black;
+            text-transform: capitalize;
+            font-size: 18px;
+            font-family: fantasy;
+            font-language-override: normal;
+        }
+       .deli{
+           display: block;
+           border: thin;
+           background-color: black;
+           color: white;
+           
+       }
+    </style>
+     <div>
+    
+    <center>
+    <script>
+     document.write("<center><div class='img-wrapper'><img src='img/piss.png' height='250px' width='80%'></div></center>");
+    document.write("<h2>Order Saved Successfully</h2>");
+    
+    document.write("<table><tr>");
+        
+    document.write("<td>Ordered from:</td><td>");
+document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.hotel+"'></td>"); 
+    document.write("<tr><td>Ordered type:</td><td>");
+ document.write("<input type='text' id='pointname' name='pointname' readonly='readonly' value='"+localStorage.saletype+"'></td></tr>"); 
+            document.write("<tr><td>Quantity:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.qty+"'></td></tr>");
+document.write("<tr><td>Order Id:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.orderid+"'></td></tr>");  
+        document.write("<tr><td>Order key:</td><td>");
+    document.write("<input type='text'  id='qty' name='qty'readonly='readonly' value='"+localStorage.mykey+"'></td></tr>");  
+        
+    document.write("<tr><td>Total Bill:</td><td>");
+    document.write("<input type='text' id='total' name='total'readonly='readonly' value='"+localStorage.total+"'></td></tr>");
+    
+    document.write("<tr><td>Contact:</td><td>");
+    document.write("<input type='text' id='contact' readonly='readonly' name='contact' value='"+localStorage.contact+"'></td></tr>");
+    
+    document.write("<tr hidden='hidden'><td>Your Latitude:</td><td>");
+    document.write("<input type='hidden' id='latitude' readonly='readonly' name='latitude' value='"+localStorage.latitude+"'></td></tr>");
+    document.write("<tr hidden='hidden'><td>Your Longitude:</td><td>");
+    document.write("<input type='text' id='longitude'readonly='readonly' name='longitude' value='"+localStorage.longitude+"'></td></tr>");
+        document.write("</table>");
+    
+    localStorage.orderstatus="pending";
+    document.write("Your Order Status: "+localStorage.orderstatus);
+      
+    </script></center>
+    
+    
+    </div>
+         <div class="mine"> 
+             <script>document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>"); 
+                 document.write("<table width='100%' border='0'>")
+                document.write("<tr><td>Order Key:</td><td>"+localStorage.orderkey+"</td></tr>");
+                 document.write("<tr><td>Order Id:</td><td>"+localStorage.orderid+"</td></tr>");
+                 document.write("<tr><td>Pickup:</td><td>"+localStorage.hotel+"</td></tr>");
+                 document.write("<tr><td>What :</td><td>"+localStorage.saletype+"</td></tr>");
+                 document.write("<tr><td>Quantity:</td><td>"+localStorage.qty+"</td></tr>");
+                 document.write("<tr><td>Bill:</td><td>"+localStorage.total+"</td></tr>");
+                 document.write("<tr><td>Customer No</td><td>"+localStorage.contact+"</td></tr>");
+                 document.write("<tr><td>Latitude:</td><td>"+localStorage.orderlat+"</td></tr>");
+                 document.write("<tr><td>Longitude:</td><td>"+localStorage.orderlong+"</td></tr>");
+              
+             document.write("</table>")
+             
+             </script>
+    
+    
+    </div>
+    <script>
+    
+     
+      
+
+       
+        
+    </script>
+    
+    
+    <hr>
+ 
+
+    
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script><style> #map{
+        height:250px;
+        width: 1005;
+    }</style>
+    <form><div id="map">
+               
+               
+               </div> <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script>
+                     
+    
+      
+            
+            
+            var c = parseFloat(localStorage.orderlat);
+            var d = parseFloat(localStorage.orderlong);
+            var bodalat=parseFloat(localStorage.bodalaty);
+            var bodalong=parseFloat(localStorage.bodalongy);
+            
+            
+            //alert(c);
+           // alert(d);
+            
+            
+            
+      var map;
+      function initMap() {
+                    
+          var myLatLng = {lat: c, lng: d};
+          var bodyy={lat: bodalat, lng: bodalong};
+
+          //alert("laty"+laty);
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 16
+        });
+          
+         var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          animation: google.maps.Animation.BOUNCE,                   
+          title: 'Customer Location!'
+        });
+          
+          
+     
+            
+          
+          
+          
+      }
+            
+    </script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script>
+
+
+         <input type="button" onclick="getLocationUpdate();" value="Watch Update"/>
+      </form>
+ 
+</body>
+</html>

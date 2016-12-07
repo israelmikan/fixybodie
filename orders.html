@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+       <link rel="stylesheet" type="text/css" href="framework7/css/framework7.material.min.css" class="uib-framework-theme">
+        
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+      <title>
+      
+      </title>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+      <script>
+			if (localStorage.getItem("located") === null) {
+			  //...
+			window.location.assign("login.html")
+			
+			
+			}
+          var boda=localStorage.getItem("located");
+		</script>
+      
+ <style>
+    .mybutton{
+        border: thick;
+        height:50px;
+        background-color: black;
+        color: white;
+        font-family: serif;
+    }
+</style>
+      
+    </head>
+    
+    <body>
+     
+       <script>
+     function auth(){
+        alert("auth");
+    var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+          //alert("Authetication Working");
+         
+      }
+    });
+    //end of auth
+   
+} 
+         
+   
+ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
+  messageListRef.once("value", function(allMessagesSnapshot) {
+           
+    document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>");    
+        document.write("Welcome:  "+boda+"<br><h3>Choose Food Order To deliver</h3><hr>");
+          document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white;' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><input type='button' style='background-color:black;color:white;' onclick='logoutMe();' value='Logout' class='mybutton'></a></td></tr></table>");
+      allMessagesSnapshot.forEach(function(messageSnapshot) {
+        // Will be called with a messageSnapshot for each child under the /messages/ node
+        var key = messageSnapshot.key();  // e.g. "-JqpIO567aKezufthrn8"
+        var order_id = messageSnapshot.child("order_id").val();  // e.g. "barney"
+        var hotel = messageSnapshot.child("hotel").val();  // e.g. "Welcome to Bedrock City!"
+		var qty = messageSnapshot.child("qty").val(); 
+		var saletype = messageSnapshot.child("saletype").val(); 
+		var total = messageSnapshot.child("total").val(); 
+		var contact=messageSnapshot.child("contact").val();
+		var latitude= messageSnapshot.child("latitude").val(); 
+		var longitude = messageSnapshot.child("longitude").val(); 
+          var order_status=messageSnapshot.child("orderstatus").val();
+          if(order_status=="pending" && hotel==localStorage.getItem("bodatag")){
+              document.write("<hr>");		
+      document.write("Order Code:   "+order_id);
+      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td>What:"+saletype+"</td><td><a href='boda.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button'value='Deliver' class='deli'></a></td></tr></table>");
+          document.write("<hr>");	
+              
+              
+          }else{
+              
+          }
+		
+		  
+		//alert(hotel);
+		
+		//alert(saletype);
+		//alert(total);
+      });
+    }); 
+     function logoutMe(){
+alert("You Have Choosen To Logout");
+localStorage.removeItem("located");
+localStorage.removeItem("bodatag");
+window.location.assign("index.html");
+     }
+      </script>
+   
+    
+    </body>
+</html>

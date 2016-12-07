@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+   <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+  <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js'></script>
+      <link rel="stylesheet" href="http://clicktheglobe.co.nf/apps/thetrumpet/style.css">
+      <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="icon-fonts/elusive-icons-2.0.0/css/elusive-icons.css">
+        <link rel="stylesheet" type="text/css" href="ionic/css/ionic.min.css">
+        <meta charset="UTF-8">
+        <title>PizzaME</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+
+       <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=2"> -->
+      <script>
+      
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}
+          
+           
+          
+          
+      function pushfire(){
+          var messageListRef  = new Firebase('https://amhungry.firebaseio.com/');
+          alert("Metyhod works");
+          var name = getValue("pointname");
+           var qty = getValue("qty");
+          alert(name);
+          var total= getValue("total");
+          alert(total);
+          var contact = getValue("contact");
+           //var type = getValue("type");
+           //var qty = getValue("qty");
+           var point = getValue("point");
+           var latitude = getValue("point")
+            var longitude = getValue("point")
+         // var pointpizza = getValue("idi");
+           var total= price * qty;
+           //start sending to firebase
+        
+          messageListRef.set({ 'user_id': 'fred', 'text': 'Yabba Dabba Doo!' });
+           alert("working this");
+          var newMessageRef = messageListRef.push();
+          
+        newMessageRef.push({ 'hotel': name, 'qty': qty, 'total': total, 'customer': contact, 'latitude': latitude, 'longitude': longitude });
+          
+    // We've appended a new message to the message_list location.
+   var path = newMessageRef.toString();
+          
+          // messagesRef.set({ 'hotel': name, 'qty': qty, 'total': total, 'customer': contact, 'latitude': latitude, 'longitude': longitude });
+          
+            
+alert("Order Successfull");
+          document.write(name);
+           document.write(qty);
+           document.write(total);
+          document.write(contact);
+
+          //end sending to firebase
+          
+      }
+      </script>
+    </head>
+    <body onload="pushfire()">
+    <div class="wrapper">
+  <h1>SlackerYou</h1>
+  
+
+
+  <div class="messagesWrap">
+    <ul class="messages"></ul>
+  </div>
+
+  <form action="" class="chat">
+    <input type='text' id='nameInput' placeholder='Username' required maxlength=10> 
+    <input type='text' id='messageInput'  placeholder='Type a message...' required maxlength=140>
+    <input type="submit" value="Send →">
+    
+  </form>
+
+
+</div>
+  
+ 
+    </body>
+</html>
