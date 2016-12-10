@@ -170,7 +170,7 @@ window.location.assign("buy.html");
     }
     else
         alert("Directions failed");
-      $("#error").append("Unable to retrieve your route<br />");
+     // $("#error").append("Unable to retrieve your route<br />");
       
   }
 );  
@@ -231,10 +231,16 @@ window.location.assign("buy.html");
                 var charge=toint*1000;
                 var charge2=charge+500;
                 var allcash=charge2+tofloat;
-                
+                var commit=10;
+                var mine=(tofloat/100)*10;
+
+                alert("Commision"+mine);
+                var allinall=mine+allcash;
+                alert("all in all"+allinall);
                 localStorage.setItem("alltopay",allcash);
                 localStorage.bodabill=charge;
-                localStorage.subtotal=allcash;
+                localStorage.subtotal=allinall;
+                localStorage.mine=mine+500;
                 //alert("All cash="+allcash);
                 //alert("Total Bill"+charge);
                 //localStorage.bodafees=charge;
@@ -242,13 +248,16 @@ window.location.assign("buy.html");
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
                var dista=localStorage.getItem("distance");
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" Distance "+dista+" : <br>  Total order is "+localStorage.total+" Sub Total:"+allcash+"<a href='final.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>  Total order is "+localStorage.total+" All Total:"+localStorage.subtotal+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
             }
           }
         });
       }
     
-
+function Eeh(){
+  //div_show();
+  window.location.assign("final.html");
+}
       function deleteMarkers(markersArray) {
         for (var i = 0; i < markersArray.length; i++) {
           markersArray[i].setMap(null);
@@ -262,6 +271,11 @@ window.location.assign("buy.html");
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap">
     </script>
+
+
+
+
+    
   
   </body>
 </html>

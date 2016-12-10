@@ -1,3 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
@@ -6,7 +9,7 @@
      <script>
           var suplat;
           var suplong;
-   function grabthe{
+   function grabThe(){
       var ref = new Firebase("https://amhungry.firebaseio.com/points/");
 ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
   var newPost = snapshot.val();
@@ -21,12 +24,14 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
 // alert("Grabbed details are"+newPost.latitude);
  
  });
+whatThere();
    }
           </script>
     </head>
     
-    <body onload="grabthe();">
+    <body onload="grabThe();">
     <script>
+    function whatThere(){
         var URL="bodabillsup.html";
         var ref = new Firebase("https://amhungry.firebaseio.com/points/");
 ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
@@ -46,6 +51,8 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
 //setTimeout(function(){ window.location = URL; }, delay);
  DelayRedirect();
  });
+
+}
         </script>
          <script type="text/javascript">
 function DelayRedirect() {
@@ -65,8 +72,10 @@ function DelayRedirect() {
 }
 </script>
      <div id="dvCountDown" style = "display:none">
-You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.
+     <center><img src="img/boda.png"><br>
+You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.</center>
 </div>
+<center>&copy All Rights Reserved</center>
     </body>
 
 

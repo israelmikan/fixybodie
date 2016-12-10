@@ -100,18 +100,19 @@ function getValue(varname)
       <script type="text/javascript">
 <!-- hide
               
-          localStorage.orderkey=order_key;
-          localStorage.hotel=hotel;
-          localStorage.orderid=order_id;
-          localStorage.qty=qty;
-          localStorage.saletype=saletype;
-          localStorage.total=total;
-          localStorage.contact=contact;
-          localStorage.orderlat=latitude;
-          localStorage.orderlong=longitude;
+         // localStorage.orderkey;
+        //  localStorage.hotel;
+         // localStorage.orderid;
+         // localStorage.qty;
+        // localStorage.saletype;
+         // localStorage.total;
+         // localStorage.contact;
+        //  localStorage.orderlat;
+         // localStorage.orderlong;
       
       </script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script>
  
     <script>
 			if (localStorage.getItem("located") === null) {
@@ -206,7 +207,7 @@ function getValue(varname)
     };
     messageListRef.update({ bodalat: localStorage.bodalaty, bodalong: localStorage.bodalongy }, onComplete);
          // alert("Authetication Working");
-       //alert('Boda details saved');
+       alert('Boda details saved');
           //window.location.assign("final.html");
   
          
@@ -338,16 +339,16 @@ function getValue(varname)
  
 
     
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
-    async defer></script><style> #map{
-        height:250px;
-        width: 1005;
+    async defer></script>
+<style> #map{
+        height:350px;
+        width: 100%;
     }</style>
     <form><div id="map">
                
                
-               </div> <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+               </div> 
         <script>
                      
     
@@ -356,8 +357,8 @@ function getValue(varname)
             
             var c = parseFloat(localStorage.newcustlat);
             var d = parseFloat(localStorage.newcustlong);
-            var bodalat=parseFloat(latitude);
-            var bodalong=parseFloat(longitude);
+           // var bodalat=parseFloat(latitude);
+            //var bodalong=parseFloat(longitude);
             var bodilat=parseFloat(localStorage.bodalaty);
             var bodilong=parseFloat(localStorage.bodalongy);
             
@@ -406,8 +407,7 @@ function getValue(varname)
       }
             
     </script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
-    async defer></script>
+     
        <script>
         
         function updateOrder(){

@@ -412,10 +412,10 @@ function getValue(varname)
          // alert('Synchronization succeeded');
       }
     };
-    messageListRef.update({ orderstatus:"delivered"}, onComplete);
+    messageListRef.update({ orderstatus:"served"}, onComplete);
          // alert("Authetication Working");
-       alert('Order details Set to delivered');
-          //window.location.assign("final.html");
+       alert('Order details Set to Ready For Pickup');
+          window.location.assign("servers.html");
   
       }
     });
@@ -424,8 +424,9 @@ function getValue(varname)
             
         }
         </script><br><br>
- <input type="button" onclick="updateOrder();" value="Set Order Delivered" style="visibility:hidden;" />&nbsp; &nbsp;
-         <a href="finalboda.html"><input type="button"  value="Start Journey"/></a>
+ <input type="button" onclick="updateOrder();" value="Set Order Served" style='background-color:black;color:white;' />&nbsp; 
+ &nbsp;
+         <!--<a href="finalboda.html"><input type="button"  value="Start Journey"/></a> -->
       </form>
  
 </body>

@@ -67,7 +67,9 @@
       if(localStorage.getItem("bodatag") ==supermarket){
     
         document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='bodasuper.html?key="+ket+"&custo="+cust+"'>Deliver Order:</a></td><td>"+ket+"</td></tr>");
-       
+       if(localStorage.serverwho !=null){
+document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='serversuper.html?key="+ket+"&custo="+cust+"'>Serve Order:</a></td><td>"+ket+"</td></tr>");
+       }
   document.write("<tr><td>Customer:</td><td> " + newPost.customer+"</td></tr>");
   document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
   document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");

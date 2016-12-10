@@ -6,7 +6,7 @@
         <a href="#/products/{{product.sku}}">
             <img ng-src="{{product.image}}" alt="{{product.title}}" />
             <span class="product-title-wrapper">
-                <em class="product-title">{{product.title}} <strong class="price">{{product.price| currency}}</strong></em>
+                <em class="product-title">{{product.title}} <strong class="price">{{product.price}}</strong></em>
             </span>
             <span class="sale"  ng-show="product.isOnSale == 'Yes'">Sale</span>
         </a>

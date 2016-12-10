@@ -167,8 +167,41 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
       $("#error").append("Unable to retrieve your route<br />");
       
   }
-);  
+);  // create marker for location provided
+      var marker = new google.maps.Marker({
+      position : destinationB,
+      map: map,
+      title: 'This is the default Location!',
+      draggable: true
+      });
+
 	 
+   var cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0cc0',
+            fillOpacity: 0.35,
+            map: map,
+            center: destinationB,
+            radius: 150
+          });
+
+   // Add listener on 'drag end' event, add logitude and latitude to beginning of table
+      google.maps.event.addListener(marker, 'dragend', function(evt){
+        var textToInsert = '';  
+        var finallat=evt.latLng.lat().toFixed(5);
+        var finallong=evt.latLng.lng().toFixed(5);
+        alert("New Cordinates "+finallat+ " "+"finallong");
+       // textToInsert = '<tr><td>' + evt.latLng.lat().toFixed(5) + '</td><td>' + evt.latLng.lng().toFixed(5) + '</td></tr>';     
+        //$("#myTable tbody").prepend(textToInsert);
+      });
+
+      // listener on drag event
+      google.maps.event.addListener(marker, 'dragstart', function(evt){
+        // nothing for now
+      });
+      
 		
         var service = new google.maps.DistanceMatrixService;
         service.getDistanceMatrix({

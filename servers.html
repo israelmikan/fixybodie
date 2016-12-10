@@ -10,13 +10,13 @@
       </title>
         <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script>
-			if (localStorage.getItem("located") === null) {
+			if (  localStorage.getItem("serverwho")=== null) {
 			  //...
 			window.location.assign("login.html")
 			
 			
 			}
-          var boda=localStorage.getItem("located");
+          var server=localStorage.getItem("serverwho");
 		</script>
       
  <style>
@@ -70,8 +70,8 @@
   messageListRef.once("value", function(allMessagesSnapshot) {
            
     document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>");    
-        document.write("Welcome:  "+boda+"<br><h3>Choose Food Order To deliver</h3><hr>");
-          document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white;' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><input type='button' style='background-color:black;color:white;' onclick='logoutMe();' value='Logout' class='mybutton'></a></td></tr></table>");
+        document.write("Welcome:  "+server+"<br><h3>Choose Food Order To deliver</h3><hr>");
+          document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white; ' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><input type='button' style='background-color:black;color:white;' onclick='logoutMe();' value='Logout' class='mybutton'></a></td></tr></table>");
       allMessagesSnapshot.forEach(function(messageSnapshot) {
         // Will be called with a messageSnapshot for each child under the /messages/ node
         var key = messageSnapshot.key();  // e.g. "-JqpIO567aKezufthrn8"
@@ -84,10 +84,10 @@
 		var latitude= messageSnapshot.child("latitude").val(); 
 		var longitude = messageSnapshot.child("longitude").val(); 
           var order_status=messageSnapshot.child("orderstatus").val();
-          if(order_status=="served" && hotel==localStorage.getItem("bodatag")){
+          if(order_status=="asasude" && hotel==localStorage.getItem("bodatag")){
               document.write("<hr>");		
       document.write("Order Code:   "+order_id);
-      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td>What:"+saletype+"</td><td><a href='boda.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Deliver' class='deli'></a></td></tr></table>");
+      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td>What:"+saletype+"</td><td><a href='server.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Set To Served' class='deli'></a></td></tr></table>");
           document.write("<hr>");	
               
               
@@ -104,10 +104,15 @@
     }); 
      function logoutMe(){
 alert("You Have Choosen To Logout");
+localStorage.removeItem("serverwho");
 localStorage.removeItem("located");
 localStorage.removeItem("bodatag");
 window.location.assign("index.html");
      }
+
+
+
+
       </script>
    
     

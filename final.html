@@ -2,7 +2,13 @@
 <html>
 
 <head>
-    
+     <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+     <script>
+        
+
+
+
+     </script>
     <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 <script>
     //alert("You Should Stay on This page For fast Deliveries to take effect");
@@ -39,89 +45,40 @@
 			
 			
 			}else{
-                
+               
             }
 		</script>
-    <script>
+    
     
           
-      function getValue(varname)
-{
-  // First, we load the URL into a variable
-  var url = window.location.href;
-
-  // Next, split the url by the ?
-  var qparts = url.split("?");
-
-  // Check that there is a querystring, return "" if not
-  if (qparts.length == 0)
-  {
-    return "";
-  }
-
-  // Then find the querystring, everything after the ?
-  var query = qparts[1];
-
-  // Split the query string into variables (separates by &s)
-  var vars = query.split("&");
-
-  // Initialize the value with "" as default
-  var value = "";
-
-  // Iterate through vars, checking each one for varname
-  for (i=0;i<vars.length;i++)
-  {
-    // Split the variable by =, which splits name and value
-    var parts = vars[i].split("=");
-    
-    // Check if the correct variable
-    if (parts[0] == varname)
-    {
-      // Load value into variable
-      value = parts[1];
-
-      // End the loop
-      break;
-    }
-  }
-  
-  // Convert escape code
-  value = unescape(value);
-
-  // Convert "+"s to " "s
- // value.replace(/\+/g," ");
-
-  // Return the value
-  return value;
-}
-          
-  var name = getValue("pointname");
-           var qty = getValue("qty");
+  <script>    
+  //var name = getValue("pointname");
+        //   var qty = getValue("qty");
         
        
         
-          var key= getValue("orderkey");
+        //  var key= getValue("orderkey");
         //alert("we have akey here"+key);
           //alert(total);
-          var contact = getValue("contact");
+      //    var contact = getValue("contact");
            //var type = getValue("type");
            //var qty = getValue("qty");
-           var point = getValue("point");
-           var latit = getValue("latitude");
-            var longit = getValue("longitude");
-        var orderid= getValue("orderid")
-         var saletype= getValue("type")
+        //   var point = getValue("point");
+         //  var latit = getValue("latitude");
+        //    var longit = getValue("longitude");
+       // var orderid= getValue("orderid")
+        // var saletype= getValue("type")
             
-       localStorage.orderkey=order_key;
-          localStorage.hotel=hotel;
-          localStorage.orderid=order_id;
-          localStorage.qty=qty;
-          localStorage.saletype=saletype;
-          localStorage.total=total;
-          localStorage.contact=contact;
-          localStorage.orderlat=latit;
-          localStorage.orderlong=longit;
-        var alltopay=localStorage.getitem("alltopay");
+        // localStorage.orderkey=order_key;
+          //localStorage.hotel=hotel;
+         // localStorage.orderid=order_id;
+         //// localStorage.qty=qty;
+          //localStorage.saletype=saletype;
+         // localStorage.total=total;
+         /// localStorage.contact=contact;
+         // localStorage.orderlat=latit;
+         // localStorage.orderlong=longit;
+        var alltopay=localStorage.getItem("alltopay");
       //  alert(alltopay);
           
 
@@ -231,7 +188,7 @@ alert("Iyiiii");
 
 
          function getLocationUpdate(){
-               x = 5;  // 5 Seconds
+               x = 20;  // 5 Seconds
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
                var options = {timeout:60000};
@@ -242,7 +199,8 @@ alert("Iyiiii");
             else{
                alert("Sorry, Device does not support location services");
             }
-             setTimeout(refreshData, x*1000);
+             //setTimeout(refreshData, x*1000);
+             fire();
          }
       </script>
     <script>
@@ -255,14 +213,16 @@ alert("Iyiiii");
   } else {
     console.log('Synchronization succeeded');
       //alert('Synchronization succeeded');
+      alrt("Order key is"+localStorage.orderkey);
   }
 };
-messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong }, onComplete);  
-          //  alert("Details Saved Successfully");
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
+messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong,total:localStorage.subtotal,deviceid:localStorage.deviceid }, onComplete);  
+      console.log("Details Saved Successfully wow");
 
 }
         
-                                                                                   }
+
     </script>
         <script>
      function autheticate(){
@@ -288,26 +248,33 @@ messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorag
         }
       } else {
         console.log("Authenticated successfully with payload:", authData);
-		
+		reallyU();
 		  var onComplete = function(error) {
       if (error) {
         console.log('Synchronization failed');
       } else {
         console.log('Synchronization succeeded');
         //  alert('Synchronization succeeded');
-      }
-    };
-    messageListRef.update({latitude: localStorage.newloclat, longitude: localStorage.newloclong }, onComplete);
-         // alert("Authetication Working");
-       //alert('Customer details saved');
+        
           //window.location.assign("final.html");
         
       }
+
+      getNew();
+      }
+    };
+    
     });
     //end of auth
-   getNew();
+   
 } 
+function reallyU(){
+//  alert("Really");
+//messageListRef.update({latitude: localStorage.newloclat, longitude: localStorage.newloclong, total: localStorage.subtotal }, onComplete);
+         // alert("Authetication Working");
+      //alert('New Location details saved');
 
+}
     // Same as the previous example, except we will also display an alert
     // message when the data has finished synchronizing.
    function getNew(){
@@ -337,7 +304,7 @@ messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorag
  
 </head>
 <body onload="getLocationUpdate();">
-    <script>document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>"); document.write("<center>Bodafix Delivery Page</center>");
+    <script>document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>"); document.write("<center style='background-color:black; color:white;'><h4>Bodafix Delivery Page</h4></center>");
                  document.write("<table width='100%' border='0'>")
                 document.write("<tr hidden='hidden'><td>Order Key:</td><td>"+localStorage.mykey+"</td></tr>");
                  document.write("<tr><td>Order Id:</td><td>"+localStorage.orderid+"</td></tr>");
@@ -349,7 +316,7 @@ messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorag
                  document.write("<tr hidden='hidden'><td>Latitude:</td><td>"+localStorage.orderlat+"</td></tr>");
                  document.write("<tr hidden='hidden'><td>Longitude:</td><td>"+localStorage.orderlong+"</td></tr>");
                  document.write("<tr><td>Delivery Costs:</td><td>"+localStorage.bodabill+"</td></tr>");
-              document.write("<tr><td>Sub-Total:</td><td>"+localStorage.getItem("alltopay")+"</td></tr>");
+              document.write("<tr><td>Sub-Total:</td><td>"+localStorage.subtotal+"</td></tr>");
              document.write("</table>")
              
              </script>
@@ -366,7 +333,7 @@ var nt=tals +"00";
     var name = data.query.results.row.name;
     var rate = parseFloat(data.query.results.row.rate, 10);
     //alert("Exchange rate " + name + " is " + rate);
-	alert("Rate"+rate);
+//	alert("Rate"+rate);
 	//document.write("Rate is"+rate);
 	var newpay=localStorage.subtotal/rate;
       localStorage.setItem("paythis",newpay);
@@ -377,15 +344,12 @@ var nt=tals +"00";
   
   
 </script>
-    <script type="text/javascript"
 
-            src="https://www.simplify.com/commerce/simplify.pay.js"></script>
-    <center>
        
      <script language="javascript" type="text/javascript">
 var myNamespace = {};
  var topay=localStorage.getItem("paythis");
-         alert("Dollars"+topay);
+        // alert("Dollars"+topay);
 myNamespace.round = function(number, precision) {
     var factor = Math.pow(10, precision);
     var tempNumber = number * factor;
@@ -393,15 +357,13 @@ myNamespace.round = function(number, precision) {
     return roundedTempNumber / factor;
 };
 
-alert("Converted"+myNamespace.round(topay, +2)); // 1234.6
+//alert("Converted"+myNamespace.round(topay, +2)); // 1234.6
 var finalpay=myNamespace.round(topay, +2);
 localStorage.setItem("finalpay",finalpay);
 </script>   
         
         
-      <script type="text/javascript"
-
-            src="https://www.simplify.com/commerce/simplify.pay.js"></script>
+     
 
 			<script> var ammount=00;
              var subtotal=localStorage.getItem("paythis");
@@ -411,18 +373,20 @@ localStorage.setItem("finalpay",finalpay);
                 
                 var thy=parseFloat(cash);
                 
-                alert("Subtotal"+subtotal);
+                //alert("Subtotal"+subtotal);
                 var gy=cash +"10";
                 var why=parseInt(gy);
-            document.write("<button id='payments' data-sc-key='sbpb_YTUyZWRiYTYtZDcxYi00ZDVjLWJjOTEtYTQ1ZTQ5OGM2NWNi'");
-			document.write("data-name='Boda Fix Uganda'");
-			document.write("data-description='Order Of "+localStorage.saletype+" from "+localStorage.hotel+"'");
-			document.write("data-reference='"+localStorage.orderid+"'");
-            document.write("data-currency='UGX'");
-			document.write("data-amount='"+theny+"'");
-			document.write("data-color='#12B830'>");
-			document.write("Buy Now");
-			document.write("</button> ");
+           // document.write("<button id='payments' data-sc-key='sbpb_YTUyZWRiYTYtZDcxYi00ZDVjLWJjOTEtYTQ1ZTQ5OGM2NWNi'");
+			//document.write("data-name='Boda Fix Uganda'");
+			//document.write("data-description='Order Of "+localStorage.saletype+" from "+localStorage.hotel+"'");
+		//	document.write("data-reference='"+localStorage.orderid+"'");
+      //      document.write("data-currency='UGX'");
+		//	document.write("data-amount='"+theny+"'");
+		//	document.write("data-color='#12B830'>");
+		//	document.write("Buy Now");
+		//	document.write("</button> ");
+    document.write("<input type='submit' onclick='PayUs();' value='Pay Now' style='background-color:black; color:white; border-radius:20px;' ");
+     document.write("<input type='submit' onclick='GetBoda();' value='View Boda' style='background-color:black; color:white; border-radius:20px;' ");
 					
 			</script>
 			
@@ -430,7 +394,7 @@ localStorage.setItem("finalpay",finalpay);
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
     async defer></script><style> #map{
         height:250px;
-        width: 1005;
+        width: 100%;
     }</style>
    
     <center > <input hidden="hidden" type="button" onclick="getLocationUpdate();" value="Update My location"/></center>
@@ -476,7 +440,7 @@ localStorage.setItem("finalpay",finalpay);
         });
           
           
-          GetAddress();
+          getNew();
             
           
           
@@ -484,7 +448,183 @@ localStorage.setItem("finalpay",finalpay);
       }
             
     </script>
-   
+   <style>
+      
+
+
+      @import "http://fonts.googleapis.com/css?family=Raleway";
+/*----------------------------------------------
+CSS settings for HTML div Exact Center
+------------------------------------------------*/
+#abc {
+width:100%;
+height:100%;
+opacity:.95;
+top:0;
+left:0;
+display:none;
+position:fixed;
+background-color:#313131;
+overflow:auto
+}
+img#close {
+position:absolute;
+right:-14px;
+top:-14px;
+cursor:pointer
+}
+div#popupContact {
+position:absolute;
+left:50%;
+top:17%;
+margin-left:-202px;
+font-family:'Raleway',sans-serif
+}
+form {
+max-width:300px;
+min-width:250px;
+padding:10px 50px;
+border:2px solid gray;
+border-radius:10px;
+font-family:raleway;
+background-color:#fff
+}
+p {
+margin-top:30px
+}
+h2 {
+background-color:#FEFFED;
+padding:20px 35px;
+margin:-10px -50px;
+text-align:center;
+border-radius:10px 10px 0 0
+}
+hr {
+margin:10px -50px;
+border:0;
+border-top:1px solid #ccc
+}
+input[type=text] {
+width:82%;
+padding:10px;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:40px;
+font-size:16px;
+font-family:raleway
+}
+#name {
+background-image:url(../images/name.jpg);
+background-repeat:no-repeat;
+background-position:5px 7px
+}
+#email {
+background-image:url(../images/email.png);
+background-repeat:no-repeat;
+background-position:5px 7px
+}
+textarea {
+background-image:url(../images/msg.png);
+background-repeat:no-repeat;
+background-position:5px 7px;
+width:82%;
+height:95px;
+padding:10px;
+resize:none;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:40px;
+font-size:16px;
+font-family:raleway;
+margin-bottom:30px
+}
+#submit {
+text-decoration:none;
+width:100%;
+text-align:center;
+display:block;
+background-color:#FFBC00;
+color:#fff;
+border:1px solid #FFCB00;
+padding:10px 0;
+font-size:20px;
+cursor:pointer;
+border-radius:5px
+}
+span {
+color:red;
+font-weight:700
+}
+button {
+width:10%;
+height:45px;
+border-radius:3px;
+background-color:#cd853f;
+color:#fff;
+font-family:'Raleway',sans-serif;
+font-size:18px;
+cursor:pointer
+}
+    </style>
+ <script>
+  function check_empty() {
+if (document.getElementById('name').value == "" || document.getElementById('email').value == "" || document.getElementById('msg').value == "") {
+alert("Fill All Fields !");
+} else {
+document.getElementById('form').submit();
+alert("Form Submitted Successfully...");
+}
+}
+//Function To Display Popup
+function div_show() {
+document.getElementById('abc').style.display = "block";
+}
+//Function to Hide Popup
+function div_hide(){
+document.getElementById('abc').style.display = "none";
+}
+
+function PayUs(){
+  alert("Payiong");
+  //document.getElementById("ammounttopay").value=locastorage.subtotal;
+  div_show();
+}
+</script>  
+<div id="abc" style="overflow:hidden;">
+<!-- Popup Div Starts Here -->
+<div id="popupContact">
+<!-- Contact Us Form -->
+<!--<form action="#" id="form" method="post" name="form">
+<img id="close" src="images/3.png" onclick ="div_hide()">
+<h2>Contact Us</h2>
+<hr>
+<input id="name" name="name" placeholder="Name" type="text">
+<input id="email" name="email" placeholder="Email" type="text">
+<textarea id="msg" name="message" placeholder="Message"></textarea>
+<a href="javascript:%20check_empty()" id="submit">Pay Now</a>
+</form> -->
+<script>
+     document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
+     document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
+     document.write("<input type='hidden' name='jc' value='dons' class='textfields'>");
+     document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
+     document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
+     document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
+     document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
+     document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/success.html?orderid="+localStorage.orderid+"&orderkey="+localStorage.orderkey+"' class='textfields'>");
+     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/fail.html?orderid="+localStorage.orderid+"&orderkey="+localStorage.usethiskey+"' class='textfields'>");
+     document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
+     document.write("<span class='btnl'><span class='btnr'>");
+     document.write("<input type='submit' name='Submit' value='Pay Now'>");
+     document.write("</span></span>");
+   document.write("</form>")
+
+
+</script>
+
+</div>
+<!-- Popup Div Ends Here -->
+</div>
     
 </body>
   

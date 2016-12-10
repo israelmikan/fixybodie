@@ -12,6 +12,8 @@
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <title>Special Order</title>
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script>
   // Initialize Firebase
   var config = {
@@ -89,27 +91,124 @@ function getValue(varname)
       <script type="text/javascript">
 <!-- hide
          var order_key = getValue("key");
-          var order_id = getValue("order_id");
-          var hotel = getValue("hotel");
-           var qty = getValue("qty");
-           var saletype = getValue("saletype");
-           var total = getValue("total");
-          var contact = getValue("contact");
-           var latitude = getValue("latitude");
-          var longitude = getValue("longitude");
-      
+           var custo = getValue("custo");
+          alert(order_key);
+          alert(custo);          
           localStorage.orderkey=order_key;
-          localStorage.hotel=hotel;
-          localStorage.orderid=order_id;
-          localStorage.qty=qty;
-          localStorage.saletype=saletype;
-          localStorage.total=total;
-          localStorage.contact=contact;
-          localStorage.orderlat=latitude;
-          localStorage.orderlong=longitude;
+            var ref6 = new Firebase("https://amhungry.firebaseio.com/customers/"+custo+"");
+// Retrieve new posts as they are added to our database
+        ref6.on("value", function(snapshot2, prevChildKey) {
+          var newPost1 = snapshot2.val();
+            var custname=newPost1.name;
+            var contact=newPost1.email;
+            var apart=newPost1.unit;
+            localStorage.customername=custname;
+            localStorage.customercontact=contact;
+            localStorage.customerapart=apart;
+           
+              //document.write("<p>Customer name: " + custname+"</p>");
+             //document.write("<p>Customer contact: " + contact+"</p>");
+             // document.write("<p>Apartment" + apart+"</p>");
+            });     
+          
+          
+          
+          
+          
+         var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+      // Get a database reference to our posts
+   
+ 
+ ref.on("value", function(snapshot, prevChildKey) {
+    
+ 
+   var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey+"/items");
+  ref1.once("value", function(snapshot1) {
+      
+      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); 
+      
+      
+       var ket=snapshot.key();
+ 
+  document.write("<table  width='100%'>");
+ 
+      document.write("<table width='100%'>");
+  var newPost = snapshot.val();
+  document.write("<tr><td style='background-color:yellow;color:white;'><a  href='#'>Deliver Order:</td><td>"+ket+"</a></td></tr>");
+  document.write("<tr><td>Customer id:</td><td> " + newPost.customer+"</td></tr>");
+  document.write("<tr><td>Customer name:</td><td> " + localStorage.customername+"</td></tr>");
+  document.write("<tr><td>Customer Contact:</td><td> " + localStorage.customercontact+"</td></tr>");
+  document.write("<tr><td>Apartment:</td><td> " + localStorage.customerapart+"</td></tr>");
+  document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
+  document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");
+document.write("<tr><td>Location:</td><td> " + newPost.customerlat+","+newPost.customerlong+"</td></tr>");
+      localStorage.customerlat=newPost.customerlat;
+      localStorage.customerlong=newPost.customerlong;
+      
+      
+  document.write("<tr><td>View map</td><td><a href='showcustomer.html'><input type='submit' id='show' value='View map'></a></td></tr>");
+ var cust=newPost.customer;
+      document.write("</table>");      
+   
+        
+ 
+    snapshot1.forEach(function(childSnapshot) {
+        
+        
+    // key will be "fred" the first time and "barney" the second time
+          document.write("<table width='100%'>");
+        
+          document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();
+	
+	
+	 console.log("Product: " + childData.title);
+     console.log("price:   " + childData.price);
+	 console.log("Quantity: " + childData.quantity);
+	 console.log("One order ends here");
+     document.write("<tr><td width='200px'>"+childData.title+"</td><td width='200px'>"+childData.price+"</td><td width='200px'>"+childData.quantity+"</td></tr>");
+        
+       
+    
+  
+  });
+     
+document.write("</table>");
+      document.write("<div id='map''></div>");
+   document.write("<hr>");
+  
+  
+  });
+  ///document.write("<tr><td>""</td><td>""</td><td><a href='bodasuper.html'>Deliver Order</td></tr>");
+    
+
+  
+}); 
+          
+          
       
       </script>
-
+  <script>
+    
+    function showcustomer(){
+       alert("Customer Showing"); 
+    var dialog = document.getElementById('window');  
+    document.getElementById('show').onclick = function() {  
+        dialog.show();  
+    }; 
+        
+    document.getElementById('exit').onclick = function() {  
+        dialog.close();  
+    }; 
+        
+    }   
+    </script>  
+    
+    
+    
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"></script>
  
     <script>
 			if (localStorage.getItem("located") === null) {
@@ -127,8 +226,8 @@ function getValue(varname)
          function showLocation(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-            localStorage.bodalaty=latitude;
-            localStorage.bodalongy=longitude;
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
            // alert("Latitude : " + latitude + " Longitude: " + longitude);
              //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
              //localStorage.bodalaty=latitude;
@@ -137,19 +236,16 @@ function getValue(varname)
                    }
             
   function changeT(){
-      //alert("changing");
+      alert("changing");
       autheticate();
   }
          function errorHandler(err) {
             if(err.code == 1) {
-               alert("Error: Access is denied! try Again and turn location On");
-               // window.location.assign("orders.html");
-                
+               alert("Error: Access is denied!");
             }
             
             else if( err.code == 2) {
                alert("Error: Position is unavailable!");
-                window.location.assign("orders.html");
             }
          }
          
@@ -174,7 +270,7 @@ function getValue(varname)
     <script>
      function autheticate(){
         //alert("auth");
-     var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
       email    : "israelmikan@gmail.com",
       password : "dangersisrael"
@@ -204,9 +300,9 @@ function getValue(varname)
          // alert('Synchronization succeeded');
       }
     };
-    messageListRef.update({ bodalat: localStorage.bodalaty, bodalong: localStorage.bodalongy }, onComplete);
+    messageListRef.update({ bodalat: latitude, bodalong: longitude }, onComplete);
          // alert("Authetication Working");
-       //alert('Boda details saved');
+       alert('Boda details saved');
           //window.location.assign("final.html");
   
       }
@@ -221,7 +317,9 @@ function getValue(varname)
 
 </script>
 
-
+<script>
+ 
+    </script>
 </head>
 <body  style="font-family: sans-serif;" onload="getLocationUpdate();">
      <style>.mine{
@@ -277,36 +375,10 @@ function getValue(varname)
            
        }
     </style>
+    
   
-         <div class="mine"> 
-             <script>document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>"); 
-               
-                 document.write("<table width='100%' border='0'>")
-                document.write("<tr><td>Order Key:</td><td>"+localStorage.orderkey+"</td></tr>");
-                 document.write("<tr><td>Order Id:</td><td>"+localStorage.orderid+"</td></tr>");
-                 document.write("<tr><td>Pickup:</td><td>"+localStorage.hotel+"</td></tr>");
-                 document.write("<tr><td>What :</td><td>"+localStorage.saletype+"</td></tr>");
-                 document.write("<tr><td>Quantity:</td><td>"+localStorage.qty+"</td></tr>");
-                 document.write("<tr><td>Bill:</td><td>"+localStorage.total+"</td></tr>");
-                 document.write("<tr><td>Customer No</td><td>"+localStorage.contact+"</td></tr>");
-                 document.write("<tr><td>Latitude:</td><td>"+localStorage.orderlat+"</td></tr>");
-                 document.write("<tr><td>Longitude:</td><td>"+localStorage.orderlong+"</td></tr>");
-              
-             document.write("</table>")
-             
-             </script>
-    
-    
-    </div>
-    <script>
-    
-     
-      
-
-       
         
-    </script>
-    
+   
     
     <hr>
  
@@ -314,12 +386,14 @@ function getValue(varname)
     
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
-    async defer></script><style> 
-    </style>
+    async defer></script><style> #map{
+        height:250px;
+        width: 1005;
+    }</style>
     <form><div id="map">
                
                
-               </div> 
+               </div> <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script>
                      
     
@@ -334,18 +408,14 @@ function getValue(varname)
             
             //alert(c);
            // alert(d);
-
-                      //alert("auth");
-     
+            
+            
             
       var map;
       function initMap() {
                     
-          
-         
-          
           var myLatLng = {lat: c, lng: d};
-          var bodyy={lat: localStorage.bodalaty, lng: localStorage.bodalongy};
+          var bodyy={lat: bodalat, lng: bodalong};
 
           //alert("laty"+laty);
         map = new google.maps.Map(document.getElementById('map'), {
@@ -364,8 +434,8 @@ function getValue(varname)
        var marker2 = new google.maps.Marker({
           position: boddy,
           map: map,
-          animation: google.maps.Animation.DROP,                   
-          title: 'Your Location!'
+          animation: google.maps.Animation.BOUNCE,                   
+          title: 'Customer Location!'
         });
           
             
@@ -375,14 +445,15 @@ function getValue(varname)
       }
             
     </script>
-     
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+    async defer></script>
        <script>
         
         function updateOrder(){
             
             alert("Update order");
             
-            var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+            var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
       email    : "israelmikan@gmail.com",
       password : "dangersisrael"
@@ -412,9 +483,9 @@ function getValue(varname)
          // alert('Synchronization succeeded');
       }
     };
-    messageListRef.update({ orderstatus:"delivered"}, onComplete);
+    messageListRef.update({ orderstatus:"served"}, onComplete);
          // alert("Authetication Working");
-       alert('Order details Set to delivered');
+       alert('Order details Set to Ready For Pickup');
           //window.location.assign("final.html");
   
       }
@@ -423,9 +494,29 @@ function getValue(varname)
    
             
         }
-        </script><br><br>
- <input type="button" onclick="updateOrder();" value="Set Order Delivered" style="visibility:hidden;" />&nbsp; &nbsp;
-         <a href="finalboda.html"><input type="button"  value="Start Journey"/></a>
+        </script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://www.jacklmoore.com/colorbox/jquery.colorbox.js"></script>
+    <script>
+      function openColorBox(){
+        $.colorbox({iframe:true, width:"80%", height:"80%", href: "http://www.sitepoint.com"});
+      }
+      
+      function countDown(){
+        seconds--
+        $("#seconds").text(seconds);
+        if (seconds === 0){
+          openColorBox();
+          clearInterval(i);
+        }
+      }
+
+      var seconds = 7,
+          i = setInterval(countDown, 1000);
+    </script>
+ <input type="button" onclick="updateOrder();" value="Set Order Served"/>
+        <!-- <input type="button" onclick="getLocationUpdate();" value="Watch Update"/> -->
       </form>
  
 </body>

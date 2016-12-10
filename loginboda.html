@@ -5,6 +5,7 @@
         
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta http-equiv="refresh" content="5">
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"
             type="text/javascript"></script>
 	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
@@ -72,6 +73,8 @@ function getValue(varname)
       </script>
       
     <script>
+                var type;
+
 	var ref = new Firebase("https://amhungry.firebaseio.com/bodas");
     ref.authWithPassword({
       email    : email,
@@ -103,6 +106,8 @@ function getValue(varname)
         console.log("Authenticated successfully with payload:", authData);
           alert("Autheticated Well"+authData);
           localStorage.setItem("located",email);
+           localStorage.setItem("serverwho",email);
+           localStorage.serverwho=email;
           if(localStorage.getItem("located")=="admin@amhungry.com"){
           window.location.assign("cart/admin.html");
           }else{
@@ -111,27 +116,49 @@ function getValue(varname)
                 //grabbing boda details
                 var det=snapshot.val();
                 var bodatag=det.tag;
+                 type=det.type;
                 console.log("tag "+det.tag);
                 console.log(snapshot.key());
                 console.log(snapshot.tag);
-              
+              alert(type);
                 localStorage.setItem("bodatag",bodatag);
+                localStorage.type=type;
+                if(type=="boda"){
+                          window.location.assign("orders.html");
+                        }else if(type=="server"){
+                          alert("Eeh server");
+                           window.location.assign("servers.html");
+                        }else if(type=="admin"){
+                         window.location.assign("cart/admin.html");
+                        }
             
             });   
-              
          if((localStorage.getItem("bodatag")==null)){
           alert("OOps No Boda tag");
          }else if(localStorage.getItem("bodatag") !==null){
              alert(localStorage.getItem("bodatag"));
-                          window.location.assign("orders.html");
+
+                 // redirectI();     
          } else{
              
          } 
-          
+           if(type=="boda"){
+                          window.location.assign("orders.html");
+                        }else if(type=="server"){
+                          alert("Eeh server");
+                           window.location.assign("servers.html");
+                        }else if(type=="admin"){
+                         window.location.assign("cart/admin.html");
+                        }
 
           }
       }
-    });</script>  
+    });
+function redirectI(){
+  alert("redirecting");
+                    
+}
+    </script>  
       
       
     </head>

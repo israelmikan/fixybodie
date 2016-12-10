@@ -3,7 +3,7 @@
     <p class="cart-empty" ng-hide="itemsCount"></p>
     <div ng-show="itemsCount">
         <div class="simple-cart-header">
-            <h4 class="pull-left">{{itemsCount}} item{{itemsCount > 1 && 's'|| ''}}, {{subTotal| currency}}</h4>
+            <h4 class="pull-left">{{itemsCount}} item{{itemsCount > 1 && 's'|| ''}}, {{subTotal}}</h4>
             <a class="pull-right" href="#/cart">View/Edit Cart</a>
         </div>
         <div class="simple-cart-body">
@@ -16,7 +16,7 @@
                             </a>
                         </td>
                         <td class="details">
-                            <h4>{{item.title}} <span class="price">{{item.price| currency}}</span></h4>
+                            <h4>{{item.title}} <span class="price">{{item.price}}</span></h4>
                             <p>qty: <span>{{item.quantity}}</span></p>
                         </td>
                         <td>

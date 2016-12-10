@@ -12,7 +12,7 @@
   if (localStorage.orderkeysuper == null) {
         //...
                 alert("You Dont have Any Current Orders");
-      window.location.assign("../index.html")
+      window.location.assign("../index.html");
       
       
       }else{
@@ -72,11 +72,13 @@ function myFunction() {
   
          function errorHandler(err) {
             if(err.code == 1) {
-               alert("Error: Access is denied!");
+               alert("Error: Access is denied Turn Gps On!");
+              // window.location.assign("getpoint.html");
             }
             
             else if( err.code == 2) {
                alert("Error: Position is unavailable!");
+              //  window.location.assign("getpoint.html");
             }
          }
          
@@ -141,7 +143,7 @@ ref.on("value", function(snapshot, prevChildKey) {
     var orderkey=snapshot.key();
     localStorage.nowkey=orderkey;
     
-    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div>"); 
+    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div><br><img src='../img/boda.png'>"); 
      document.write("<p>Delivery page</p>");
      document.write("<p>You Are required to keep on this page to monitor your order progress</p>");
     document.write("<div id='map'></div>");
@@ -166,6 +168,7 @@ ref.on("value", function(snapshot, prevChildKey) {
   
   });
 document.write("</table>");
+document.write("<center>&copy; All Rights Reserved Bodafix</center>");
   });
     
     

@@ -189,6 +189,7 @@ messageListRef.push({ 'order_id': localStorage.orderid, 'hotel': localStorage.ho
     messageListRef.orderByChild("order_id").equalTo(localStorage.orderid).on("child_added", function(snapshot) {
       console.log(snapshot.key());
         localStorage.mykey=snapshot.key();
+        localStorage.usethiskey=snapshot.key();
        alert("Order Saved Successfully");
         localStorage.success="true";
         

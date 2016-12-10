@@ -51,7 +51,7 @@ $closeButton.on("click", function(){
     $layer.removeClass("active");
 });</script>
       <script type="text/javascript">
-<!-- hide from old browsers
+// hide from old browsers
 
 function getValue(varname)
 {
@@ -136,7 +136,7 @@ function initialize() {
       center: {lat: position.coords.latitude, lng: position.coords.longitude},
       zoom:17,
       scaleControl: true,
-    mapTypeId:google.maps.MapTypeId.STREET
+    mapTypeId:google.maps.MapTypeId.SATELLITE
   };
        var cityCircle = new google.maps.Circle({
             strokeColor: '#FF0000',
@@ -281,8 +281,8 @@ var res = str.replace(/+/gi, " ");
          // alert("lsatest"+evt.latLng.lat().toFixed(8));
 </script>   
 
-<main id="container" style="overflow:scroll">
-  <h2>PizzaMe Order</h2>
+<main id="container" style="overflow:scroll; height:100%">
+  <h2>Boda Fix Order</h2>
      <style>
          .yes{
              background-color: black;
@@ -376,7 +376,7 @@ var res = str.replace(/+/gi, " ");
 <script>document.write("<input type='hidden' id='point' name='point' readonly='readonly' value='"+pointpizza+"'>");  </script>
 <script>document.write("<input type='hidden' id='latitude' name='latitude' readonly='readonly' value='"+latit+"'>");  </script>
     <script>document.write("<input type='hidden' id='type' name='type' readonly='readonly' value='"+type+"'>");  </script>
-<script>document.write("<input type='hidden' id='longitude' name='longitude' readonly='readonly' value='"+longit+"'>");  </script><button type="submit">Save Order</button> 
+<script>document.write("<input type='hidden' id='longitude' name='longitude' readonly='readonly' value='"+longit+"'>");  </script><button type="submit" style="background-color:black; color:white; height:30px; width:70px;">Continue</button> 
 </form>
         
      
@@ -385,7 +385,7 @@ var res = str.replace(/+/gi, " ");
 </main>
 
  
-      <p class="detail">Welcome and thanks For Embracing PizzaMe. </p>
-     
+      <p class="detail">Welcome and thanks For Embracing Bodafix. </p>
+     <center>&copy; All Rights Reserved Bodafix Uganda</center>
   </body>
 </html>

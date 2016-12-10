@@ -63,6 +63,50 @@ body {
   .sidenav a {font-size: 18px;}
 }
 </style> 
+<script>
+         
+          function getLocation() {
+            var devicename= device.name;
+        var devicecordova=device.cordova;
+        var deviceid=device.uuid;
+        var deviceversion=device.version;
+        localStorage.deviceid=deviceid;
+        alert("device id "+deviceid);
+        alert("device cordova"+deviceversion); 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else { 
+       alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function showPosition(position) {
+  var here=position.coords.latitude;
+  var here1=position.coords.longitude;
+  localStorage.here=here;
+  localStorage.here1=here1;
+   // x.innerHTML = "Latitude: " + position.coords.latitude + 
+    //"<br>Longitude: " + position.coords.longitude;
+}
+function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("Location Turned off Turn On GPS.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location infor Failed .");
+            break;
+        case error.TIMEOUT:
+            alert("Location Turned off timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            alert("Unknown Error Occured.");
+            break;
+    }
+}
+   
+
+       </script>
       <style>.mybutton{
           background-color: chocolate;
           border: groove;
@@ -97,27 +141,52 @@ body {
     var chick="Pizza+Chicken";
     var customIcons = {
       Pizza: {
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon38.png'
+        icon:'img/pizza.png'
        //icon: 'http://clicktheglobe.co.nf/pizzame/pizzaico.gif'
       },
       Chicken: {
-        icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
+        icon: 'img/chicken.png'
       },
        supermarket: {
         icon: 'http://maps.google.com/mapfiles/kml/pal3/icon26.png'
       },
-      chick:{
-      icon:'img/Chicken.png'
+      PizzaChicken:{
+      icon:'img/pizzachick.png'
       },
       wine:{
        icon: 'img/winde.png'
+      },
+      mansuit:{
+       icon: 'img/suit.png'
+      }
+      ,
+      cigarpack:{
+       icon: 'img/cigar.png'
+      }
+      ,
+      fullfish:{
+       icon: 'img/fullfish.png'
+      }
+      ,
+      pork:{
+       icon: 'img/pork.png'
+      }
+      ,
+      nilespecial:{
+       icon: 'img/nilespecial.png'
+      }
+      ,
+      matooke:{
+       icon: 'img/matooke.png'
       }
          
     };
 	function load(){
+    var latu=parseFloat(localStorage.here);
+    var lotu=parseFloat(localStorage.here1);
 	var map = new google.maps.Map(document.getElementById("map"), {
-        center: new google.maps.LatLng(0.3205746,32.6287588),
-        zoom: 13,
+        center: new google.maps.LatLng(latu,lotu),
+        zoom: 15,
         mapTypeId: 'roadmap'
       });
 	     var infoWindow = new google.maps.InfoWindow;
@@ -247,9 +316,10 @@ body {
         <!-- for your init code, see README and file comments for details -->
         <script src="xdk/init-dev.js"></script>
        <link rel="stylesheet" href="css/buy.css">
+       
   </head>
 
-  <body onload="load()"><style>.boda{
+  <body onload="getLocation();load()"><style>.boda{
       display: block;
       border-radius: 20px;
       color: white;
@@ -274,7 +344,7 @@ body {
   <a href="final.html">My Order</a>
   <a href="cart/finalsuper.html">My Cart</a>
   <a href="orders.html">Deliver</a>
-  <a href="charge.html">Charge</a>
+  <a href="servers.html">Serve</a>
   
  <!--  <a href="#">Browse</a>
  <a href="#">Clients</a>
@@ -294,7 +364,7 @@ function closeNav() {
   <div class="img-wrapper">
       <img src="img/pizza.jpg" alt="">
   </div>
-          <div id="map" style="width: 100%; height: 300px"></div></main>
+          <div id="map" style="width: 100%; height: 450px"></div></main>
 	  <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">

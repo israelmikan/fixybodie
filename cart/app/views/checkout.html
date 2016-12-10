@@ -1,3 +1,4 @@
+
 <div id="checkout" class="row">
     <p class="cart-empty well-cart" ng-hide="itemsCount"></p>
     <form ng-show="itemsCount" name="orderFrom" ng-submit="placeOrder()" novalidate>
@@ -5,18 +6,18 @@
             <h2>Delivery Address</h2>
             <p class="alert alert-danger" ng-show="error">{{::error}}</p>
             <div class="form-group col-sm-12">
-                <label for="fullname">Full Name</label> 
+                <label for="fullname">Your Names</label> 
                 <input id="fullname" type="text" class="form-control" ng-model="customer.name" placeholder="E.g Israel Mikan Peter" required>
             </div>
 
             <div class="form-group col-sm-12">
-                <label for="email">Contact number</label>
-                <input id="email" type="text" class="form-control" ng-model="customer.email" placeholder="E.g 0705957020" required>
+                <label for="email">Valid Contact number</label>
+                <input id="email" type="text"  class="form-control" ng-model="customer.email" placeholder=" E.g 0705957020" required>
             </div>
 
 
             <div class="form-group col-sm-4">
-                <label for="apt">Apartment / Unit</label>
+                <label for="apt">Street/Apartment / Unit/</label>
                 <input id="apt" type="text" class="form-control" ng-model="customer.unit" placeholder="E.g Bugolobi flats b5 second floor">
             </div>
 <!--
@@ -77,37 +78,37 @@
         </div> -->
         <div id="checkout-cart" class="col-lg-5 well-cart">
             <div id="checkout-cart-header">
-                <h4 class="pull-left">{{itemsCount}} item{{itemsCount > 1 && 's'|| ''}}, {{subTotal| currency}}</h4>
+                <h4 class="pull-left">{{itemsCount}} item{{itemsCount > 1 && 's'|| ''}}, {{subTotal}}</h4>
                 <a class="pull-right" href="#/cart">View/Edit Cart</a>
             </div>
             <div class="checkout-item" ng-repeat="item in items">
                 <img ng-src="{{item.image}}">
-                <h4>{{item.title}} <span class="price">{{item.price| currency}}</span></h4>
+                <h4>{{item.title}} <span class="price">{{item.price}}</span></h4>
                 <p>qty: <span>{{item.quantity}}</span></p>
             </div>
             <ol id="checkout-totals">
                 <li>
                     <strong>Subtotal</strong>
                     <span>
-                        {{subTotal| currency}}
+                        {{subTotal}}
                     </span>
                 </li>
                 <li>
                     <strong>Tax <small>(10%)</small></strong>
                     <span>
-                        {{tax|currency}}
+                        {{tax}}
                     </span>
                 </li>
                 <li>
                     <strong>Shipping</strong>
                     <span>
-                        {{!shipping ? 'PENDING' : (shipping| currency)}}
+                        {{!shipping ? 'PENDING' : (shipping)}}
                     </span>
                 </li>
                 <li id="grand-total">
                     <strong>Grand Total</strong>
                     <span>
-                        {{grandTotal| currency}}
+                        {{grandTotal}}
                     </span>
                 </li>
             </ol>
