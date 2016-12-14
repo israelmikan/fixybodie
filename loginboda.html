@@ -108,7 +108,7 @@ function getValue(varname)
           localStorage.setItem("located",email);
            localStorage.setItem("serverwho",email);
            localStorage.serverwho=email;
-          if(localStorage.getItem("located")=="admin@amhungry.com"){
+          if(localStorage.getItem("located")=="israelmikan@gmail.com"){
           window.location.assign("cart/admin.html");
           }else{
             var newref = new Firebase("https://amhungry.firebaseio.com/bodas"); 
@@ -126,9 +126,10 @@ function getValue(varname)
                 if(type=="boda"){
                           window.location.assign("orders.html");
                         }else if(type=="server"){
-                          alert("Eeh server");
+                         // alert("Eeh server");
                            window.location.assign("servers.html");
                         }else if(type=="admin"){
+                          //localStorage.setItem("adminhascome",admin);
                          window.location.assign("cart/admin.html");
                         }
             

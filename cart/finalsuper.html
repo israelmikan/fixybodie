@@ -61,10 +61,10 @@ function myFunction() {
                     console.log('Synchronization failed');
                   } else {
                     console.log('Synchronization succeeded');
-                      alert('Order Details Updated');
+                     // alert('Order Details Updated');
                   }
                 };
-                  ref.update({ supermarket: localStorage.supermarket,customerlat: localStorage.custlat, customerlong:localStorage.custlong }, onComplete);
+                  ref.update({ supermarket: localStorage.supermarket,customerlat: localStorage.custlat, customerlong:localStorage.custlong,bodabill:localStorage.bodabill,mine:localStorage.mine,hotelbill:localStorage.supertotal }, onComplete);
                     //alert('Details Updated');
              
                }
@@ -85,7 +85,7 @@ function myFunction() {
          function Track(){
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
-               var options = {timeout:1000};
+               var options = {timeout:60000};
                geoLoc = navigator.geolocation;
                watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
             }
@@ -94,14 +94,14 @@ function myFunction() {
                alert("Sorry, device does not support geolocation!");
             }
             
-            myFunction();
-             refreshData();
+            //myFunction();
+            // refreshData();
              
          }
 function refreshData()
 {
-    x = 8;  // 5 Seconds
-   Track();
+    x = 30;  // 5 Seconds
+   //Track();
 
     setTimeout(refreshData, x*1000);
 }refreshData();
@@ -112,8 +112,10 @@ function refreshData()
     </head>
    <body onload="Track();">
        <script>
+       var laty=parseFloat(localStorage.custlat);
+       var longy = parseFloat(localStorage.custlong);
       function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
+        var uluru = {lat: laty, lng: longy};
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           center: uluru
@@ -127,6 +129,10 @@ function refreshData()
 
     
          <script>
+         function viewBoda(){
+alert("View Boda");
+popup('popUpDiv');
+         }
                 
                 document.write("<table width='100%'>");
                 
@@ -145,6 +151,7 @@ ref.on("value", function(snapshot, prevChildKey) {
     
     document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div><br><img src='../img/boda.png'>"); 
      document.write("<p>Delivery page</p>");
+      document.write("<button onclick='viewBoda();'>View Boda</button>");
      document.write("<p>You Are required to keep on this page to monitor your order progress</p>");
     document.write("<div id='map'></div>");
         document.write("<table border='1' width='100%'><tr><td>"+customer+"</td><td>"+subtotal+"</td><td>"+orderstatus+"</td></tr></table>");  
@@ -176,10 +183,86 @@ document.write("<center>&copy; All Rights Reserved Bodafix</center>");
 
 
 </script>
+<style>#blanket {
+background-color:#111;
+opacity: 0.65;
+*background:none;
+position:absolute;
+z-index: 9001;
+top:0px;
+left:0px;
+width:100%;
+}
+
+#popUpDiv {
+position:absolute;
+background:url(pop-back.jpg) no-repeat;
+width:400px;
+height:400px;
+border:5px solid #000;
+z-index: 9002;
+}</style>
+<div id="blanket" style="display:none"></div>
+<div id="popUpDiv" style="display:none">
+<a href="#" onclick="popup('popUpDiv')" >Click to Close CSS Pop Up</a>
+</div>
+<a href="#" onclick="popup('popUpDiv')">Click to Open CSS Pop Up</a>
     <div id='map'></div>
     
     </body>
 
 
-
+<script>
+  function toggle(div_id) {
+  var el = document.getElementById(div_id);
+  if ( el.style.display == 'none' ) { el.style.display = 'block';}
+  else {el.style.display = 'none';}
+}
+function blanket_size(popUpDivVar) {
+  if (typeof window.innerWidth != 'undefined') {
+    viewportheight = window.innerHeight;
+  } else {
+    viewportheight = document.documentElement.clientHeight;
+  }
+  if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
+    blanket_height = viewportheight;
+  } else {
+    if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
+      blanket_height = document.body.parentNode.clientHeight;
+    } else {
+      blanket_height = document.body.parentNode.scrollHeight;
+    }
+  }
+  var blanket = document.getElementById('blanket');
+  blanket.style.height = blanket_height + 'px';
+  var popUpDiv = document.getElementById(popUpDivVar);
+  popUpDiv_height=blanket_height/2-200;//200 is half popup's height
+  popUpDiv.style.top = popUpDiv_height + 'px';
+}
+function window_pos(popUpDivVar) {
+  if (typeof window.innerWidth != 'undefined') {
+    viewportwidth = window.innerHeight;
+  } else {
+    viewportwidth = document.documentElement.clientHeight;
+  }
+  if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
+    window_width = viewportwidth;
+  } else {
+    if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
+      window_width = document.body.parentNode.clientWidth;
+    } else {
+      window_width = document.body.parentNode.scrollWidth;
+    }
+  }
+  var popUpDiv = document.getElementById(popUpDivVar);
+  window_width=window_width/2-200;//200 is half popup's width
+  popUpDiv.style.left = window_width + 'px';
+}
+function popup(windowname) {
+  blanket_size(windowname);
+  window_pos(windowname);
+  toggle('blanket');
+  toggle(windowname);   
+}
+</script>
 </html>

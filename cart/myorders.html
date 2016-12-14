@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>My Orders</title>
+<script src="SpryAssets/SpryTabbedPanels.js" type="text/javascript"></script>
+<link href="SpryAssets/SpryTabbedPanels.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+  <script>
+      
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}</script><script>
+function pickThem(){
+var pointname=getValue("pointname");
+var saletype=getValue("saletype");
+localStorage.setItem("pickwho",pointname);
+localStorage.setItem("saletype",saletype);
+if(saletype=="supermarket"){
+	alert(pointname);
+	window.location.assign("myorderssuper.html");
+	}
+//
+//alert(saletype)
+	
+}
+          </script>
+</head>
+
+<body onload="pickThem();">
+<div id="TabbedPanels1" class="TabbedPanels">
+  <ul class="TabbedPanelsTabGroup">
+    <li class="TabbedPanelsTab" tabindex="0">Foods</li>
+    <li class="TabbedPanelsTab" tabindex="0">Supermarkets</li>
+    <li class="TabbedPanelsTab" tabindex="0">Boda Bills</li>
+    <li class="TabbedPanelsTab" tabindex="0">Tab 4</li>
+  </ul>
+  <div class="TabbedPanelsContentGroup">
+    <div class="TabbedPanelsContent">Food Orders
+    <!-- food orders start here -->
+     <script>
+	 var totalammount=0;
+	var mytotal=0;
+	var bodatotal=0;
+	var alltotal=0;
+     function auth(){
+        alert("auth");
+    var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+          //alert("Authetication Working");
+         
+      }
+    });
+    //end of auth
+   
+} 
+         
+   
+ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
+  messageListRef.orderByChild("hotel").equalTo(localStorage.getItem("pickwho")).once("value", function(allMessagesSnapshot) {
+           
+    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div>");    
+	
+        document.write("Welcome: <br><h3>Admin Orders for "+localStorage.getItem("pickwho")+"</h3><hr>");
+		document.write("<table>");
+		document.write("<tr><td>Total Client Bill:</td><td><p id='clientbill'></p></td></tr>");
+		document.write("<tr><td>Bodafix takes:</td><td><p id='mybill'></p></td></tr>");
+		document.write("<tr><td>Boda Bill:</td><td><p id='bodabill'></p></td></tr>");
+		document.write("<tr><td>All total:</td><td><p id='allbill'></p></td></tr>");
+		document.write("</table>");
+          document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;visibility:hidden;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white; visibility:hidden;' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><input type='button' style='background-color:black;color:white;' onclick='logoutMe();' value='Logout' class='mybutton'></a></td></tr></table>");
+      allMessagesSnapshot.forEach(function(messageSnapshot) {
+        // Will be called with a messageSnapshot for each child under the /messages/ node
+        var key = messageSnapshot.key();  // e.g. "-JqpIO567aKezufthrn8"
+        var order_id = messageSnapshot.child("order_id").val();  // e.g. "barney"
+        var hotel = messageSnapshot.child("hotel").val();  // e.g. "Welcome to Bedrock City!"
+		var qty = messageSnapshot.child("qty").val(); 
+		var saletype = messageSnapshot.child("saletype").val(); 
+		var total = messageSnapshot.child("total").val(); 
+		var contact=messageSnapshot.child("contact").val();
+		var latitude= messageSnapshot.child("latitude").val(); 
+		var longitude = messageSnapshot.child("longitude").val(); 
+          var order_status=messageSnapshot.child("orderstatus").val();
+		  var bodabill=messageSnapshot.child("bodabill").val();
+		  var mine=messageSnapshot.child("mine").val();
+		  var hotelbill=messageSnapshot.child("hotelbill").val();
+		 
+		  hotelbill=parseFloat(hotelbill);
+		  mine=parseFloat(mine);
+		  bodabill=parseFloat(bodabill);
+		  total=parseFloat(total);
+		  totalammount+=hotelbill;
+		  mytotal+=mine;
+		  bodatotal+=bodabill;
+		  alltotal+=total;
+		  
+          if(order_status=="delivered"){
+              document.write("<hr>");		
+      document.write("Order Code:   "+order_id);
+      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td>What:"+saletype+"</td><td><a href='boda.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Deliver' class='deli'></a></td></tr></table>");
+          document.write("<hr>");	
+              
+              
+          }else{
+              
+          }
+		 document.getElementById("clientbill").innerHTML=totalammount;
+		document.getElementById("mybill").innerHTML=mytotal;
+		document.getElementById("bodabill").innerHTML=bodatotal;
+		document.getElementById("allbill").innerHTML=alltotal;
+		  
+		//alert(hotel);
+		
+		//alert(saletype);
+		//alert(total); 
+		
+      });
+	
+    }); 
+     function logoutMe(){
+alert("You Have Choosen To Logout");
+localStorage.removeItem("located");
+localStorage.removeItem("bodatag");
+window.location.assign("index.html");
+     }
+      </script>
+    <!-- food orders end here -->
+    </div>
+    <div class="TabbedPanelsContent">Content 3</div>
+    <div class="TabbedPanelsContent">Content 2</div>
+    <div class="TabbedPanelsContent">Content 4</div>
+  </div>
+</div>
+<script type="text/javascript">
+var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
+</script>
+</body>
+</html>

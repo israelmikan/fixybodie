@@ -230,6 +230,7 @@ window.location.assign("buy.html");
                 var toint=parseFloat(bodabill);
                 var charge=toint*1000;
                 var charge2=charge+500;
+                charge2=parseFloat(charge2);
                 var allcash=charge2+tofloat;
                 var commit=10;
                 var mine=(tofloat/100)*10;
@@ -237,7 +238,7 @@ window.location.assign("buy.html");
                 alert("Commision"+mine);
                 var allinall=mine+allcash;
                 alert("all in all"+allinall);
-                localStorage.setItem("alltopay",allcash);
+                localStorage.setItem("alltopay",allinall);
                 localStorage.bodabill=charge;
                 localStorage.subtotal=allinall;
                 localStorage.mine=mine+500;
@@ -248,7 +249,7 @@ window.location.assign("buy.html");
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
                var dista=localStorage.getItem("distance");
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>  Total order is "+localStorage.total+" All Total:"+localStorage.subtotal+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>  Total order is "+localStorage.total+" All Total:"+localStorage.getItem("alltopay")+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
             }
           }
         });

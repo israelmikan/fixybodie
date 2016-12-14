@@ -188,7 +188,7 @@ alert("Iyiiii");
 
 
          function getLocationUpdate(){
-               x = 20;  // 5 Seconds
+               x = 30;  // 5 Seconds
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
                var options = {timeout:60000};
@@ -217,8 +217,9 @@ alert("Iyiiii");
   }
 };
 var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
-messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong,total:localStorage.subtotal,deviceid:localStorage.deviceid }, onComplete);  
+messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong,total:localStorage.subtotal,deviceid:localStorage.deviceid,mine:localStorage.mine,bodabill:localStorage.bodabill,hotelbill:localStorage.total }, onComplete);  
       console.log("Details Saved Successfully wow");
+      document.getElementById("paynow").style.visibility="visible";
 
 }
         
@@ -385,7 +386,7 @@ localStorage.setItem("finalpay",finalpay);
 		//	document.write("data-color='#12B830'>");
 		//	document.write("Buy Now");
 		//	document.write("</button> ");
-    document.write("<input type='submit' onclick='PayUs();' value='Pay Now' style='background-color:black; color:white; border-radius:20px;' ");
+    document.write("<input type='submit' id='paynow' onclick='PayUs();' value='Pay Now' style='background-color:black; visibility:hidden; color:white; border-radius:20px;' ");
      document.write("<input type='submit' onclick='GetBoda();' value='View Boda' style='background-color:black; color:white; border-radius:20px;' ");
 					
 			</script>

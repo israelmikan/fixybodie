@@ -40,7 +40,7 @@
     </style>
       <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script>
-       /*   var suplat;
+       var suplat;
           var suplong;
           function getlat(){
                    alert("getting POint details");
@@ -59,7 +59,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
  
  
  });
-          } */</script>
+          } </script>
       <script>
       
      function showIt() {
@@ -93,13 +93,13 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
         var hy=parseFloat(cuslat);
         var hyt=parseFloat(cuslong);
         
-        var yout=localStorage.pointlat;
-        var youy= localStorage.pointlong;
+        var yout=localStorage.suplat;
+        var youy= localStorage.suplong;
         
         var startlat=parseFloat(yout);
         var startlong=parseFloat(youy);
         var tofloat=parseFloat(carttotal);
-        alert("Supermarket latitude"+suplat);
+        alert("Supermarket latitude"+localStorage.suplat);
         alert("Customer at"+localStorage.suplat);
          alert("Starting at"+localStorage.startlat);
       var superlat=parseFloat(localStorage.suplat);
@@ -164,7 +164,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
     }
     else
         alert("Directions failed");
-      $("#error").append("Unable to retrieve your route<br />");
+    //  $("#error").append("Unable to retrieve your route<br />");
       
   }
 );  // create marker for location provided
@@ -258,17 +258,26 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
                 var charge=toint*1000;
                 var charge2=charge+500;
                 var allcash=charge2+tofloat;
+                var commit=10;
+                var mine=(tofloat/100)*10;
+                mine=mine+500;
                 
-                localStorage.setItem("alltopay",allcash);
+                alert("Commision"+mine);
+                var allinall=mine+allcash;
+                alert("all in all"+allinall);
+                localStorage.setItem("alltopay",allinall);
+                
                 localStorage.bodabill=charge;
-                localStorage.subtotal=allcash;
+               // localStorage.subtotal=allcash;
+                localStorage.subtotal=allinall;
+                localStorage.mine=mine;
                 //alert("All cash="+allcash);
                 //alert("Total Bill"+charge);
                 //localStorage.bodafees=charge;
                 //var curtotal=localStorage.total;
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>  Total order is "+localStorage.supertotal+" Sub Total:"+allcash+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br> Mine: <br>"+localStorage.mine+" <br> Total order is "+localStorage.supertotal+" Sub Total:"+localStorage.getItem("alltopay")+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
             }
           }
         });

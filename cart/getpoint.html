@@ -9,6 +9,8 @@
      <script>
           var suplat;
           var suplong;
+
+
    function grabThe(){
       var ref = new Firebase("https://amhungry.firebaseio.com/points/");
 ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
@@ -21,41 +23,14 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
   //  alert("Supermarket latitude"+newPost.latitude);
     //localStorage.suplat=suplat;
     //localStorage.suplong=suplong;
-// alert("Grabbed details are"+newPost.latitude);
- 
- });
-whatThere();
-   }
-          </script>
-    </head>
-    
-    <body onload="grabThe();">
-    <script>
-    function whatThere(){
-        var URL="bodabillsup.html";
-        var ref = new Firebase("https://amhungry.firebaseio.com/points/");
-ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
-  var newPost = snapshot.val();
-  console.log("Supermarket name: " + newPost.name);
-  console.log("latitude: " + newPost.latitude);
-    localStorage.pointlat=newPost.latitude;
-    localStorage.pointlong=newPost.longitude;
-// alert("longitude: " + newPost.longitude);
-    //suplat=newPost.latitude;
-    //suplong=newpost.longitude;
-  //  alert("Supermarket latitude"+newPost.latitude);
-    //localStorage.suplat=suplat;
-    //localStorage.suplong=suplong;
  alert("Grabbed details are"+newPost.latitude);
-     // var delay = 5000; //Your delay in milliseconds
-//setTimeout(function(){ window.location = URL; }, delay);
  DelayRedirect();
  });
 
-}
-        </script>
-         <script type="text/javascript">
-function DelayRedirect() {
+   }
+
+
+   function DelayRedirect() {
     var seconds = 5;
     var dvCountDown = document.getElementById("dvCountDown");
     var lblCount = document.getElementById("lblCount");
@@ -70,11 +45,88 @@ function DelayRedirect() {
         }
     }, 1000);
 }
+          </script>
+    </head>
+    
+    <body onload="grabThe();">
+    <script>
+    function whatThere(){
+
+        //alert("auth");
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/points/");
+    messageListRef.authWithPassword({
+      email    : "israelmikan@gmail.com",
+      password : "dangersisrael"
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+         // alert("Auth Successful");
+            var URL="bodabillsup.html";
+        //var ref = new Firebase("https://amhungry.firebaseio.com/points/");
+
+ getWhats();
+   }
+    });
+       
+     
+
+}
+
+
+
+   
+
+function getWhats(){
+  alert("getting there");
+  var messageListRef = new Firebase("https://amhungry.firebaseio.com/points/");
+ messageListRef.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+  console.log("Supermarket name: " + newPost.name);
+  console.log("latitude: " + newPost.latitude);
+    localStorage.pointlat=newPost.latitude;
+    localStorage.pointlong=newPost.longitude;
+// alert("longitude: " + newPost.longitude);
+    //suplat=newPost.latitude;
+    //suplong=newpost.longitude;
+  //  alert("Supermarket latitude"+newPost.latitude);
+    //localStorage.suplat=suplat;
+    //localStorage.suplong=suplong;
+ alert("Grabbed details are"+newPost.latitude);
+ if(localStorage.pointlat!=null){
+
+ }
+ window.location.assign("bodabillsup.html");
+ //var URL= "bodabillsup.html";
+      //var delay = 5000; //Your delay in milliseconds
+//setTimeout(function(){ window.location = URL; }, delay);
+ 
+ }); 
+
+}
+     </script>
+         <script type="text/javascript">
+
 </script>
      <div id="dvCountDown" style = "display:none">
-     <center><img src="img/boda.png"><br>
+    
 You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.</center>
-</div>
+</div> <center><img src="../img/boda.png"><br>
+<p>You Will Be Redirected After Details Are Gathered</p>
+
 <center>&copy All Rights Reserved</center>
     </body>
 
