@@ -9,9 +9,9 @@ AngularFireCart.controller("CheckoutCtrl", [
         $scope.orders = checkout.orders.$asArray();
         $scope.customers = checkout.customers.$asArray();
         $scope.error = "";
-        $scope.tax = $scope.subTotal * 0.1; // @todo Tax could be read from settings
+        $scope.tax = 0; // @todo Tax could be read from settings
         $scope.shipping = 0; // @todo Shipping options could be read from settings
-        $scope.grandTotal = $scope.subTotal + $scope.shipping + $scope.tax;
+        $scope.grandTotal = $scope.subTotal + $scope.shipping ;
         var items = angular.copy($scope.items); // Copy of our cart items object
         $scope.order = order;
 
@@ -68,8 +68,8 @@ AngularFireCart.controller("CheckoutCtrl", [
         // Helper function to generate some prefilled values for testing
         $scope.prefillValid = function() {
             $scope.customer = {
-                name: "Norik Davtian " + random(100),
-                email: "norik" + random(100) + "@bigemployee.com",
+                name: "israel mikan " + random(100),
+                email: "israelmikan" + random(100) + "@gmail.com",
                 address: random(150) + " Main Street",
                 unit: "" + random(10),
                 city: "Los Angeles",

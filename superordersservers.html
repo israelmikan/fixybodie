@@ -49,14 +49,15 @@
      supermarket=det.supermarket;
      var status=det.status;
      //alert(supermarket);
-  
+ 
    var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
   ref1.once("value", function(snapshot1) {
       
-      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); 
+      
       
       
        var ket=snapshot.key();
+        document.write("<div class='img-wrapper'><center><img src='img/boda.png' alt=''></center></div>"); 
       document.write("Choose Order key To Deliver");
       
   document.write("<table  width='100%'>");
@@ -65,9 +66,9 @@
       
   var newPost = snapshot.val();
       var cust=newPost.customer;
-      if(localStorage.getItem("serverwho") ==supermarket && status=="served"){
+      if(localStorage.getItem("bodatag") ==supermarket && status=="asasude"){
     
-        document.write("<tr><td style='color:white; display:block;'><a  href='bodasuper.html?key="+ket+"&custo="+cust+"'>Deliver Order:</a></td><td>"+ket+"</td></tr>");
+        document.write("<tr><td style='color:white; display:block;'><a  href='bodasuperserver.html?key="+ket+"&custo="+cust+"'>Serve Order:</a></td><td>"+ket+"</td></tr>");
        if(localStorage.serverwho !=null){
 //document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='serversuper.html?key="+ket+"&custo="+cust+"'>Serve Order:</a></td><td>"+ket+"</td></tr>");
        }

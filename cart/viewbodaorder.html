@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BodaFix</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+  <center><img src="../img/boda.png"><br> Boda Location
+  <a href="finalsuper.html">Go To Delivery page</a><br>
+  <p>Boda will Appear on Map As Soon as he Takes Off</p>
+  <p>Its Advisable to Stay on Delivery page for Fast Deliveries Thanks</p></center>
+    <div id="map"></div>
+    <script>
+
+var map;
+var bodalat;
+var bodalong;
+var center;
+var centerl;
+function initMap() {
+var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkeysuper+"");
+// Retrieve new posts as they are added to our database
+ref.on("value", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+    var customer=newPost.customer;
+    var subtotal=newPost.subTotal;
+    var orderstatus=newPost.status;
+     bodalat=newPost.bodalat;
+     bodalong=newPost.bodalong;
+     console.log(bodalat);
+     console.log(subtotal);
+center=parseFloat(bodalat);
+centerl=parseFloat(bodalong);
+
+
+  if(centerl==null){ alert("Boda has Not yet Started delivery process");
+window.location.assign("finalsuper.html");
+}
+
+var myLatLng = {lat: center, lng: centerl};
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: center, lng: centerl},
+    zoom: 14
+  });
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    animation:google.maps.Animation.BOUNCE,
+    map: map,
+    title: 'Boda Location!'
+  });
+    });
+ 
+
+}
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+        async defer></script>
+        <center><br>&copy; All rights Reserved Bodafix</center>
+  </body>
+</html>

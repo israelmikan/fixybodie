@@ -107,6 +107,7 @@ function getValue(varname)
           alert("Autheticated Well"+authData);
           localStorage.setItem("located",email);
            localStorage.setItem("serverwho",email);
+           localStorage.setItem("bodatag",email);
            localStorage.serverwho=email;
           if(localStorage.getItem("located")=="israelmikan@gmail.com"){
           window.location.assign("cart/admin.html");
@@ -127,6 +128,7 @@ function getValue(varname)
                           window.location.assign("orders.html");
                         }else if(type=="server"){
                          // alert("Eeh server");
+                         localStorage.serverthere="server";
                            window.location.assign("servers.html");
                         }else if(type=="admin"){
                           //localStorage.setItem("adminhascome",admin);

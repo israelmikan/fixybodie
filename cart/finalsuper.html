@@ -23,8 +23,9 @@
 </script>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
    
-<title>Special Order</title>
+<title>Bodafix</title>
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+ 
     <script> 
         
         
@@ -130,8 +131,9 @@ function refreshData()
     
          <script>
          function viewBoda(){
-alert("View Boda");
-popup('popUpDiv');
+//alert("View Boda");
+window.location.assign("viewbodaorder.html");
+
          }
                 
                 document.write("<table width='100%'>");
@@ -146,15 +148,43 @@ ref.on("value", function(snapshot, prevChildKey) {
     var customer=newPost.customer;
     var subtotal=newPost.subTotal;
     var orderstatus=newPost.status;
+    var grandTotal=newPost.grandTotal;
     var orderkey=snapshot.key();
+    localStorage.subtotal=grandTotal;
     localStorage.nowkey=orderkey;
+    if(orderstatus=="delivered"){
+      localStorage.removeItem("orderkeysuper");
+      window.location.assign("finalsuper.html");
+    }else {
+    //  document.getElementById("viewboda").style.visibility="visible";
+    }
     
     document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div><br><img src='../img/boda.png'>"); 
      document.write("<p>Delivery page</p>");
-      document.write("<button onclick='viewBoda();'>View Boda</button>");
-     document.write("<p>You Are required to keep on this page to monitor your order progress</p>");
+     document.write("<p>You Are required to pay and return on this page to monitor your order progress</p><br>");
+     
+     if(orderstatus=="asasude"){
+    document.write("<button id='viewboda' onclick='viewBoda();' style='background-color:black color:white;'>View Boda</button>");
+    }else{
+      document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
+     document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
+     document.write("<input type='hidden' name='jc' value='dons' class='textfields'>");
+     document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
+     document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
+     document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
+     document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
+     document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/successsuper.html?orderid="+localStorage.orderkeysuper+"' class='textfields'>");
+     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"' class='textfields'>");
+     document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
+     document.write("<span class='btnl'><span class='btnr'>");
+     document.write("<input type='submit' name='Submit' value='Pay Now' style='background-color:black color:white;'>");
+     document.write("</span></span>");
+   document.write("</form>")
+    }
+      
+     
     document.write("<div id='map'></div>");
-        document.write("<table border='1' width='100%'><tr><td>"+customer+"</td><td>"+subtotal+"</td><td>"+orderstatus+"</td></tr></table>");  
+        document.write("<table border='1' width='100%'><tr><td>"+customer+"</td><td>"+grandTotal+"</td><td>"+orderstatus+"</td></tr></table>");  
    document.write("<table border='1'>");
  var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
   ref1.once("value", function(snapshot1) {
@@ -181,88 +211,30 @@ document.write("<center>&copy; All Rights Reserved Bodafix</center>");
     
 });
 
+function payNow(){
 
-</script>
-<style>#blanket {
-background-color:#111;
-opacity: 0.65;
-*background:none;
-position:absolute;
-z-index: 9001;
-top:0px;
-left:0px;
-width:100%;
+  document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
+     document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
+     document.write("<input type='hidden' name='jc' value='dons' class='textfields'>");
+     document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
+     document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
+     document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
+     document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
+     document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/successsuper.html?orderid="+localStorage.orderkeysuper+"' class='textfields'>");
+     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"' class='textfields'>");
+     document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
+     document.write("<span class='btnl'><span class='btnr'>");
+     document.write("<input type='submit' name='Submit' value='Pay Now'>");
+     document.write("</span></span>");
+   document.write("</form>")
 }
+</script>
 
-#popUpDiv {
-position:absolute;
-background:url(pop-back.jpg) no-repeat;
-width:400px;
-height:400px;
-border:5px solid #000;
-z-index: 9002;
-}</style>
-<div id="blanket" style="display:none"></div>
-<div id="popUpDiv" style="display:none">
-<a href="#" onclick="popup('popUpDiv')" >Click to Close CSS Pop Up</a>
-</div>
-<a href="#" onclick="popup('popUpDiv')">Click to Open CSS Pop Up</a>
-    <div id='map'></div>
+  <div id='map'></div>
     
+
     </body>
 
 
-<script>
-  function toggle(div_id) {
-  var el = document.getElementById(div_id);
-  if ( el.style.display == 'none' ) { el.style.display = 'block';}
-  else {el.style.display = 'none';}
-}
-function blanket_size(popUpDivVar) {
-  if (typeof window.innerWidth != 'undefined') {
-    viewportheight = window.innerHeight;
-  } else {
-    viewportheight = document.documentElement.clientHeight;
-  }
-  if ((viewportheight > document.body.parentNode.scrollHeight) && (viewportheight > document.body.parentNode.clientHeight)) {
-    blanket_height = viewportheight;
-  } else {
-    if (document.body.parentNode.clientHeight > document.body.parentNode.scrollHeight) {
-      blanket_height = document.body.parentNode.clientHeight;
-    } else {
-      blanket_height = document.body.parentNode.scrollHeight;
-    }
-  }
-  var blanket = document.getElementById('blanket');
-  blanket.style.height = blanket_height + 'px';
-  var popUpDiv = document.getElementById(popUpDivVar);
-  popUpDiv_height=blanket_height/2-200;//200 is half popup's height
-  popUpDiv.style.top = popUpDiv_height + 'px';
-}
-function window_pos(popUpDivVar) {
-  if (typeof window.innerWidth != 'undefined') {
-    viewportwidth = window.innerHeight;
-  } else {
-    viewportwidth = document.documentElement.clientHeight;
-  }
-  if ((viewportwidth > document.body.parentNode.scrollWidth) && (viewportwidth > document.body.parentNode.clientWidth)) {
-    window_width = viewportwidth;
-  } else {
-    if (document.body.parentNode.clientWidth > document.body.parentNode.scrollWidth) {
-      window_width = document.body.parentNode.clientWidth;
-    } else {
-      window_width = document.body.parentNode.scrollWidth;
-    }
-  }
-  var popUpDiv = document.getElementById(popUpDivVar);
-  window_width=window_width/2-200;//200 is half popup's width
-  popUpDiv.style.left = window_width + 'px';
-}
-function popup(windowname) {
-  blanket_size(windowname);
-  window_pos(windowname);
-  toggle('blanket');
-  toggle(windowname);   
-}
-</script>
+
 </html>

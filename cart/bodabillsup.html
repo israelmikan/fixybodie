@@ -68,6 +68,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
       </script>
   </head>
   <body onload="getlat(); setTimeout('showIt()', 5000);">
+  <center><img src="../img/boda.png"></center>
     <div id="right-panel">
       <div id="inputs">
         
@@ -170,6 +171,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
 );  // create marker for location provided
       var marker = new google.maps.Marker({
       position : destinationB,
+      animation: google.maps.Animation.BOUNCE,
       map: map,
       title: 'This is the default Location!',
       draggable: true
@@ -259,10 +261,11 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
                 var charge2=charge+500;
                 var allcash=charge2+tofloat;
                 var commit=10;
-                var mine=(tofloat/100)*10;
+                var mine=(tofloat/100)*6;
+                var commiser=mine;
                 mine=mine+500;
                 
-                alert("Commision"+mine);
+                //alert("Commision"+mine);
                 var allinall=mine+allcash;
                 alert("all in all"+allinall);
                 localStorage.setItem("alltopay",allinall);
@@ -271,13 +274,14 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
                // localStorage.subtotal=allcash;
                 localStorage.subtotal=allinall;
                 localStorage.mine=mine;
+                var realboda=parseFloat(charge2)+500;
                 //alert("All cash="+allcash);
                 //alert("Total Bill"+charge);
                 //localStorage.bodafees=charge;
                 //var curtotal=localStorage.total;
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br> Mine: <br>"+localStorage.mine+" <br> Total order is "+localStorage.supertotal+" Sub Total:"+localStorage.getItem("alltopay")+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+realboda+" <br> Tax 6%: <br>"+commiser+" <br> Total order is "+localStorage.supertotal+" Sub Total:"+localStorage.getItem("alltopay")+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
             }
           }
         });
