@@ -10,7 +10,7 @@
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<title>Special Order</title>
+<title>Bodafix</title>
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -135,30 +135,31 @@ function getValue(varname)
       document.write("<table width='100%'>");
   var newPost = snapshot.val();
   document.write("<tr><td style='background-color:yellow;color:white;'><a  href='#'>Deliver Order:</td><td>"+ket+"</a></td></tr>");
-  document.write("<tr><td>Customer id:</td><td> " + newPost.customer+"</td></tr>");
+  
   document.write("<tr><td>Customer name:</td><td> " + localStorage.customername+"</td></tr>");
   document.write("<tr><td>Customer Contact:</td><td> " + localStorage.customercontact+"</td></tr>");
   document.write("<tr><td>Apartment:</td><td> " + localStorage.customerapart+"</td></tr>");
   document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
+  document.write("<tr><td>Boda Bill:</td><td> " + newPost.bodabill+"</td></tr>");
   document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");
 document.write("<tr><td>Location:</td><td> " + newPost.customerlat+","+newPost.customerlong+"</td></tr>");
       localStorage.customerlat=newPost.customerlat;
       localStorage.customerlong=newPost.customerlong;
       
       
-  document.write("<tr><td>View map</td><td><a href='showcustomer.html'><input type='submit' id='show' value='View map'></a></td></tr>");
+  document.write("<tr><td>View Customer</td><td><a href='showcustomer.html'><input type='submit' id='show' value='View Customer' style='background-color:black; color:white;'></a></td></tr>");
  var cust=newPost.customer;
       document.write("</table>");      
-   
+    document.write("<table width='100%'>");
+        
+          document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
         
  
     snapshot1.forEach(function(childSnapshot) {
         
         
     // key will be "fred" the first time and "barney" the second time
-          document.write("<table width='100%'>");
-        
-          document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
+         
     var key = childSnapshot.key();
     // childData will be the actual contents of the child
     var childData = childSnapshot.val();
@@ -226,8 +227,8 @@ document.write("</table>");
          function showLocation(position) {
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
-             //localStorage.bodalaty=latitude;
-            //localstorage.bodalongy=longitude;
+             localStorage.bodalaty=latitude;
+            localstorage.bodalongy=longitude;
            // alert("Latitude : " + latitude + " Longitude: " + longitude);
              //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
              //localStorage.bodalaty=latitude;
@@ -272,8 +273,10 @@ document.write("</table>");
         //alert("auth");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -455,8 +458,10 @@ document.write("</table>");
             
             var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {

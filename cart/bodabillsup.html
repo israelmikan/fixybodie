@@ -43,7 +43,7 @@
        var suplat;
           var suplong;
           function getlat(){
-                   alert("getting POint details");
+                   console.log("getting POint details");
       var ref = new Firebase("https://amhungry.firebaseio.com/points/");
 ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", function(snapshot, prevChildKey) {
   var newPost = snapshot.val();
@@ -55,7 +55,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
   //  alert("Supermarket latitude"+newPost.latitude);
     localStorage.suplat=newPost.latitude;
     localStorage.suplong=newPost.longitude;
-    alert("Grabbed details include"+localStorage.suplat);
+    console.log("Grabbed details include"+localStorage.suplat);
  
  
  });
@@ -67,14 +67,15 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
     }
       </script>
   </head>
-  <body onload="getlat(); setTimeout('showIt()', 5000);">
-  <center><img src="../img/boda.png"></center>
+  <body onload="getlat(); setTimeout('showIt()', 5000);" style="background-image:url(../img/back.jpg); background-repeat:no-repeat;">
+  <center><img src="../img/piss.png" width="120px" height="120px"></center>
     <div id="right-panel">
       <div id="inputs">
         
       </div>
       <div>
         <strong>Results</strong>
+        <p style="font-size:9px;">Tip: Scroll Down To COnfirm Transaction and Shipping Costs... </p>
       </div>
       <div id="output"></div>
     </div>
@@ -164,7 +165,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
       });
     }
     else
-        alert("Directions failed");
+        alert("Directions failed Turn on Location and Continue");
     //  $("#error").append("Unable to retrieve your route<br />");
       
   }
@@ -194,7 +195,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
         var textToInsert = '';  
         var finallat=evt.latLng.lat().toFixed(5);
         var finallong=evt.latLng.lng().toFixed(5);
-        alert("New Cordinates "+finallat+ " "+"finallong");
+        console.log("New Cordinates "+finallat+ " "+"finallong");
        // textToInsert = '<tr><td>' + evt.latLng.lat().toFixed(5) + '</td><td>' + evt.latLng.lng().toFixed(5) + '</td></tr>';     
         //$("#myTable tbody").prepend(textToInsert);
       });
@@ -263,6 +264,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
                 var commit=10;
                 var mine=(tofloat/100)*6;
                 var commiser=mine;
+				localStorage.comiser=commiser;
                 mine=mine+500;
                 
                 //alert("Commision"+mine);
@@ -273,15 +275,17 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
                 localStorage.bodabill=charge;
                // localStorage.subtotal=allcash;
                 localStorage.subtotal=allinall;
+				
                 localStorage.mine=mine;
                 var realboda=parseFloat(charge2)+500;
+				localStorage.realboda=realboda;
                 //alert("All cash="+allcash);
                 //alert("Total Bill"+charge);
                 //localStorage.bodafees=charge;
                 //var curtotal=localStorage.total;
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+realboda+" <br> Tax 6%: <br>"+commiser+" <br> Total order is "+localStorage.supertotal+" Sub Total:"+localStorage.getItem("alltopay")+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+realboda+" <br> Tax 6%: <br>"+commiser+" <br> Total order is "+localStorage.supertotal+" Sub Total:"+localStorage.getItem("alltopay")+"<a href='finalsuper.html'><input type='submit' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'></a><br>";
             }
           }
         });

@@ -10,9 +10,9 @@
       </title>
         <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script>
-			if (  localStorage.getItem("serverwho")=== null) {
+			if (localStorage.getItem("serverwho")=== null) {
 			  //...
-			window.location.assign("login.html")
+			//window.location.assign("loginboda.html")
 			
 			
 			}
@@ -38,8 +38,8 @@
         alert("auth");
     var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -70,7 +70,7 @@
   messageListRef.once("value", function(allMessagesSnapshot) {
            
     document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='150px'></center></div>");    
-        document.write("Welcome:  "+server+"<br><h3>Choose Food Order To Serve</h3><hr>");
+        document.write("Welcome:  "+localStorage.serverwho+"<br><h3>Choose Food Order To Serve</h3><hr>");
           document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superordersservers.html' class='mybutton'><input type='button' style='background-color:black;color:white; ' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><input type='button' style='background-color:black;color:white;' onclick='logoutMe();' value='Logout' class='mybutton'></a></td></tr></table>");
       allMessagesSnapshot.forEach(function(messageSnapshot) {
         // Will be called with a messageSnapshot for each child under the /messages/ node

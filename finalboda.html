@@ -177,8 +177,10 @@ function getValue(varname)
         //alert("auth");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -416,8 +418,10 @@ function getValue(varname)
             
             var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {

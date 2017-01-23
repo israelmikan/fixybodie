@@ -7,6 +7,10 @@
     <meta name="viewport" content="user-sc
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA"
             type="text/javascript"></script>
 	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script></head>
@@ -71,12 +75,12 @@ body {
         var deviceid=device.uuid;
         var deviceversion=device.version;
         localStorage.deviceid=deviceid;
-        alert("device id "+deviceid);
-        alert("device cordova"+deviceversion); 
+       console.log("device id "+deviceid);
+       console.log("device cordova"+deviceversion); 
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else { 
-       alert("Geolocation is not supported by this browser.");
+       alert("Geolocation is not supported by this device.");
     }
 }
 
@@ -182,6 +186,12 @@ function showError(error) {
          
     };
 	function load(){
+	if(!localStorage.authemail){
+			 
+			console.log("Wait we get details");
+			 Loader();
+			 getEmail();
+			 }	
     var latu=parseFloat(localStorage.here);
     var lotu=parseFloat(localStorage.here1);
 	var map = new google.maps.Map(document.getElementById("map"), {
@@ -191,10 +201,13 @@ function showError(error) {
       });
 	     var infoWindow = new google.maps.InfoWindow;
 		 
+		 
 		      var messageListRef = new Firebase("https://amhungry.firebaseio.com/points");
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -242,7 +255,7 @@ function showError(error) {
 						
 						if(type==username){
 							//alert("Found something");
-						   var html="<form name='theform' action='cart/index.html' method='get'><input type='hidden' name='name' value='"+name+"'><input type='submit' class='mybutoon' value='Shop Now'>";
+						   var html="<form name='theform' action='cart/index.html' method='get'><input type='hidden' name='name' value='"+name+"'><input type='submit' class='mybutoon' style='background-color:black; color:white;' value='Shop Now'>";
 						}
             
 				        var icon = customIcons[type] || {};
@@ -306,6 +319,54 @@ function showError(error) {
     }
 
     function doNothing() {}
+
+		
+		function Loader(){
+    $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=password",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            //console.log(responseData);
+			localStorage.authpassword=responseData;
+			console.log(localStorage.authpassword);
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });   
+    
+    }
+	function getEmail(){
+      $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=email",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        { 
+            //console.log(responseData);
+			localStorage.authemail=responseData;
+			console.log(localStorage.authemail);
+			
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });  
+    
+    }
+		
+		
+		
 	
 	</script>
 	<script src="cordova.js" id="xdkJScordova_"></script>
@@ -343,8 +404,8 @@ function showError(error) {
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <a href="final.html">My Order</a>
   <a href="cart/finalsuper.html">My Cart</a>
-  <a href="orders.html">Deliver</a>
-  <a href="servers.html">Serve</a>
+  <a href="orders.html">login</a>
+  <!--<a href="servers.html">Serve</a> -->
   
  <!--  <a href="#">Browse</a>
  <a href="#">Clients</a>

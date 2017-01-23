@@ -111,7 +111,7 @@ function refreshData()
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap">
     </script>
     </head>
-   <body onload="Track();">
+   <body style="background-image:url(../img/back.jpg);" onload="Track();">
        <script>
        var laty=parseFloat(localStorage.custlat);
        var longy = parseFloat(localStorage.custlong);
@@ -147,24 +147,34 @@ ref.on("value", function(snapshot, prevChildKey) {
   var newPost = snapshot.val();
     var customer=newPost.customer;
     var subtotal=newPost.subTotal;
-    var orderstatus=newPost.status;
+    var orderstatus=newPost.orderstatus;
+	var status=newPost.status;
     var grandTotal=newPost.grandTotal;
     var orderkey=snapshot.key();
     localStorage.subtotal=grandTotal;
     localStorage.nowkey=orderkey;
+	if(localStorage.getItem("orderkeysuper")==null){
+		alert("You Dont have Any orders Currently");
+      window.location.assign("../index.html");
+		}
     if(orderstatus=="delivered"){
       localStorage.removeItem("orderkeysuper");
-      window.location.assign("finalsuper.html");
+	  alert("You Dont have Any orders Currently");
+      window.location.assign("../index.html");
     }else {
     //  document.getElementById("viewboda").style.visibility="visible";
     }
-    
-    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div><br><img src='../img/boda.png'>"); 
-     document.write("<p>Delivery page</p>");
-     document.write("<p>You Are required to pay and return on this page to monitor your order progress</p><br>");
-     
-     if(orderstatus=="asasude"){
-    document.write("<button id='viewboda' onclick='viewBoda();' style='background-color:black color:white;'>View Boda</button>");
+	var alltopay=parseFloat(localStorage.getItem("alltopay"));
+    var jpesafee=(alltopay/100)*4;
+	localStorage.subtotal=parseFloat(localStorage.subtotal)+ jpesafee;
+	alltopay=alltopay +jpesafee;
+	localStorage.setItem("alltopay",alltopay);
+	//alert("All To pay"+alltopay);
+    document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div><center><img src='../img/boda.png'><br>Delivery page</center> "); 
+      document.write("<p>You Are required to pay and return on this page to track your order Guidelines on Next page</p>");
+     document.write("<strong><p>Total Cart :"+localStorage.supertotal+" Delivery Costs: "+localStorage.realboda+" | Tax: "+localStorage.comiser+" | Mobile Money fee: "+jpesafee+" (4%)</p></strong>");
+     if(orderstatus=="served" || orderstatus=="asasude" ){
+    document.write("<center><button id='viewboda' onclick='viewBoda();' style='background-color:black; color:white;'>View Boda</button></center>");
     }else{
       document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
      document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
@@ -172,20 +182,24 @@ ref.on("value", function(snapshot, prevChildKey) {
      document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
      document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
      document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
-     document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
+     document.write("<input type='hidden' name='amount' value='"+localStorage.getItem("alltopay")+"' id='ammounttopay' class='textfields'>");
      document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/successsuper.html?orderid="+localStorage.orderkeysuper+"' class='textfields'>");
      document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"' class='textfields'>");
      document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
      document.write("<span class='btnl'><span class='btnr'>");
-     document.write("<input type='submit' name='Submit' value='Pay Now' style='background-color:black color:white;'>");
+     document.write("<center><input type='submit' name='Submit' value='Pay Now' style='background-color:black; color:white;'></center>");
      document.write("</span></span>");
    document.write("</form>")
     }
       
      
     document.write("<div id='map'></div>");
-        document.write("<table border='1' width='100%'><tr><td>"+customer+"</td><td>"+grandTotal+"</td><td>"+orderstatus+"</td></tr></table>");  
-   document.write("<table border='1'>");
+        document.write("<table border='0' width='100%'>");
+		  document.write("<tr><td>Order Code</td><td>Grand Total</td></tr>");
+		document.write("<tr><td>"+localStorage.orderkeysuper+"</td><td>"+localStorage.getItem("alltopay")+"</td></tr>");
+		document.write("</table><hr>");
+   document.write("<table border='0' width='100%'>");
+   document.write("<tr style='color:white;background-color:black;'><td>Item name</td><td>Quantity</td><td>Price</td></tr>");
  var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
   ref1.once("value", function(snapshot1) {
   
@@ -198,14 +212,14 @@ ref.on("value", function(snapshot, prevChildKey) {
         var price=childData.price;
         var qty=childData.quantity;
         
-        document.write("<tr><td>Item name:"+itemtitle+"</td><td>Quantity"+qty+"</td><td>Price:"+price+"</td></tr>");
+        document.write("<tr><td>"+itemtitle+"</td><td>"+qty+"| </td><td>"+price+"</td></tr>");
           
 
 
   
   });
 document.write("</table>");
-document.write("<center>&copy; All Rights Reserved Bodafix</center>");
+document.write("<center><br><br><hr>&copy; All Rights Reserved Bodafix</center>");
   });
     
     
@@ -219,7 +233,7 @@ function payNow(){
      document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
      document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
      document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
-     document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
+     document.write("<input type='hidden' name='amount' value='"+localStorage.getItem("alltopay")+"' id='ammounttopay' class='textfields'>");
      document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/successsuper.html?orderid="+localStorage.orderkeysuper+"' class='textfields'>");
      document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"' class='textfields'>");
      document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");

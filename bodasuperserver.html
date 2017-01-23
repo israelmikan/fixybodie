@@ -10,7 +10,7 @@
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<title>Special Order</title>
+<title>Bodafix</title>
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -125,7 +125,7 @@ function getValue(varname)
    var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey+"/items");
   ref1.once("value", function(snapshot1) {
       
-      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); 
+      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'><br><img src='img/boda.png' alt=''></center></div>"); 
       
       
        var ket=snapshot.key();
@@ -146,7 +146,7 @@ document.write("<tr style='visibility:hidden'><td>Location:</td><td> " + newPost
       localStorage.customerlong=newPost.customerlong;
       
       
-  document.write("<tr><td>View map</td><td><button onclick='updateOrder()' style='background-color:black;color:white;' >Set order Served</button></td></tr>");
+  document.write("<tr><td></td><td><button onclick='updateOrder()' style='background-color:black;color:white;' >Set order Served</button></td></tr>");
  var cust=newPost.customer;
       document.write("</table>");      
    
@@ -193,7 +193,7 @@ document.write("</table>");
   <script>
     
     function showcustomer(){
-       alert("Customer Showing"); 
+       console.log("Customer Showing"); 
     var dialog = document.getElementById('window');  
     document.getElementById('show').onclick = function() {  
         dialog.show();  
@@ -272,8 +272,10 @@ document.write("</table>");
         //alert("auth");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -393,7 +395,7 @@ document.write("</table>");
     <form><div id="map" style="visibility:hidden;">
                
                
-               </div> <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+               </div>
         <script>
                      
     
@@ -455,8 +457,8 @@ document.write("</table>");
             
             var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -483,7 +485,8 @@ document.write("</table>");
          // alert('Synchronization succeeded');
       }
     };
-    messageListRef.update({ status:"served"}, onComplete);
+	var sevie=localStorage.getItem("serverwho");
+    messageListRef.update({ orderstatus:"served",servedby:sevie}, onComplete);
          // alert("Authetication Working");
        alert('Order details Set to Served Wait for Pickup');
           window.location.assign("superordersservers.html");

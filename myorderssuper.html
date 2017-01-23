@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+            
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+      <title>
+      
+      </title>
+        <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+      <script>
+			if (localStorage.getItem("located") === null) {
+			  //...
+			window.location.assign("login.html")
+			
+			
+			}
+		</script>
+      
+ <style>
+    .mybutton{
+        border: thick;
+        height:50px;
+        background-color: black;
+        color: white;
+        font-family: serif;
+    }
+     
+     .deliver a: link {
+       color: white;
+}
+</style>
+    </head>
+    
+    <body>
+     
+       <script>
+         var supermarket;
+		 var totalearnings=0;
+     console.log(localStorage.getItem("bodatag"));
+     
+ var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/");
+      // Get a database reference to our posts
+   
+ 
+ ref.orderByChild("deriveredby").equalTo(localStorage.getItem("located")).on("child_added", function(snapshot, prevChildKey) {
+    
+ var det=snapshot.val();
+     supermarket=det.supermarket;
+	 var status=det.orderstatus;
+	 var by=det.deriveredby;
+     var status=det.orderstatus;
+     //alert(supermarket);
+  
+   var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
+  ref1.once("value", function(snapshot1) {
+      
+      document.write("<div class='img-wrapper'><center><img src='img/piss.png' alt='' width='40%' height='120px'></center></div>"); document.write("<br><center><img src='img/boda.png'></center>");
+      document.write("<center><a href='orders.html'>Go back</a></center>");
+      
+       var ket=snapshot.key();
+      document.write("<p>Your Delivered Orders</p>");
+      
+  document.write("<table  width='100%'>");
+  
+      document.write("<table width='100%'>");
+      
+  var newPost = snapshot.val();
+      var cust=newPost.customer;
+      if(localStorage.getItem("bodatag") ==supermarket && status=="delivered"){
+    
+       // document.write("<tr><td style='color:white; display:block;'><a  href='bodasuper.html?key="+ket+"&custo="+cust+"'>Deliver Order:</a></td><td>"+ket+"</td></tr>");
+       if(localStorage.serverwho !=null){
+//document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='serversuper.html?key="+ket+"&custo="+cust+"'>Serve Order:</a></td><td>"+ket+"</td></tr>");
+       }
+  document.write("<tr><td>Customer:</td><td>"+ newPost.customer+"</td></tr>");
+  document.write("<tr><td>Supermarket:</td><td>" + newPost.supermarket+"</td></tr>");
+  document.write("<tr><td>Total order:</td><td>" + newPost.subTotal+"</td></tr>");
+   document.write("<tr><td>Boda Bill:</td><td>" + newPost.bodabill+"</td></tr>");
+     document.write("<tr><td>Order Status:</td><td>" + newPost.orderstatus+"</td></tr>");
+  document.write("</table>");
+  var bills=parseFloat(newPost.bodabill);
+  totalearnings+=bills;
+  document.write("<table width='100%'>");
+   document.write("<tr style='background-color:black;color:white;'><td >Product</td><td>Price:</td><td>Qty:</td></tr><hr><center>Items</center>");
+    snapshot1.forEach(function(childSnapshot) {
+    // key will be "fred" the first time and "barney" the second time
+          
+          //document.write("<tr style='background-color:black;color:white;'><td>Product</td><td>Price</td><td>Quantity</td></tr>");
+    var key = childSnapshot.key();
+    // childData will be the actual contents of the child
+    var childData = childSnapshot.val();	
+	 console.log("Product: " + childData.title);
+     console.log("price:   " + childData.price);
+	 console.log("Quantity: " + childData.quantity);
+	 console.log("One order ends here");        
+     document.write("<tr><td>"+childData.title+"</td><td>"+childData.price+"</td><td>"+childData.quantity+"</td></tr>");
+    });
+      
+document.write("</table>");
+   document.write("<hr>"); 
+   }else{
+    document.write("You Dnt Have Orders Pending");
+   }  
+   document.write("Your Total Deliveries are: "+totalearnings);
+  });
+  ///document.write("<tr><td>""</td><td>""</td><td><a href='bodasuper.html'>Deliver Order</td></tr>");
+ 
+ 
+});
+
+      </script>
+   
+    
+    </body>
+</html>

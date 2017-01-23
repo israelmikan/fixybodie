@@ -2,8 +2,10 @@
         alert("auth");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/points/");
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {

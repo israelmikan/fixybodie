@@ -96,8 +96,8 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+loca
         alert("auth");
     
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -213,7 +213,7 @@ alert("Iyiiii");
   } else {
     console.log('Synchronization succeeded');
       //alert('Synchronization succeeded');
-      alrt("Order key is"+localStorage.orderkey);
+      alert("Order key is"+localStorage.orderkey);
   }
 };
 var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
@@ -230,8 +230,10 @@ messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorag
         //alert("autheticate");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -586,7 +588,7 @@ document.getElementById('abc').style.display = "none";
 }
 
 function PayUs(){
-  alert("Payiong");
+  console.log("Paying");
   //document.getElementById("ammounttopay").value=locastorage.subtotal;
   div_show();
 }

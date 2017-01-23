@@ -10,7 +10,7 @@
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-<title>Special Order</title>
+<title>BodaFix</title>
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -143,6 +143,7 @@ function getValue(varname)
             else{
                alert("Sorry, browser does not support geolocation!");
             }
+			locateCustomer();
          }
     
     </script>
@@ -153,10 +154,12 @@ function getValue(varname)
     <script>
      function autheticate(){
         //alert("auth");
+		 document.getElementById("callCustomer").href = "tel:"+localStorage.customercontact;
+		var database = firebase.database();
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -174,18 +177,20 @@ function getValue(varname)
         }
       } else {
         console.log("Authenticated successfully with payload:", authData);
-		
+		messageListRef.update({ bodalat:localStorage.bodalaty,bodalong:localStorage.bodalongy}, onComplete);
+         // alert("Authetication Working");
+      console.log('Boda details saved');
 		  var onComplete = function(error) {
       if (error) {
         console.log('Synchronization failed');
       } else {
         console.log('Synchronization succeeded');
          // alert('Synchronization succeeded');
+		 
+		 
       }
     };
-    messageListRef.update({ bodalat: localStorage.bodalaty, bodalong: localStorage.bodalongy }, onComplete);
-         // alert("Authetication Working");
-      console.log('Boda details saved');
+   
           //window.location.assign("final.html");
   
       }
@@ -263,7 +268,7 @@ function getValue(varname)
             document.write("<table width='100%' border='0'>")
             document.write("<tr><td>Order Key:</td><td>"+localStorage.orderkey+"</td></tr>");
             document.write("<tr><td>Customer:</td><td>"+localStorage.customername+"</td></tr>"); 
-            document.write("<tr><td>Customer No</td><td>"+localStorage.customercontact+"</td></tr>");
+            document.write("<tr><td>Customer Contact</td><td>"+localStorage.customercontact+"</td></tr>");
             document.write("<tr><td>Aprtment/Unit</td><td>"+localStorage.customerapart+"</td></tr>");
             document.write("<tr><td>Latitude:</td><td>"+localStorage.customerlat+"</td></tr>");
             document.write("<tr><td>Longitude:</td><td>"+localStorage.customerlong+"</td></tr>");
@@ -304,10 +309,7 @@ function getValue(varname)
       
             
             
-            var c = parseFloat(localStorage.customerlat);
-            var d = parseFloat(localStorage.customerlong);
-            var bodalat=parseFloat(localStorage.bodalaty);
-            var bodalong=parseFloat(localStorage.bodalongy);
+         
             
             
             //alert(c);
@@ -317,7 +319,10 @@ function getValue(varname)
             
       var map;
       function initMap() {
-                    
+                var c = parseFloat(localStorage.customerlat);
+            var d = parseFloat(localStorage.customerlong);
+            var bodalat=parseFloat(localStorage.bodalaty);
+            var bodalong=parseFloat(localStorage.bodalongy);       
           var myLatLng = {lat: c, lng: d};
           var bodyy={lat: bodalat, lng: bodalong};
 
@@ -352,15 +357,17 @@ function getValue(varname)
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
     async defer></script>
        <script>
-        
+       var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
         function updateOrder(){
             
            // alert("Update order");
             
-            var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+            
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -387,7 +394,8 @@ function getValue(varname)
          // alert('Synchronization succeeded');
       }
     };
-    messageListRef.update({ orderstatus:"delivered"}, onComplete);
+	var whobrout=localStorage.getItem("located");
+    messageListRef.update({ orderstatus:"delivered",deriveredby:whobrout}, onComplete);
          // alert("Authetication Working");
        alert('Order details Set to delivered');
         window.location.assign("orders.html");
@@ -398,9 +406,27 @@ function getValue(varname)
    
             
         }
-        </script>
- <input type="button" onclick="updateOrder();" value="Set Order Delivered"/>
-         <input type="button" onclick="getLocationUpdate();" value="Locate Customer"/>
+		
+		function locateCustomer(){
+			      console.log("Locating Customer");   
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey+"");
+// Retrieve new posts as they are added to our database
+messageListRef.on("value", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+  var customerlat=newPost.customerlat;
+  var customerlong=newPost.customerlong;
+  localStorage.customerlat=customerlat;
+  localStorage.customerlong=customerlong;
+  console.log(customerlat);
+  initMap();
+});
+			
+			}
+        </script><br />
+ <input type="button" onclick="updateOrder();" value="Set Order Delivered" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/>
+         <input type="button" onclick="getLocationUpdate();" value="Locate Customer" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/>
+             <a href="" id="callCustomer"><input type="button"  value="Call Customer" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/></a>
+              <a href="orders.html" id="callCustomer"><input type="button"  value="Go Back" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/></a>
       </form>
  
 </body>

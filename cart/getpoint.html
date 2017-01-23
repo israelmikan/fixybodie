@@ -17,13 +17,13 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
   var newPost = snapshot.val();
   console.log("Supermarket name: " + newPost.name);
   console.log("latitude: " + newPost.latitude);
- alert("longitude: " + newPost.longitude);
+console.log("longitude: " + newPost.longitude);
     //suplat=newPost.latitude;
     //suplong=newpost.longitude;
   //  alert("Supermarket latitude"+newPost.latitude);
     //localStorage.suplat=suplat;
     //localStorage.suplong=suplong;
- alert("Grabbed details are"+newPost.latitude);
+ console.log("Grabbed details are"+newPost.latitude);
  DelayRedirect();
  });
 
@@ -48,15 +48,17 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
           </script>
     </head>
     
-    <body onload="grabThe();">
+    <body onload="grabThe();" style="background-image:url(../img/back.jpg);">
     <script>
     function whatThere(){
 
         //alert("auth");
      var messageListRef = new Firebase("https://amhungry.firebaseio.com/points/");
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -105,7 +107,7 @@ function getWhats(){
   //  alert("Supermarket latitude"+newPost.latitude);
     //localStorage.suplat=suplat;
     //localStorage.suplong=suplong;
- alert("Grabbed details are"+newPost.latitude);
+ console.log("Grabbed details are"+newPost.latitude);
  if(localStorage.pointlat!=null){
 
  }
@@ -121,14 +123,14 @@ function getWhats(){
          <script type="text/javascript">
 
 </script>
-      <center><img src="../img/boda.png"><br>
+      <center><img src="../img/piss.png" width="120px" height="120px"><br>
       <div id="dvCountDown" style = "display:none">
     
 You will be redirected after <span id = "lblCount"></span>&nbsp;seconds.</center>
 </div>
 <p>You Will Be Redirected After Details Are Gathered</p>
 
-<center>&copy All Rights Reserved</center>
+<center> <marquee>&copy All Rights Reserved Boda Fix Uganda</marquee></center>
     </body>
 
 

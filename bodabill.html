@@ -232,8 +232,8 @@ window.location.assign("buy.html");
                 var charge2=charge+500;
                 charge2=parseFloat(charge2);
                 var allcash=charge2+tofloat;
-                var commit=10;
-                var mine=(tofloat/100)*10;
+                var commit=4;
+                var mine=(tofloat/100)*4;
 
                 alert("Commision"+mine);
                 var allinall=mine+allcash;
@@ -242,6 +242,11 @@ window.location.assign("buy.html");
                 localStorage.bodabill=charge;
                 localStorage.subtotal=allinall;
                 localStorage.mine=mine+500;
+				var charged=parseFloat(localStorage.getItem("alltopay"));
+				var mmoney=(charged/100)*4;
+				var alltot=allinall+mmoney+500;
+				localStorage.setItem("alltopay",alltot);
+				localStorage.subtotal=alltot;
                 //alert("All cash="+allcash);
                 //alert("Total Bill"+charge);
                 //localStorage.bodafees=charge;
@@ -249,7 +254,7 @@ window.location.assign("buy.html");
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
                var dista=localStorage.getItem("distance");
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>  Total order is "+localStorage.total+" All Total:"+localStorage.getItem("alltopay")+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>Mobile Money Dues: "+mmoney+" <br> Total order is "+localStorage.total+" All Total:"+localStorage.getItem("alltopay")+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
             }
           }
         });

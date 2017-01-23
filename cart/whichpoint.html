@@ -43,8 +43,10 @@ document.write("<img id='close' src='images/3.png' onclick ='div_hide()'>");
 document.write("<h2>Select Orders for</h2><hr>");
   var messageListRef = new Firebase("https://amhungry.firebaseio.com/points");
     messageListRef.authWithPassword({
-      email    : "israelmikan@gmail.com",
-      password : "dangersisrael"
+      email    :localStorage.authemail,
+
+
+      password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {

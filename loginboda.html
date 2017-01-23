@@ -10,7 +10,7 @@
             type="text/javascript"></script>
 	<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-    <title>Special Order</title> 
+    <title>Boda Fix</title> 
 
    
     
@@ -73,6 +73,8 @@ function getValue(varname)
       </script>
       
     <script>
+	
+	
                 var type;
 
 	var ref = new Firebase("https://amhungry.firebaseio.com/bodas");
@@ -104,10 +106,10 @@ function getValue(varname)
         }
       } else {
         console.log("Authenticated successfully with payload:", authData);
-          alert("Autheticated Well"+authData);
+          console.log("Autheticated Well"+authData);
           localStorage.setItem("located",email);
            localStorage.setItem("serverwho",email);
-           localStorage.setItem("bodatag",email);
+           //localStorage.setItem("bodatag",email);
            localStorage.serverwho=email;
           if(localStorage.getItem("located")=="israelmikan@gmail.com"){
           window.location.assign("cart/admin.html");
@@ -121,23 +123,24 @@ function getValue(varname)
                 console.log("tag "+det.tag);
                 console.log(snapshot.key());
                 console.log(snapshot.tag);
-              alert(type);
+              console.log(type);
                 localStorage.setItem("bodatag",bodatag);
                 localStorage.type=type;
                 if(type=="boda"){
                           window.location.assign("orders.html");
                         }else if(type=="server"){
                          // alert("Eeh server");
-                         localStorage.serverthere="server";
+						 localStorage.setItem("serverwho",email);
+                         localStorage.serverthere=="server";
                            window.location.assign("servers.html");
                         }else if(type=="admin"){
-                          //localStorage.setItem("adminhascome",admin);
+                          localStorage.setItem("adminhascome",admin);
                          window.location.assign("cart/admin.html");
                         }
             
             });   
          if((localStorage.getItem("bodatag")==null)){
-          alert("OOps No Boda tag");
+          console.log("OOps No Boda tag");
          }else if(localStorage.getItem("bodatag") !==null){
              alert(localStorage.getItem("bodatag"));
 
@@ -168,7 +171,9 @@ function redirectI(){
 	
 	
 	<body>
-	
-	
+    <center>
+    <img src="img/piss.png" height="130px;" width="130px;" >
+	<P>You will Be Redirected when login after successful Login</P>
+	</center>
 	</body>
 	</html>
