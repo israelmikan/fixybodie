@@ -3,13 +3,7 @@
 
 <head>
      <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-     <script>
-        
-
-
-
-     </script>
-    <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 <script>
     //alert("You Should Stay on This page For fast Deliveries to take effect");
   // Initialize Firebase
@@ -93,7 +87,7 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+loca
 
     
     function auth(){
-        alert("auth");
+        console.log("auth");
     
     messageListRef.authWithPassword({
       email    :localStorage.authemail,
@@ -121,16 +115,16 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+loca
   
 }   
 function fuck(){
-  alert("fuck this ");
+  console.log("fuck this ");
 //messageListRef.push({ 'user_id': 'ttttttttred', 'text': 'Yabba Dabba Doo!' });
 messageListRef.push({ 'order_id': localStorage.orderid, 'hotel': localStorage.hotel, 'qty': localStorage.qty, 'total': localStorage.total, 'contact': localStorage.contact, 'latitude': localStorage.latitude, 'longitude': localStorage.longitude, 'saletype': localStorage.saletype  });
-alert("Iyiiii");
+console.log("Iyiiii");
     
    
     messageListRef.orderByChild("order_id").equalTo(localStorage.orderid).on("child_added", function(snapshot) {
       console.log(snapshot.key());
        
-        alert("Saved Order is "+snapshot.key());
+        console.log("Saved Order is "+snapshot.key());
         
         var orderid=snapshot.key();
         
@@ -213,7 +207,7 @@ alert("Iyiiii");
   } else {
     console.log('Synchronization succeeded');
       //alert('Synchronization succeeded');
-      alert("Order key is"+localStorage.orderkey);
+      console.log("Order key is"+localStorage.orderkey);
   }
 };
 var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);

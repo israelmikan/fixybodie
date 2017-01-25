@@ -6,7 +6,15 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
       <title>
       
-      </title>
+      </title>    <script>
+ 
+ function autoRefresh1()
+{
+	   window.location.reload();
+}
+ 
+ setInterval('autoRefresh1()', 12000); // this will reload page after every 5 secounds; Method II
+</script>  
         <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script>
 			if (localStorage.getItem("located") === null) {
@@ -82,7 +90,7 @@ window.location.assign("index.html");
 		
 		if(localStorage.type=="server"){
 			//if server
-			document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Other Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white;' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'><a href='logout.html'><input type='button' style='background-color:black;color:white;'  value='Logout' class='mybutton'></a></td></tr></table>");
+			document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Other Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white;' value='Supermarket Orders' class='mybutton'></a></td><td><p' class='mybutton'></td></tr><tr><td><a href='logout.html'><input type='button' style='background-color:black;color:white;'  value='Logout' class='mybutton'></a></td></tr></table>");
 			}else if(localStorage.type=="boda"){
 				//if boda
 			document.write("<table><tr><td><a href='#' class='mybutton'><input type='button'' value='Food Orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><a href='superorders.html' class='mybutton'><input type='button' style='background-color:black;color:white;' value='Supermarket Orders' class='mybutton'></a><a href='myorders.html' class='mybutton'><input type='button'' value='My Orders' style='background-color:black;color:white;' class='mybutton'></a><a href='myorderssuper.html' class='mybutton'><input type='button'' value='My Supermarket orders' style='background-color:black;color:white;' class='mybutton'></a></td><td><p' class='mybutton'><a href='logout.html'><input type='button' style='background-color:black;color:white;'  value='Logout' class='mybutton'></a></td></tr></table>");
@@ -98,12 +106,13 @@ window.location.assign("index.html");
 		var total = messageSnapshot.child("total").val(); 
 		var contact=messageSnapshot.child("contact").val();
 		var latitude= messageSnapshot.child("latitude").val(); 
+		var bodabill=messageSnapshot.child("bodabill").val(); 
 		var longitude = messageSnapshot.child("longitude").val(); 
           var order_status=messageSnapshot.child("orderstatus").val();
-          if(hotel==localStorage.getItem("bodatag") &&  order_status=="asasude" || order_status=="served"){
+          if(hotel==localStorage.getItem("bodatag") &&  order_status=="served"){
               document.write("<hr>");		
       document.write("Order Code:   "+order_id);
-      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td> What: "+saletype+" &nbsp; Status:"+order_status+"</td><td><a href='boda.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Deliver' class='deli'></a></td></tr></table>");
+      document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td> What: "+saletype+" &nbsp; Status:"+order_status+"</td><td><a href='boda.html?key="+key+"&bodabill="+bodabill+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Deliver' class='deli'></a></td></tr></table>");
           document.write("<hr>");	
               
               

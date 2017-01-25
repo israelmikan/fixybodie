@@ -60,12 +60,12 @@
 function pickThem(){
 var pointname=getValue("pointname");
 var saletype=getValue("saletype");
+//var email=getValue("email");
 localStorage.setItem("pickwho",pointname);
 localStorage.setItem("saletype",saletype);
-if(saletype=="supermarket"){
-	alert(pointname);
-	window.location.assign("myorderssuper.html");
-	}
+//if(saletype=="supermarket"){
+//	alert(pointname);
+//	}
 //
 //alert(saletype)
 	
@@ -124,8 +124,9 @@ if(saletype=="supermarket"){
     //pick total payments
 	
 	var alltota=0;
+	var fulltoat=0;
 var hotel=localStorage.getItem("pickwho");
-var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/workerpayments/");
   messageListRef.once("value", function(allMessagesSnapshot) {
   	          
       allMessagesSnapshot.forEach(function(messageSnapshot) {
@@ -142,7 +143,7 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
 		}
 		  
 		   });
-		   console.log("All cash for Hotel is"+alltota);
+		   console.log("All cash for Boda is"+alltota);
     });
 	
 	//end total payments
@@ -151,12 +152,12 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
 	
 	     
    
- var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders");
-  messageListRef.orderByChild("hotel").equalTo(localStorage.getItem("pickwho")).once("value", function(allMessagesSnapshot) {
+ var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/");
+  messageListRef.orderByChild("deriveredby").equalTo(localStorage.getItem("pickwho")).once("value", function(allMessagesSnapshot) {
            
     document.write("<div class='img-wrapper'><center><img src='../img/piss.png' alt='' width='40%' height='150px'></center></div>");    
 	
-        document.write("Welcome: <br><h3>Admin Orders for "+localStorage.getItem("pickwho")+"</h3><hr>");
+        document.write("Welcome: <br><h3>Admin Delivered Orders for "+localStorage.getItem("pickwho")+"</h3><hr>");
 		document.write("<table>");
 		document.write("<tr><td>Total Client Bill:</td><td><p id='clientbill'></p></td></tr>");
 		document.write("<tr><td>Bodafix takes:</td><td><p id='mybill'></p></td></tr>");
@@ -181,16 +182,7 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
 		  var bodabill=messageSnapshot.child("bodabill").val();
 		  var mine=messageSnapshot.child("mine").val();
 		  var hotelbill=messageSnapshot.child("hotelbill").val();
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
-		 
+		    if(order_status=="delivered"){
 		  hotelbill=parseFloat(hotelbill);
 		  mine=parseFloat(mine);
 		  bodabill=parseFloat(bodabill);
@@ -198,9 +190,9 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
 		  totalammount+=hotelbill;
 		  mytotal+=mine;
 		  bodatotal+=bodabill;
-		  alltotal+=total;
-		  
-          if(order_status=="delivered"){
+		  alltotal=bodabill+mine+hotelbill;
+		  fulltoat+=alltotal
+        
               document.write("<hr>");		
       document.write("Order Code:   "+order_id);
       document.write("<table border='2' width='100%' class='listed'><tr><td>"+hotel+"</td><td>Quantity"+qty+"</td></tr><tr><td>"+total+"</td><td>"+contact+"</td></tr><tr><td>What:"+saletype+"</td><td><a href='deleteorder.html?key="+key+"&order_id="+order_id+"&hotel="+hotel+"&qty="+qty+"&saletype="+saletype+"&total="+total+"&contact="+contact+"&latitude="+latitude+"&longitude="+longitude+"' class='deli'><input type='button' style='background-color:black;color:white;' value='Delete' class='deli'></a></td></tr></table>");
@@ -210,14 +202,14 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
           }else{
               
           }
-		 document.getElementById("clientbill").innerHTML=totalammount;
+		 
+		document.getElementById("clientbill").innerHTML=totalammount;
 		document.getElementById("mybill").innerHTML=mytotal;
 		document.getElementById("bodabill").innerHTML=bodatotal;
-		document.getElementById("allbill").innerHTML=alltotal;
+		document.getElementById("allbill").innerHTML=alltoat;
 		document.getElementById("cashpaid").innerHTML=alltota;
 		var balance=alltotal - alltota;
 		document.getElementById("balanceremaining").innerHTML=balance;
-		
 		  
 		//alert(hotel);
 		

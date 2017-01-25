@@ -68,7 +68,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
       </script>
   </head>
   <body onload="getlat(); setTimeout('showIt()', 5000);">
-  <center><img src="img/logo.png" width="150px;"" height="70px;" "></center>
+  <center><img src="img/piss.png" width="100px;" height="70px;"></center>
     <div id="right-panel">
       <div id="inputs">
         
@@ -228,23 +228,27 @@ window.location.assign("buy.html");
          alert("Distance "+localStorage.getItem("distance")+"in"+localStorage.getItem("duration"));
                 var bodabill=localStorage.getItem("distance");
                 var toint=parseFloat(bodabill);
-                var charge=toint*1000;
-                var charge2=charge+500;
+				var bodie=parseFloat(localStorage.bodacharge);
+				var mineyy=parseFloat(localStorage.myextra);
+				
+                var charge=toint*bodie;
+                var charge2=charge+mineyy;
                 charge2=parseFloat(charge2);
                 var allcash=charge2+tofloat;
-                var commit=4;
-                var mine=(tofloat/100)*4;
-
+                var commit=parseFloat(localStorage.commission);
+                var mine=(tofloat/100)*commit;
+              //  mine+=mineyy;
                 alert("Commision"+mine);
                 var allinall=mine+allcash;
                 alert("all in all"+allinall);
                 localStorage.setItem("alltopay",allinall);
                 localStorage.bodabill=charge;
                 localStorage.subtotal=allinall;
-                localStorage.mine=mine+500;
+                localStorage.mine=mine+mineyy;
 				var charged=parseFloat(localStorage.getItem("alltopay"));
-				var mmoney=(charged/100)*4;
-				var alltot=allinall+mmoney+500;
+				var mmrate=parseFloat(localStorage.jpesarate);
+				var mmoney=(charged/100)*mmrate;
+				var alltot=allinall+mmoney+mineyy;
 				localStorage.setItem("alltopay",alltot);
 				localStorage.subtotal=alltot;
                 //alert("All cash="+allcash);
@@ -254,7 +258,7 @@ window.location.assign("buy.html");
                 //var toynt=parseint(cutotal);                
                // var newtotal=toynt+charge; 
                var dista=localStorage.getItem("distance");
-                detailsDiv.innerHTML +="<br><hr>Delivery Costs: <br>"+charge2+" <br>Mine: "+localStorage.mine+"<br> Distance "+dista+" : <br>Mobile Money Dues: "+mmoney+" <br> Total order is "+localStorage.total+" All Total:"+localStorage.getItem("alltopay")+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
+                detailsDiv.innerHTML +="<br><hr>Delivery Costs: "+charge2+"<br>Distance "+dista+" : <br>Tax: "+localStorage.mine+ "  By "+localStorage.commission+"%<br> Mobile Money Dues: "+mmoney+" &nbsp;"+localStorage.jpesarate+"%<br> Total order is "+localStorage.total+"<br><hr> All Total:"+localStorage.getItem("alltopay")+"<input type='submit' onclick='Eeh();' value='Confirm Order' style='background-color:black; color:white; width:100px; height:40px; display:block;'>";
             }
           }
         });

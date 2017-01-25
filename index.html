@@ -186,12 +186,27 @@ function showError(error) {
          
     };
 	function load(){
-	if(!localStorage.authemail){
+	
+	var day = new Date();
+	var yesto=new Date();
+	
+	yesto.setDate(yesto.getDate()-1);
+    day.setDate(day.getDate());
+	console.log("yesterday"+yesto);
+	console.log("Today"+day);
+	localStorage.shoppingdate=yesto;
+	localStorage.shoppingdate=day;
+	
+   if(localStorage.shoppingdate != day){
 			 
 			console.log("Wait we get details");
 			 Loader();
-			 getEmail();
-			 }	
+			 getEmail();	 
+		     Fuckit();
+		     Harder();
+		     Hardest();
+		     Forsure();	 
+	 }	
     var latu=parseFloat(localStorage.here);
     var lotu=parseFloat(localStorage.here1);
 	var map = new google.maps.Map(document.getElementById("map"), {
@@ -366,7 +381,92 @@ function showError(error) {
     }
 		
 		
-		
+			function Fuckit(){
+    $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=bodacharge",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            //console.log(responseData);
+			localStorage.bodacharge=responseData;
+			console.log(localStorage.bodacharge);
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });   
+    
+    }
+
+	
+	 	function Harder(){
+    $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=myextra",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            //console.log(responseData);
+			localStorage.myextra=responseData;
+			console.log(localStorage.myextra);
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });   
+    
+    }
+	function Hardest(){
+    $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=commission",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            //console.log(responseData);
+			localStorage.commission=responseData;
+			console.log(localStorage.commission);
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });   
+    
+    }
+	function Forsure(){
+    $.ajax({
+        type: 'POST',
+        url: 'http://clicktheglobe.co.nf/pizzame/tahamu.php',
+        crossDomain: true,
+        data: "my_request_is=jpesarate",
+        dataType: 'json',
+        success: function(responseData, textStatus, jqXHR) 
+        {
+            //console.log(responseData);
+			localStorage.jpesarate=responseData;
+			console.log(localStorage.jpesarate);
+        },
+        error: function (responseData, textStatus, errorThrown) 
+        {
+            console.warn(responseData, textStatus, errorThrown);
+            alert('CORS failed - ' + textStatus);
+        }
+    });   
+    
+    }	
 	
 	</script>
 	<script src="cordova.js" id="xdkJScordova_"></script>
@@ -402,7 +502,7 @@ function showError(error) {
           <table style="background-color:cyan; width:100%;"><tr><td class="logosec"><img src="img/boda.png"></td><td style="background-position:right; padding-right:5px;"><!--<a href="final.html" >My Order</a>&nbsp; &nbsp;<a href="cart/finalsuper.html" >My cart</a>&nbsp; &nbsp;<a href="orders.html" >Deliver</a>
               <a href="charge.html" >Charge</a>--> <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="final.html">My Order</a>
+  <a href="final2.html">My Order</a>
   <a href="cart/finalsuper.html">My Cart</a>
   <a href="orders.html">login</a>
   <!--<a href="servers.html">Serve</a> -->

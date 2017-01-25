@@ -97,6 +97,7 @@ function getValue(varname)
           var contact = getValue("contact");
            var latitude = getValue("latitude");
           var longitude = getValue("longitude");
+		  var bodabill=getValue("bodabill");
       
           localStorage.orderkey=order_key;
           localStorage.hotel=hotel;
@@ -107,6 +108,7 @@ function getValue(varname)
           localStorage.contact=contact;
           localStorage.orderlat=latitude;
           localStorage.orderlong=longitude;
+		  localStorage.deliverycosts=bodabill;
       
       </script>
 
@@ -133,6 +135,10 @@ function getValue(varname)
              //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
              //localStorage.bodalaty=latitude;
             //localstorage.bodalongy=longitude;
+			
+
+
+			
              changeT();
                    }
             
@@ -289,6 +295,7 @@ function getValue(varname)
                  document.write("<tr><td>Quantity:</td><td>"+localStorage.qty+"</td></tr>");
                  document.write("<tr><td>Bill:</td><td>"+localStorage.total+"</td></tr>");
                  document.write("<tr><td>Customer No</td><td>"+localStorage.contact+"</td></tr>");
+				 document.write("<tr><td style='background-color:black;color:white;'>Delivery Costs</td><td>"+localStorage.deliverycosts+"</td></tr>");
                  document.write("<tr><td>Latitude:</td><td>"+localStorage.orderlat+"</td></tr>");
                  document.write("<tr><td>Longitude:</td><td>"+localStorage.orderlong+"</td></tr>");
               
@@ -425,10 +432,10 @@ function getValue(varname)
    
             
         }
-        </script><br><br>
+        </script><br>
  <input type="button" onclick="updateOrder();" value="Set Order Delivered" style="visibility:hidden;" />&nbsp; &nbsp;
-         <a href="finalboda.html"><input type="button"  value="Start Journey"/></a>
+         <a href="finalboda.html"><br /><center><input type="button"  value="Start Journey" style="background-color:black; color:white; font-size:16px; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif; width:auto; height:auto;"/></a></center>
       </form>
- 
+ <center><marquee>&copy; All rightrs Reserved Bodafix Developed By Click the Globe INC Uganda</marquee></center>
 </body>
 </html>

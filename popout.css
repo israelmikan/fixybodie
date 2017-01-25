@@ -59,6 +59,24 @@ padding-left:15px;
 font-size:16px;
 font-family:raleway
 }
+input[type=number] {
+width:80%;
+padding:10px;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:15px;
+font-size:16px;
+font-family:raleway
+}
+input[type=date] {
+width:80%;
+padding:10px;
+margin-top:30px;
+border:1px solid #ccc;
+padding-left:15px;
+font-size:16px;
+font-family:raleway
+}
 input[type=password] {
 width:80%;
 padding:10px;

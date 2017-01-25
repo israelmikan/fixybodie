@@ -2,7 +2,58 @@
 <html>
 <head>
      <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
-<script type="text/javascript" src="validate.js"></script>    
+<script type="text/javascript" src="validate.js"></script>   
+  <script>
+      
+      function getValue(varname)
+{
+  // First, we load the URL into a variable
+  var url = window.location.href;
+
+  // Next, split the url by the ?
+  var qparts = url.split("?");
+
+  // Check that there is a querystring, return "" if not
+  if (qparts.length == 0)
+  {
+    return "";
+  }
+
+  // Then find the querystring, everything after the ?
+  var query = qparts[1];
+
+  // Split the query string into variables (separates by &s)
+  var vars = query.split("&");
+
+  // Initialize the value with "" as default
+  var value = "";
+
+  // Iterate through vars, checking each one for varname
+  for (i=0;i<vars.length;i++)
+  {
+    // Split the variable by =, which splits name and value
+    var parts = vars[i].split("=");
+    
+    // Check if the correct variable
+    if (parts[0] == varname)
+    {
+      // Load value into variable
+      value = parts[1];
+
+      // End the loop
+      break;
+    }
+  }
+  
+  // Convert escape code
+  value = unescape(value);
+
+  // Convert "+"s to " "s
+ // value.replace(/\+/g," ");
+
+  // Return the value
+  return value;
+}</script> 
     
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -22,7 +73,10 @@ document.getElementById("result").innerHTML = localStorage.getItem("fullnames");
 
 }
 
-
+function Fuckit(){
+var pointname=getValue("pointname");
+var ty=document.getElementById("tag").value=pointname;
+}
 </script>
 
 <title>Login</title>
@@ -150,38 +204,30 @@ document.getElementById('abc').style.display = "none";
 
 </head>
 <!-- Body Starts Here -->
-<body id="body" style="overflow:hidden; width:100%;" onLoad="div_show();" >
+<body id="body" style="overflow:hidden; width:100%;" onLoad="div_show();Fuckit();" >
 <div id="abc"  style="width:100%">
 <!-- Popup Div Starts Here -->
     <center></center>
 <div id="popupContact" >
 <!-- Contact Us Form -->
-<form action="savepoint.html" id="" method="get"  name="" style="overflow:hidden;" >
+<form action="savework.html" id="" method="get"  name="" style="overflow:hidden;" >
 
-<h3>Add Points</h3>
-    <p style="background-color:black; color:white">#Special Order</p>
+<h3>Add Workers</h3>
+    <p style="background-color:black; color:white">BodaFix</p>
 <hr>
-<input id="name" name="names" placeholder="Point name e.g Piza hut" style="background-color:black; color:white" type="text" required>
-<input id="address" name="address" style="background-color:black; color:white" placeholder="Price " type="text"  required>
- <input id="lat" name="lat" placeholder="Latitude" style="background-color:black; color:white" type="text" required>
- 
-<input id="long" name="long" style="background-color:black; color:white" placeholder="Longitude " type="text"  required>    
+<input id="name" name="names" placeholder="Server name e.g Piza hut" style="background-color:black; color:white" type="text" required>
+
+<input id="tag" name="tag" style="background-color:black; color:white" placeholder="Tag " type="text" value=""  readonly="true" required>    
 <input id="email" name="email" placeholder="E-mail" style="background-color:black; color:white" type="text" required>
 
 <input id="phone" name="phone" placeholder="Phone Number" style="background-color:black; color:white" type="text" required>
-<input id="jpesa" name="jpesa" placeholder="Jpesa username" style="background-color:black; color:white" type="text" required>
+<input id="password" name="password" placeholder="Password" style="background-color:black; color:white" type="text" required>
 <select name="type" id="type" style="background-color:black; width:100%;color:white" 
- required="required"><option value=" Pizza"> Pizza</option>
-<option value="Chicken">Chicken</option>
-<option value="PizzaChicken">PizzaChicken</option>
-<option value="supermarket">Supermarket</option>
-<option value="wine">Wine</option>
-<option value="mansuit">ManSuit</option>
-<option value="cigarpark">Cigarretes packed</option>
-<option value="fullfish">Full Fish</option>
-<option value="pork">Pork</option>
-<option value="nilespecial">Nile Special</option>
-<option value="matooke">Matooke</option>
+ required="required">
+ <option value="server">Server</option>
+<option value="boda">Boda Boda</option>
+<option value="admin">Admin</option>
+
   
 
 </select>
@@ -189,7 +235,7 @@ document.getElementById('abc').style.display = "none";
 <br>
     <br>
     <br>
-<INPUT TYPE="submit" id="submit" NAME="button" Value="Save Point" >
+<INPUT TYPE="submit" id="submit" NAME="button" Value="Save Worker" >
 </form>
 <center><a href="admin.html"><button value="Go back" style="background-color:black; color:white;">Go Back</button></a></center>
 </div>

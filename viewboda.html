@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BodaFix</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+             <script>
+ 
+ function autoRefresh1()
+{
+	   window.location.reload();
+}
+ 
+ setInterval('autoRefresh1()', 15000); // this will reload page after every 5 secounds; Method II
+</script>        
+    <script>
+    
+	console.log(localStorage.orderkey);
+    
+    </script>
+         <script type="text/javascript">
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             localStorage.newloclat=latitude;
+             localStorage.newloclong=longitude;
+            //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+            // alert("new lat"+localStorage.newloclat);
+        
+         }
+                  
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Turn Location For Delivery!");
+                window.location.assign("index.html");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error:Failed to Access your Location try Again");
+              //  window.location.assign("index.html");
+            }
+         }
+         
+       
+
+    // Do your thing here
+
+
+         function getLocationUpdate(){
+               x = 30;  // 5 Seconds
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:60000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, Device does not support location services");
+            }
+             //setTimeout(refreshData, x*1000);
+             FireCust();
+         }
+      </script>
+    
+    <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+		background-image:url(../img/back.jpg);
+		font-weight:300;
+      }
+      #map {
+        height: 50%;
+      }
+    </style>
+  </head>
+  <body>
+  <center><img src="../img/piss.png" width="120px" height="100px"><br> Boda Fix Delivery page
+  <center>Note:</center>
+  <p>Boda will Appear on Map As Soon as he Takes Off</p>
+  <p>Its Advisable to Stay on Delivery page for Fast Deliveries Thanks</p></center>
+    <div id="map"></div>
+    <script>
+
+var map;
+var bodalat;
+var bodalong;
+var center;
+var centerl;
+function initMap() {
+FireCust();	
+var ref = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey+"");
+// Retrieve new posts as they are added to our database
+ref.on("value", function(snapshot, prevChildKey) {
+  var newPost = snapshot.val();
+    var hotel=newPost.hotel;
+    var saletype=newPost.saletype;
+    var orderstatus=newPost.orderstatus;
+	var orderid=newPost.order_id;
+	var qty=newPost.qty;
+	var bodabill=newPost.bodabill;
+	var total=newPost.total;
+     bodalat=newPost.bodalat;
+     bodalong=newPost.bodalong;
+	 if(orderstatus=="delivered"){
+		 localStorage.orderkey==null;
+		  localStorage.mykey==null;
+		 alert("You Order has been delivered");
+		 window.location.assign("index.html");
+		 }
+     console.log(bodalat);
+     console.log(total);
+center=parseFloat(bodalat);
+centerl=parseFloat(bodalong);
+
+
+  if(centerl==null){ alert("hold On Boda has Not yet Started delivery process");
+//window.location.assign("finalsuper.html");
+}
+
+var myLatLng = {lat: center, lng: centerl};
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: center, lng: centerl},
+    zoom: 14
+  });
+  var marker = new google.maps.Marker({
+    position: myLatLng,
+    animation:google.maps.Animation.BOUNCE,
+    map: map,
+    title: 'Boda Location!'
+  });
+    });
+ 
+
+}
+
+    //update customer location
+        function FireCust(){
+console.log("fireing");
+   var onComplete = function(error) {
+  if (error) {
+    console.log('Synchronization failed');
+  } else {
+    console.log('Synchronization succeeded');
+      //alert('Synchronization succeeded');
+      console.log("Order key is"+localStorage.orderkey);
+  }
+};
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
+messageListRef.update({ latitude: localStorage.newloclat, longitude: localStorage.newloclong }, onComplete);  
+      console.log("Customer Details Saved Successfully Intresting");
+   //   document.getElementById("paynow").style.visibility="visible";
+
+}
+        
+
+    </script>
+   
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
+        async defer></script>
+        <hr>
+        <center><a href="../index.html" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Go Home</a></center>
+        <center ><br><marquee>&copy; All rights Reserved Bodafix</marquee></center>
+  </body>
+</html>

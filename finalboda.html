@@ -38,8 +38,7 @@
     <meta charset="utf-8">
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
 
-<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-     -->
+
         
               <script type="text/javascript">
 <!-- hide from old browsers
@@ -111,8 +110,7 @@ function getValue(varname)
          // localStorage.orderlong;
       
       </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
-    async defer></script>
+
  
     <script>
 			if (localStorage.getItem("located") === null) {
@@ -136,13 +134,10 @@ function getValue(varname)
              //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
              //localStorage.bodalaty=latitude;
             //localstorage.bodalongy=longitude;
-             changeT();
+  FireCust();
                    }
             
-  function changeT(){
-     // alert("changing");
-      autheticate();
-  }
+ 
          function errorHandler(err) {
             if(err.code == 1) {
                alert("Error: Access is denied! Turn location and try Again");
@@ -157,7 +152,7 @@ function getValue(varname)
          function getLocationUpdate(){
             if(navigator.geolocation){
                // timeout at 60000 milliseconds (60 seconds)
-               var options = {timeout:6000};
+               var options = {timeout:9000};
                geoLoc = navigator.geolocation;
                watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
             }
@@ -167,6 +162,42 @@ function getValue(varname)
             }
          }
     
+    //update customer location
+        function FireCust(){
+console.log("fireing");
+   var onComplete = function(error) {
+  if (error) {
+    console.log('Synchronization failed');
+  } else {
+    console.log('Synchronization succeeded');
+      //alert('Synchronization succeeded');
+      console.log("Order key is"+localStorage.orderkey);
+  }
+};
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+messageListRef.update({ bodalat: localStorage.bodalaty, bodalong: localStorage.bodalongy }, onComplete);  
+      console.log("Bodaboda location Details Saved Successfully Intresting");
+   //   document.getElementById("paynow").style.visibility="visible";
+
+}
+   function FireOrder(){
+console.log("fireing order");
+   var onComplete = function(error) {
+  if (error) {
+    console.log('Synchronization failed');
+  } else {
+    console.log('Synchronization succeeded');
+      //alert('Synchronization succeeded');
+      console.log("Order key is"+localStorage.orderkey);
+  }
+};
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+messageListRef.update({ orderstatus:"delivered", deliveredby:localStorage.getItem("located") }, onComplete);  
+      console.log("Order Details Set to Delivered Intresting");
+	  window.location.assign("orders.html");
+   //   document.getElementById("paynow").style.visibility="visible";
+
+}
     </script>
 <script>
     
@@ -174,12 +205,9 @@ function getValue(varname)
     </script>
     <script>
      function autheticate(){
-        //alert("auth");
-     var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
     messageListRef.authWithPassword({
       email    :localStorage.authemail,
-
-
       password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
@@ -209,27 +237,26 @@ function getValue(varname)
     };
     messageListRef.update({ bodalat: localStorage.bodalaty, bodalong: localStorage.bodalongy }, onComplete);
          // alert("Authetication Working");
-       alert('Boda details saved');
+       //alert('Boda details saved');
           //window.location.assign("final.html");
   
-         
       }
     });
     //end of auth
          
          
-    getNew();     
+    
    
 }
         function getNew(){
             
            // alert("Getting New");
- var messageListRef1 = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+ var messageListRef1 = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
                messageListRef1.on("value", function(snapshot1, prevChildKey) {
 				  var newPost1 = snapshot1.val();
                    localStorage.newcustlat=newPost1.latitude;
                    localStorage.newcustlong=newPost1.longitude;
-                   //alert("In Localstorage latitude"+localStorage.newcustlat);
+                   console.log("In Localstorage customer latitude"+localStorage.newcustlat);
                    
 				  //alert("Customer contact: " + newPost1.contact);
 				 // alert("Hotel: " + newPost1.hotel);
@@ -252,7 +279,7 @@ function getValue(varname)
 
 
 </head>
-<body  style="font-family: sans-serif;" onload="getLocationUpdate(); getNew();">
+<body  style="font-family: sans-serif;" onload="getLocationUpdate(); updateBoda(); getNew();">
      <style>.mine{
         overflow: scroll;
         height: 280px;
@@ -416,11 +443,9 @@ function getValue(varname)
             
            // alert("Update order");
             
-            var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+            var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.mykey);
     messageListRef.authWithPassword({
       email    :localStorage.authemail,
-
-
       password : localStorage.authpassword
     }, function(error, authData) {
       if (error) {
@@ -459,10 +484,62 @@ function getValue(varname)
    
             
         }
-        </script><br><br>
- <input type="button" onclick="updateOrder();" value="Set Order Delivered"/>
-         <a href="finalboda.html"><input type="button"  value="Locate Customer"/></a>
+		
+//saving boda latitude 
+function updateBoda(){
+            
+           // alert("Update order");
+            
+            var messageListRef = new Firebase("https://amhungry.firebaseio.com/orders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+         // alert('Synchronization succeeded');
+      }
+    };
+    messageListRef.update({ bodalat:localStorage.bodalaty, bodalong:localStorage.bodalongy}, onComplete);
+         // alert("Authetication Working");
+       console.log('Boda details Saved Successfully');
+        
+  
+      }
+    });
+    //end of auth
+   
+            
+        }
+       		
+		
+        </script>
+        
+        
+        <br><br>
+ <input type="button" onclick="FireOrder();" value="Set Order Delivered" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/>
+         <a href="finalboda.html"><input type="button"  value="Locate Customer" style="background-color:black; color:white; border:groove; font-size:19px; height:auto; width: auto; font-family:'Lucida Sans Unicode', 'Lucida Grande', sans-serif;"/></a>
       </form>
- 
+  <center><marquee>&copy; All rightrs Reserved Bodafix Developed By Click the Globe INC Uganda</marquee></center>
 </body>
 </html>

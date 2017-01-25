@@ -36,6 +36,31 @@
     <body>
      
        <script>
+	   
+	  var alltota=0;
+var hotel=localStorage.getItem("pickwho");
+var messageListRef = new Firebase("https://amhungry.firebaseio.com/payments/");
+  messageListRef.once("value", function(allMessagesSnapshot) {
+  	          
+      allMessagesSnapshot.forEach(function(messageSnapshot) {
+        // Will be called with a messageSnapshot for each child under the /messages/ node				
+        var key = messageSnapshot.key();  // e.g. "-JqpIO567aKezufthrn8"
+        var amount = messageSnapshot.child("amount").val();  // e.g. "barney"
+        var pointname = messageSnapshot.child("pointname").val(); 		
+		if(pointname==hotel){
+		var paid=parseFloat(amount);
+		alltota+=paid;
+		console.log(amount);
+		console.log(pointname);
+		console.log(pointname);
+		}
+		  
+		   });
+		   console.log("All cash for Hotel is"+alltota);
+    }); 
+	   
+	   
+	   var total;
          var supermarket;
      alert(localStorage.getItem("pickwho"));
      var totalammount=0;
@@ -50,6 +75,9 @@
     
  var det=snapshot.val();
      supermarket=det.supermarket;
+	 var bodabill=det.bodabill;
+	 var mine=det.mine;
+	 
      //alert(supermarket);
   
    var ref1 = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+snapshot.key()+"/items");
@@ -62,6 +90,8 @@
 		document.write("<tr><td>Bodafix takes:</td><td><p id='mybill'></p></td></tr>");
 		document.write("<tr><td>Boda Bill:</td><td><p id='bodabill'></p></td></tr>");
 		document.write("<tr><td>All total:</td><td><p id='allbill'></p></td></tr>");
+		document.write("<tr style='background-color:green; color:black;'><td>Current Payments:</td><td><p id='cashpaid'></p></td></tr><hr>");
+		document.write("<tr style='background-color:red;color:black;'><td>Balance Remaining:</td><td><p id='balanceremaining'></p></td></tr>");
 		document.write("</table>");
       
        var ket=snapshot.key();
@@ -79,14 +109,19 @@
        
 document.write("<tr><td style='background-color:black;color:white; display:block;'><a  href='serversuper.html?key="+ket+"&custo="+cust+"'>Serve Order:</a></td><td>"+ket+"</td></tr>");
       var hotelbill=newPost.subTotal;
-       hotelbill=parseFloat(hotelbill);
-	//	  mine=parseFloat(mine);
-		 // bodabill=parseFloat(bodabill);
-		 // total=parseFloat(total);
-		  totalammount+=hotelbill;
-		//  mytotal+=mine;
-		//  bodatotal+=bodabill;
-		//  alltotal+=total;
+       hotelbill=parseFloat(hotelbill);	
+		  totalammount+=hotelbill;	
+		  
+		  hotelbill=parseFloat(hotelbill);
+		  mine=parseFloat(mine);
+		  
+		  bodabill=parseFloat(bodabill);
+		  total=parseFloat(total);
+	
+		  mytotal+=mine;
+		  bodatotal+=bodabill;
+		  total=mine + bodabill +hotelbill;
+		  alltotal+=total;	
   document.write("<tr><td>Customer:</td><td> " + newPost.customer+"</td></tr>");
   document.write("<tr><td>Supermarket:</td><td> " + newPost.supermarket+"</td></tr>");
   document.write("<tr><td>Total order:</td><td> " + newPost.subTotal+"</td></tr>");
@@ -111,6 +146,9 @@ document.write("</table>");
 		document.getElementById("mybill").innerHTML=mytotal;
 		document.getElementById("bodabill").innerHTML=bodatotal;
 		document.getElementById("allbill").innerHTML=alltotal;
+		document.getElementById("cashpaid").innerHTML=alltota;
+		var balance=alltotal - alltota;
+		document.getElementById("balanceremaining").innerHTML=balance;
    }else{
     document.write("You Dnt Have Orders Pensing");
    }  

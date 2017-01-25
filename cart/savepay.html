@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -62,14 +63,10 @@ function getValue(varname)
 // end hide -->
 </script>
       <script>
-          var point = getValue("names");
-          var type = getValue("type");
-          var price = getValue("address");
-           var longitude = getValue("long");
-           var latitude= getValue("lat"); 
-		   var email=getValue("email");
-		   var jpesa=getValue("jpesa");
-		   var phone=getValue("phone");
+          var point = getValue("pointname");
+          var amount = getValue("amount");
+          var date = getValue("date");        
+          
          if(point !==null){
             // alert("Not empty name");
                       
@@ -98,19 +95,14 @@ function getValue(varname)
       } else {
         console.log("Authenticated successfully with payload:", authData);
          // alert("Auth Successful");
-		    var usersRef = messageListRef.child("points");
+		    var usersRef = messageListRef.child("payments");
             usersRef.push({
-           name: point,
-           type: type,
-		   latitude: latitude,
-           longitude: longitude,
-		   price:price,
-		   jpesa:jpesa,
-		   email:email,
-		   phone:phone
+           pointname: point,
+           amount: amount,
+		   date:date
           
     });
-		alert("Point Saved Successfully");
+		alert("Payment Saved Successfully");
 	 }
     });
              
@@ -139,7 +131,8 @@ function getValue(varname)
         
         </style>
         <center>
-        <a href="supermarkets.html" class="back">Add More</a>
+        <a href="payments.html" class="back">Add More</a> 
+        <a href="admin.html" class="back">Admin Home</a>
     </center>
     
     </body>

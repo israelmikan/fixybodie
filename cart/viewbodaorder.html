@@ -17,8 +17,19 @@
         height: 50%;
       }
     </style>
+    <script>
+    function checkKey(){
+		 if(localStorage.orderkey==null && localStorage.mykey ==null){
+			 alert("You Dont have Current Orders try Again");
+			 window.location.assign("index.html");
+			 
+			 
+			 }
+		
+		}
+    </script>
   </head>
-  <body>
+  <body onLoad="checkKey();">
   <center><img src="../img/piss.png" width="120px" height="100px"><br> Boda Location
   <a href="finalsuper.html"><br>Go To Delivery page</a>
   <center>Note:</center>
