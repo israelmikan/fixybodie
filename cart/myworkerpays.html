@@ -124,7 +124,7 @@ localStorage.setItem("saletype",saletype);
     //pick total payments
 	
 	var alltota=0;
-	var fulltoat=0;
+	var fulltot=0;
 var hotel=localStorage.getItem("pickwho");
 var messageListRef = new Firebase("https://amhungry.firebaseio.com/workerpayments/");
   messageListRef.once("value", function(allMessagesSnapshot) {
@@ -191,7 +191,8 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/workerpayment
 		  mytotal+=mine;
 		  bodatotal+=bodabill;
 		  alltotal=bodabill+mine+hotelbill;
-		  fulltoat+=alltotal
+		  fulltot=hotelbill + mine +bodabill;
+		 
         
               document.write("<hr>");		
       document.write("Order Code:   "+order_id);
@@ -203,13 +204,7 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/workerpayment
               
           }
 		 
-		document.getElementById("clientbill").innerHTML=totalammount;
-		document.getElementById("mybill").innerHTML=mytotal;
-		document.getElementById("bodabill").innerHTML=bodatotal;
-		document.getElementById("allbill").innerHTML=alltoat;
-		document.getElementById("cashpaid").innerHTML=alltota;
-		var balance=alltotal - alltota;
-		document.getElementById("balanceremaining").innerHTML=balance;
+		
 		  
 		//alert(hotel);
 		
@@ -217,7 +212,13 @@ var messageListRef = new Firebase("https://amhungry.firebaseio.com/workerpayment
 		//alert(total); 
 		
       });
-	
+	document.getElementById("clientbill").innerHTML=totalammount;
+		document.getElementById("mybill").innerHTML=mytotal;
+		document.getElementById("bodabill").innerHTML=bodatotal;
+		document.getElementById("allbill").innerHTML=fulltot;
+		document.getElementById("cashpaid").innerHTML=alltota;
+		var balance=alltotal - alltota;
+		document.getElementById("balanceremaining").innerHTML=balance;
     }); 
      function logoutMe(){
 alert("You Have Choosen To Logout");
