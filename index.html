@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-       <link rel="stylesheet" type="text/css" href="framework7/css/framework7.material.min.css" class="uib-framework-theme">
+      
         <meta name="format-detection" content="telephone=no" />
     <meta name="msapplication-tap-highlight" content="no" />
     <meta name="viewport" content="user-sc
@@ -185,8 +185,19 @@ function showError(error) {
       }
          
     };
+	function GrantIn (){
+		 
+			console.log("Wait we get details");
+			 Loader();
+			 getEmail();	 
+		     Fuckit();
+		     Harder();
+		     Hardest();
+		     Forsure();	
+		
+		}
 	function load(){
-	
+	GrantIn();
 	var day = new Date();
 	var yesto=new Date();
 	
@@ -196,17 +207,10 @@ function showError(error) {
 	console.log("Today"+day);
 	localStorage.shoppingdate=yesto;
 	localStorage.shoppingdate=day;
-	
-   if(localStorage.shoppingdate != day){
+	localStorage.shoppingdate=="";
+   //if(localStorage.shoppingdate ==null){
 			 
-			console.log("Wait we get details");
-			 Loader();
-			 getEmail();	 
-		     Fuckit();
-		     Harder();
-		     Hardest();
-		     Forsure();	 
-	 }	
+	// }	
     var latu=parseFloat(localStorage.here);
     var lotu=parseFloat(localStorage.here1);
 	var map = new google.maps.Map(document.getElementById("map"), {
@@ -216,13 +220,12 @@ function showError(error) {
       });
 	     var infoWindow = new google.maps.InfoWindow;
 		 
-		 
+		 var emily=toString(localStorage.authemail);
+		 var passy=toString(localStorage.authpassword);
 		      var messageListRef = new Firebase("https://amhungry.firebaseio.com/points");
     messageListRef.authWithPassword({
       email    :localStorage.authemail,
-
-
-      password : localStorage.authpassword
+      password :localStorage.authpassword
     }, function(error, authData) {
       if (error) {
         switch (error.code) {
@@ -259,18 +262,22 @@ function showError(error) {
 						//alert(localStorage.getItem("Pizza Point"));
 					  var address = newPost.price;
 					  var type = newPost.type;
+					  var phone=newPost.phone;
+					  var jpesa=newPost.jpesa;
+					  console.log(phone);
+					  console.log(jpesa);
 					  var point = new google.maps.LatLng(
 					  parseFloat(newPost.latitude),
 					   parseFloat(newPost.longitude));
 						
 							  var link="";
 					  //var html = "<b>" + name + "</b> <br/>" + address+"</b> <br/>" + type+"<br><button class='mybutton'>Order</button>"+;
-						var html = "<b>" + name + "</b> <br/>" + address+"</b> <br/>" + type+"<br>"+link+""+"<form name='theform' action='buy.html' method='get'><input type='hidden' name='price' value='"+address+"'><input type='hidden' name='idi' value='"+idi+"'><input type='hidden' name='latiu' value='"+laty+"'><input type='hidden' name='longiu' value='"+longy+"'><input type='hidden' name='location' value='"+point+"'><input type='hidden' name='type' value='"+type+"'><input type='hidden' name='name' readonly='readonly' value='"+name+"'><input type='number' name='qty' required='required' placeholder='Enter Quantity' class='fields' value=''><input type='number' name='contact' required='required' class='fields' placeholder='Emergency Contact' value=''><input type='submit' class='mybutoon' value='order Now'></form>";
+						var html = "<b>" + name + "</b> <br/>" + address+"</b> <br/>" + type+"<br>"+link+""+"<form name='theform' action='buy.html' method='get'><input type='hidden' name='price' value='"+address+"'><input type='hidden' name='idi' value='"+idi+"'><input type='hidden' name='latiu' value='"+laty+"'><input type='hidden' name='longiu' value='"+longy+"'><input type='hidden' name='location' value='"+point+"'><input type='hidden' name='type' value='"+type+"'><input type='hidden' name='name' readonly='readonly' value='"+name+"'> <input type='hidden' name='phone' readonly='readonly' value='"+phone+"'>  <input type='hidden' name='jpesa' readonly='readonly' value='"+phone+"'>  <input type='number' name='qty' required='required' placeholder='Enter Quantity' class='fields' value=''><input type='number' name='contact' required='required' class='fields' placeholder='Emergency Contact' value=''><input type='submit' class='mybutoon' value='order Now'></form>";
 						var username = "supermarket";
 						
 						if(type==username){
 							//alert("Found something");
-						   var html="<form name='theform' action='cart/index.html' method='get'><input type='hidden' name='name' value='"+name+"'><input type='submit' class='mybutoon' style='background-color:black; color:white;' value='Shop Now'>";
+						   var html="<form name='theform' action='cart/index.html' method='get'><input type='hidden' name='name' value='"+name+"'><input type='hidden' name='phone' value='"+phone+"'><input type='hidden' name='jpesa' value='"+jpesa+"'><input type='hidden' name='phone' value='"+phone+"'><input type='submit' class='mybutoon' style='background-color:black; color:white;' value='Shop Now'>";
 						}
             
 				        var icon = customIcons[type] || {};

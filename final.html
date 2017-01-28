@@ -601,18 +601,19 @@ function PayUs(){
 <a href="javascript:%20check_empty()" id="submit">Pay Now</a>
 </form> -->
 <script>
+console.log("Point Phone Number"+localStorage.phone);
      document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
-     document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
+     document.write("<input type='hidden' name='agent_id' value='"+localStorage.jpesa+"' class='textfields'>");
      document.write("<input type='hidden' name='jc' value='dons' class='textfields'>");
      document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
      document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
      document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
      document.write("<input type='hidden' name='amount' value='"+localStorage.subtotal+"' id='ammounttopay' class='textfields'>");
      document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/success.html?orderid="+localStorage.orderid+"&orderkey="+localStorage.orderkey+"' class='textfields'>");
-     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/fail.html?orderid="+localStorage.orderid+"&orderkey="+localStorage.usethiskey+"' class='textfields'>");
+     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/fail.html?orderid="+localStorage.orderid+"&orderkey="+localStorage.usethiskey+"&phone="+localStorage.phone+"' class='textfields'>");
      document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
      document.write("<span class='btnl'><span class='btnr'>");
-     document.write("<input type='submit' name='Submit' value='Pay Now'>");
+     document.write("<center><input type='submit' style='background-color:black; color:white; font-size;60px; width:auto; height:auto; border:inset;' name='Submit' value='Pay Now'></center>");
      document.write("</span></span>");
    document.write("</form>")
 

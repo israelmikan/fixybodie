@@ -165,7 +165,8 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
       });
     }
     else
-        alert("Directions failed Turn on Location and Continue");
+        alert("Directions failed Turn on Location and Continue Press Back");
+	//	window.location.assign("getpoint.html");
     //  $("#error").append("Unable to retrieve your route<br />");
       
   }
@@ -187,7 +188,7 @@ ref.orderByChild("name").equalTo(localStorage.supermarket).on("child_added", fun
             fillOpacity: 0.35,
             map: map,
             center: destinationB,
-            radius: 150
+            radius: 100
           });
 
    // Add listener on 'drag end' event, add logitude and latitude to beginning of table

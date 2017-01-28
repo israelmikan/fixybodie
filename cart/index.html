@@ -79,6 +79,10 @@ function getValue(varname)
   //localStorage.startlat=wheretopicklat;
        //   localStorage.startlong=wheretopicklong;
          var name = getValue("name");
+		 var phone=getValue("phone");
+		 var jpesa=getValue("jpesa");
+		 localStorage.phone=phone;
+		 localStorage.jpesa=jpesa;
             localStorage.supermarket=name;
             alert("You Selected"+localStorage.supermarket);
             //alert("We will start at"+ localStorage.startlat);

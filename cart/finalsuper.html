@@ -176,15 +176,16 @@ ref.on("value", function(snapshot, prevChildKey) {
      if(orderstatus=="served" || orderstatus=="asasude" ){
     document.write("<center><button id='viewboda' onclick='viewBoda();' style='background-color:black; color:white;'>View Boda</button></center>");
     }else{
+		console.log("Client phone"+localStorage.phone);
       document.write("<form action='http://secure.jpesa.com/webpr.php' method='post'>");
-     document.write("<input type='hidden' name='agent_id' value='israelmikan' class='textfields'>");
+     document.write("<input type='hidden' name='agent_id' value='"+localStorage.jpesa+"' class='textfields'>");
      document.write("<input type='hidden' name='jc' value='dons' class='textfields'>");
      document.write("<input type='hidden' name='currency_code' value='UGX' class='textfields'>");
      document.write(" <input type='hidden' name='item_name' value='Bodafix Uganda' class='textfields'>");
      document.write("<input type='hidden' name='tx' value='"+localStorage.orderid+"' class='textfields'>");
      document.write("<input type='hidden' name='amount' value='"+localStorage.getItem("alltopay")+"' id='ammounttopay' class='textfields'>");
      document.write("<input type='hidden' name='return' value='http://clicktheglobe.co.nf/bodafix/successsuper.html?orderid="+localStorage.orderkeysuper+"' class='textfields'>");
-     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"' class='textfields'>");
+     document.write("<input type='hidden' name='cancel' value='http://clicktheglobe.co.nf/bodafix/failsuper.html?orderkey="+localStorage.orderkeysuper+"&phone="+localStorage.phone+"' class='textfields'>");
      document.write("<input type='hidden' name='callback' value='https://secure.jolis.net/modules/gateways/jpesa/callback.php' class='textfields'>");
      document.write("<span class='btnl'><span class='btnr'>");
      document.write("<center><input type='submit' name='Submit' value='Pay Now' style='background-color:black; color:white;'></center>");
