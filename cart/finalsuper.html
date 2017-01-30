@@ -36,7 +36,12 @@ function myFunction() {
 </script>
 <script type="text/javascript">
     
-    
+    if(localStorage.orderkeysuper==null){
+	
+	alert("You Dont have Current Orders try Again");
+			 window.location.assign("../index.html");
+	}
+	
          var watchID;
          var geoLoc;
          
@@ -66,7 +71,7 @@ function myFunction() {
                   }
                 };
                   ref.update({ supermarket: localStorage.supermarket,customerlat: localStorage.custlat, customerlong:localStorage.custlong,bodabill:localStorage.bodabill,mine:localStorage.mine,hotelbill:localStorage.supertotal }, onComplete);
-                    //alert('Details Updated');
+                  console.log('Details Updated');
              
                }
  

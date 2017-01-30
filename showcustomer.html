@@ -8,9 +8,19 @@
 
 <html>
 <head>
+       <script>
+ 
+ function autoRefresh1()
+{
+	   window.location.reload();
+}
+ 
+ setInterval('autoRefresh1()', 30000); // this will reload page after every 5 secounds; Method II
+</script> 
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <title>BodaFix</title>
+
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
 <script>
   // Initialize Firebase
@@ -204,7 +214,57 @@ function getValue(varname)
   
 
 </script>
+<script>
+//upload boda codes
 
+	 document.getElementById("callCustomer").href = "tel:"+localStorage.customercontact;
+		var database = firebase.database();
+     var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		messageListRef.update({ bodalat:localStorage.bodalaty,bodalong:localStorage.bodalongy}, onComplete);
+         // alert("Authetication Working");
+      console.log('Boda details saved');
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+         // alert('Synchronization succeeded');
+		 
+		 
+      }
+    };
+   
+          //window.location.assign("final.html");
+  
+      }
+    });
+    //end of auth
+
+//end upload boda codes
+
+
+
+</script>
 
 </head>
 <body  style="font-family: sans-serif;" onload="getLocationUpdate();autheticate();">

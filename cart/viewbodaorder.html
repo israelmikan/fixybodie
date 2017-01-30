@@ -2,8 +2,10 @@
 <html>
   <head>
     <title>BodaFix</title>
+     <meta http-equiv="refresh" content="30">
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
+ 
     <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
     <style>
       html, body {
@@ -25,8 +27,81 @@
 			 
 			 
 			 }
-		
+		Track();
 		}
+    </script>
+    <script>
+    
+         var watchID;
+         var geoLoc;
+         
+         function showLocation(position) {
+			 console.log("Showiing Location");
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+             localStorage.custlat=latitude;
+             localStorage.custlong=longitude;
+           
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+           // alert("Latitude : " + latitude + " Longitude: " + longitude);
+             //alert("Customer atambudde Latitude : " + latitude + " Longitude: " + longitude);
+             //localStorage.bodalaty=latitude;
+            //localstorage.bodalongy=longitude;
+           // alert("Pushing");
+                var t=localStorage.nowkey;
+                var ref = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkeysuper);
+            // Retrieve new posts as they are added to our database
+
+                      var onComplete = function(error) {
+                  if (error) {
+                    console.log('Synchronization failed');
+                  } else {
+                    console.log('Synchronization succeeded');
+                     // alert('Order Details Updated');
+                  }
+                };
+                  ref.update({ customerlat: localStorage.custlat, customerlong:localStorage.custlong}, onComplete);
+                  console.log('Customer Location Updated');
+             
+               }
+ 
+  
+         function errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied Turn Gps On!");
+              // window.location.assign("getpoint.html");
+            }
+            
+            else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+              //  window.location.assign("getpoint.html");
+            }
+         }
+         
+         function Track(){
+            if(navigator.geolocation){
+               // timeout at 60000 milliseconds (60 seconds)
+               var options = {timeout:60000};
+               geoLoc = navigator.geolocation;
+               watchID = geoLoc.watchPosition(showLocation, errorHandler, options);
+            }
+            
+            else{
+               alert("Sorry, device does not support geolocation!");
+            }
+            
+            //myFunction();
+            // refreshData();
+             
+         }
+function refreshData()
+{
+    x = 30;  // 5 Seconds
+   //Track();
+
+    setTimeout(refreshData, x*1000);
+}refreshData();
     </script>
   </head>
   <body onLoad="checkKey();">
@@ -58,7 +133,11 @@ ref.on("value", function(snapshot, prevChildKey) {
 center=parseFloat(bodalat);
 centerl=parseFloat(bodalong);
 
-
+if(orderstatus=="delivered"){
+	localStorage.orderkeysuper=null;
+	alert("You Dont have Current Orders try Again");
+			 window.location.assign("../index.html");
+	}
   if(centerl==null){ alert("Boda has Not yet Started delivery process");
 window.location.assign("finalsuper.html");
 }

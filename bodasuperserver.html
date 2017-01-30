@@ -11,6 +11,11 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 <title>Bodafix</title>
+
+ <script>
+        
+ 
+        </script>
        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -146,7 +151,7 @@ document.write("<tr style='visibility:hidden'><td>Location:</td><td> " + newPost
       localStorage.customerlong=newPost.customerlong;
       
       
-  document.write("<tr><td></td><td><button onclick='updateOrder()' style='background-color:black;color:white;' >Set order Served</button></td></tr>");
+  document.write("<tr><td></td><td><button onclick='FuckOrder()' style='background-color:black;color:white;' >Set order Served</button></td></tr>");
  var cust=newPost.customer;
       document.write("</table>");      
    
@@ -188,7 +193,52 @@ document.write("</table>");
 }); 
           
           
-      
+             function updateOrder(){
+            
+            alert("Update order");
+            
+            var messageListRef = new Firebase("https://amhungry.firebaseio.com/supermarketorders/"+localStorage.orderkey);
+    messageListRef.authWithPassword({
+      email    :localStorage.authemail,
+      password : localStorage.authpassword
+    }, function(error, authData) {
+      if (error) {
+        switch (error.code) {
+          case "INVALID_EMAIL":
+            console.log("The specified user account email is invalid.");
+            break;
+          case "INVALID_PASSWORD": 
+            console.log("The specified user account password is incorrect.");
+            break;
+          case "INVALID_USER":
+            console.log("The specified user account does not exist.");
+            break;
+          default:
+            console.log("Error logging user in:", error);
+        }
+      } else {
+        console.log("Authenticated successfully with payload:", authData);
+		
+		  var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization failed');
+      } else {
+        console.log('Synchronization succeeded');
+         // alert('Synchronization succeeded');
+      }
+    };
+	var sevie=localStorage.getItem("serverwho");
+    messageListRef.update({ orderstatus:"served",servedby:sevie}, onComplete);
+         // alert("Authetication Working");
+       alert('Order details Set to Served Wait for Pickup');
+          window.location.assign("superordersservers.html");
+  
+      }
+    });
+    //end of auth
+   
+            
+        }
       </script>
   <script>
     
@@ -449,9 +499,17 @@ document.write("</table>");
     </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKhOBqZP-Gej1xLry8_M7d8fZvp-E1FwA&callback=initMap"
     async defer></script>
-       <script>
+      
         
-        function updateOrder(){
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+   
+ <input style="visibility:hidden;" type="button" onclick="FuckOrder();" value="Set Order Delivered"/>
+         
+      </form>
+  <script>
+        
+        function FuckOrder(){
             
             alert("Update order");
             
@@ -498,13 +556,5 @@ document.write("</table>");
             
         }
         </script>
-        
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    
-   
- <input style="visibility:hidden;" type="button" onclick="updateOrder();" value="Set Order Delivered"/>
-         
-      </form>
- 
 </body>
 </html>

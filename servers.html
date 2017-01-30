@@ -5,8 +5,17 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
       <title>
-      
+      Bodafix
       </title>
+       <script>
+ 
+ function autoRefresh1()
+{
+	   window.location.reload();
+}
+ 
+ setInterval('autoRefresh1()', 12000); // this will reload page after every 5 secounds; Method II
+</script> 
         <script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
       <script>
 			if (localStorage.getItem("serverwho")=== null) {
